@@ -6,7 +6,7 @@
 #    By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/12 14:05:06 by eduaserr          #+#    #+#              #
-#    Updated: 2025/03/13 17:01:47 by eduaserr         ###   ########.fr        #
+#    Updated: 2025/03/13 18:18:05 by eduaserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ BONUS_OB = $(BONUS:.c=.o)
 all : $(NAME)
 
 $(NAME): $(OBJS)
+	@echo "loading libft..."
 	@$(AR) $(NAME) $(OBJS)
 	@echo "libft compiled successfully"
 
