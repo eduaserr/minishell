@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:40:57 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/13 17:01:19 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/19 22:42:14 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@
 // struct in ft_flood_fill.c
 typedef struct s_data
 {
-	void			*width;
-	void			*length;
-	void			*wall;
-	void			*floor;
-	void			*coin;
-	void			*exit;
-	void			*player;
-	void			*next;
+	int			width;
+	int			length;
+	int			wall;
+	int			floor;
+	int			coin;
+	int			exit;
+	int			player;
 }			t_data;
 
 // struct in bonus functions
@@ -428,7 +427,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
  * @warning This function is recursive, that means it will look around his
  * first appearance. then it continoues where is true and follow this path.
 */
-int		flood_fill(t_data *data, char **map, int y, int x, char search);
+int		ft_flood_fill(t_data *data, char **map, int y, int x, char search);
 /**
  * @brief print array.
  * @param str
