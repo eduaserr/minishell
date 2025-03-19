@@ -4,13 +4,8 @@
 #include "../lib/libft/libft.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
 #include <stdio.h>
-
-typedef struct s_fd
-{
-	int	in;
-	int	out;
-}	t_fd;
 
 typedef struct s_env //env structure
 {
@@ -20,15 +15,32 @@ typedef struct s_env //env structure
 
 typedef struct s_shell
 {
-	char	**args;
-}	t_shell;
-
-typedef struct s_stack
-{
 	int		exit_status;
 	char	**user_input;
-	t_shell	*minishell;
 	t_env	*env;
-}	t_stack;
+}	t_shell;
+
+/* **************************************** */
+/*					SIGNALS					*/
+/* **************************************** */
+//////////////////////
+//	sig_init		//
+//////////////////////
+void	signal_function();
+
+t_shell	*init_mshell(t_shell *mshell, char **envp);
+
+/* **************************************** */
+/*					UTILS					*/
+/* **************************************** */
+//////////////////////
+//	utils_error		//
+//////////////////////
+void	ft_error(char *str);
+
+//////////////////////
+//	utils			//
+//////////////////////
+char	**ft_init_array(char **array);
 
 #endif
