@@ -39,6 +39,11 @@ t_shell	*init_mshell(t_shell *mshell, char **envp);
 void	ft_error(char *str);
 
 //////////////////////
+//	utils_free		//
+//////////////////////
+void	ft_free_mshell(t_shell *mshell);
+
+//////////////////////
 //	utils			//
 //////////////////////
 char	**ft_init_array(char **array);

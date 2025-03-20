@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:40:57 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/19 22:42:14 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:42:29 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -442,6 +442,7 @@ void	ft_printmap(char **file_map);
  * @brief duplicate with malloc any 2D array.
  * @param arr
  * @return 
+ * @warning must allocate type * (size + 1) into parenthesis.
  */
 char	**ft_arrdup(char **arr);
 /**

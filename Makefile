@@ -6,7 +6,7 @@
 #    By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 15:47:17 by eduaserr          #+#    #+#              #
-#    Updated: 2025/03/19 21:20:56 by eduaserr         ###   ########.fr        #
+#    Updated: 2025/03/20 17:29:34 by eduaserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SIG		= src/signals
 UTLS	= src/utils
 SRC		= main.c
 SRCS	= $(SIG)/sig_init.c\
-		$(UTLS)/utils.c $(UTLS)/utils_error.c
+		$(UTLS)/utils.c $(UTLS)/utils_error.c $(UTLS)/utils_free.c
 
 ### OBJS ###
 OBJS	= $(SRC:.c=.o) $(SRCS:.c=.o)

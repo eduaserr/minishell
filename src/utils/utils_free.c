@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/20 19:26:16 by eduaserr         ###   ########.fr       */
+/*   Created: 2025/03/20 17:28:38 by eduaserr          #+#    #+#             */
+/*   Updated: 2025/03/20 17:39:27 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	**ft_init_array(char **array)
+void	ft_free_env(t_env *env)
 {
-	char	**tmp;
-	int		i;
+	if (env->env)
+		ft_freemap(env->env);
+	if (env->path)
+		ft_freemap(env->path);
+	if (env)
+		free(env);
+}
 
-	i = 0;
-	if (!array)
-		return (NULL);
-	while (array && array[i])
-		i++;
-	tmp = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!tmp)
-		return (NULL);
-	i = 0;
-	while (array[i])
-	{
-		tmp[i] = ft_strdup(array[i]);
-		if (!tmp[i])
-		{
-			ft_freemap(tmp);
-			return (NULL);
-		}
-		i++;
-	}
-	tmp[i] = NULL;
-	return (tmp);
+void	ft_free_mshell(t_shell *mshell)
+{
+	if (mshell->env)
+		ft_free_env(mshell->env);
+	if (mshell->user_input)
+		ft_freemap(mshell->user_input);
+	if (mshell)
+		free(mshell);
 }
