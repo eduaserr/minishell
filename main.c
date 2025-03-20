@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/20 19:39:18 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/20 20:55:36 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ int	main(int argc, char **argv, char **envp)
 	mshell = init_mshell(mshell, envp);
 	if (!mshell)
 		return (ft_error("init minishell"), 0);
+	while (1)
+	{
+		;
+	}
 	printf("minishell :)\n");
 	ft_free_mshell(mshell);
 	return (0);

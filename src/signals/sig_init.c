@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:35:22 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/19 22:26:34 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/20 21:07:43 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,5 @@ void	signal_function()
 {
 	signal_init();	//Ctrl + C signal
 	signal(SIGQUIT, SIG_IGN);	//Ctrl + \ signal
+	//signal(SIGABRT,); //Ctrl + D signal
 }
