@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:35:22 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/20 21:07:43 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:10:56 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	handle_sigint(int sign)
 	rl_redisplay();
 }
 
-static void	signal_init()
+void	signal_function(void)
 {
 	struct sigaction	sa;
 
@@ -30,11 +30,5 @@ static void	signal_init()
 	sa.sa_handler = handle_sigint;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 		perror("sigaction\n");
-}
-
-void	signal_function()
-{
-	signal_init();	//Ctrl + C signal
-	signal(SIGQUIT, SIG_IGN);	//Ctrl + \ signal
-	//signal(SIGABRT,); //Ctrl + D signal
+	signal(SIGQUIT, SIG_IGN);
 }

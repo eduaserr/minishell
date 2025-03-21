@@ -48,4 +48,9 @@ void	ft_free_mshell(t_shell *mshell);
 //////////////////////
 char	**ft_init_array(char **array);
 
+//////////////////////
+//	init.c			//
+//////////////////////
+t_shell	*init_mshell(t_shell *mshell, char **envp);
+
 #endif
