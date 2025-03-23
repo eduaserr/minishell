@@ -12,7 +12,7 @@
 
 #include "inc/minishell.h"
 
-void	read_user_input(t_shell *mshell)
+void	promp_input(t_shell *mshell)
 {
 	(void)mshell;
 	char	*input;
@@ -23,22 +23,28 @@ void	read_user_input(t_shell *mshell)
 		exit(EXIT_SUCCESS);
 	}
 	ft_printf("%s\n", input);
-	//free input
+	ft_free_str(&input);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*mshell;
+	//char	**split;
 
+	//(void)split;
+	//split = NULL;
 	(void)argc;
 	(void)argv;
 	mshell = NULL;
 	signal_function();
-	mshell = init_mshell(mshell, envp);
+	mshell = init_mshell(mshell, envp); //init lstenv as stack
 	if (!mshell)
 		return (ft_error("init minishell"), 0);
+	//split = split_env(mshell->env);
+	//ft_printf("\nPRINT SPLIT\n");
+	//ft_printmap(split);
 	while (1)
-		read_user_input(mshell);//Ctrl + D signal se maneja con readline
+		promp_input(mshell);//Ctrl + D signal se maneja con readline
 	printf("minishell :)\n");
 	ft_free_mshell(mshell);
 	return (0);

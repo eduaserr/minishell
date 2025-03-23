@@ -12,22 +12,30 @@
 
 #include "../../inc/minishell.h"
 
-void	ft_free_env(t_env *env)
+void	ft_free_env(t_env *lstenv)
 {
-	if (env->env)
-		ft_freemap(env->env);
-	if (env->path)
-		ft_freemap(env->path);
-	if (env)
-		free(env);
+	t_env	*stack;
+
+	while (lstenv)
+	{
+		stack = lstenv->next;
+		if (lstenv->key)
+			free(lstenv->key);
+		if (lstenv->value)
+			free(lstenv->value);
+		free(lstenv);
+		lstenv = stack;
+	}
 }
 
 void	ft_free_mshell(t_shell *mshell)
 {
-	if (mshell->env)
-		ft_free_env(mshell->env);
+	if (mshell->lstenv)
+		ft_free_env(mshell->lstenv);
 	if (mshell->user_input)
 		ft_freemap(mshell->user_input);
+	if (mshell->env)
+		ft_freemap(mshell->env);
 	if (mshell)
 		free(mshell);
 }
