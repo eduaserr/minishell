@@ -33,7 +33,7 @@ void	signal_function();
 
 t_shell	*init_mshell(t_shell *mshell, char **envp);
 
-char	**split_env(char **env);
+t_env	*split_env(t_env *new, char *env);
 
 /* **************************************** */
 /*					UTILS					*/
