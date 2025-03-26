@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/21 13:30:39 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:45:19 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ int	main(int argc, char **argv, char **envp)
 	mshell = init_mshell(mshell, envp); //init lstenv as stack
 	if (!mshell)
 		return (ft_error("init minishell"), 0);
-	//split = split_env(mshell->env);
-	//ft_printf("\nPRINT SPLIT\n");
-	//ft_printmap(split);
 	while (1)
 		promp_input(mshell);//Ctrl + D signal se maneja con readline
 	printf("minishell :)\n");

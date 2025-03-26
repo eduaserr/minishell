@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/20 19:26:16 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:47:01 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**ft_init_array(char **array)
 		tmp[i] = ft_strdup(array[i]);
 		if (!tmp[i])
 		{
-			ft_freemap(tmp);
+			ft_freematrix(tmp);
 			return (NULL);
 		}
 		i++;
