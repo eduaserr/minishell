@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:40:57 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/20 18:42:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:44:06 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -417,13 +417,13 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 /**
- * @brief recursive function for search an specific char in a 2D array.
+ * @brief recursive function for search an specific char in a 2D array matrix.
  * @param data structure
- * @param map 2D map array
+ * @param map 2D array matrix
  * @param search char to find
  * @param y int
  * @param x int
- * @return true (1) if the char is on the map. False (0) if not.
+ * @return true (1) if the char is in the matrix. False (0) if not.
  * @warning This function is recursive, that means it will look around his
  * first appearance. then it continoues where is true and follow this path.
 */
@@ -434,10 +434,10 @@ int		ft_flood_fill(t_data *data, char **map, int y, int x, char search);
  */
 void	ft_printlines(char *str);
 /**
- * @brief prints every array in a 2D map.
- * @param file_map the file map.
+ * @brief prints every array in a 2D matrix.
+ * @param file_matrix the file matrix.
  */
-void	ft_printmap(char **file_map);
+void	ft_printmatrix(char **file_matrix);
 /**
  * @brief duplicate with malloc any 2D array.
  * @param arr
@@ -446,10 +446,10 @@ void	ft_printmap(char **file_map);
  */
 char	**ft_arrdup(char **arr);
 /**
- * @brief frees any 2D array map allocated.
- * @param map 2D map array.
+ * @brief frees any 2D array matrix allocated.
+ * @param matrix 2D matrix array.
  */
-void	ft_freemap(char **map);
+void	ft_freematrix(char **matrix);
 
 /* FT_PRINTF FOLDER */
 

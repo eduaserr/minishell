@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_freemap.c                                       :+:      :+:    :+:   */
+/*   ft_freematrix.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:57:35 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/19 22:30:34 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/26 20:56:13 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	ft_freemap(char **map)
+void	ft_freematrix(char **matrix)
 {
 	int	i;
 
 	i = 0;
-	while (map && map[i])
+	while (matrix && matrix[i])
 	{
-		free(map[i]);
+		free(matrix[i]);
 		i++;
 	}
-	free(map);
-	map = NULL;
+	free(matrix);
+	matrix = NULL;
 }
