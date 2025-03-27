@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/26 20:47:55 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:51:00 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,14 @@ t_env	*split_env(t_env *new, char *env)
 	i = 0;
 	arr = NULL;
 	arr = ft_split(env, '=');
-	if (!arr || !*arr)
+	if (!arr || !arr[0] || !arr[1])
 		return (ft_error("split"), NULL);
-	ft_printf("%s\n", env);
-	ft_printmatrix(arr);
-	ft_printf("\n<-------->\n");
 	new->key = ft_strdup(arr[0]);
 	if (!new->key)
-		return (NULL);
+		return (ft_freematrix(arr), NULL);
 	new->value = ft_strdup(arr[1]);
 	if (!new->value)
-		return (NULL);
+		return (ft_freematrix(arr), NULL);
 	return (ft_freematrix(arr), new);
 }
 
@@ -38,11 +35,12 @@ static t_env	*create_env(char *env)
 {
 	t_env	*new;
 
-	(void)env;
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
 		return (NULL);
 	new = split_env(new, env);
+	if (!new)
+		return (NULL);
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
