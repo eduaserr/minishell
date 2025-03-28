@@ -3,50 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/27 17:51:00 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/28 04:32:22 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-t_env	*split_env(t_env *new, char *env)
+void	ft_printenv(t_env *lstenv)
 {
-	char	**arr;
-	int		i;
+	int	i;
 
 	i = 0;
-	arr = NULL;
-	arr = ft_split(env, '=');
-	if (!arr || !arr[0] || !arr[1])
-		return (ft_error("split"), NULL);
-	new->key = ft_strdup(arr[0]);
-	if (!new->key)
-		return (ft_freematrix(arr), NULL);
-	new->value = ft_strdup(arr[1]);
-	if (!new->value)
-		return (ft_freematrix(arr), NULL);
-	return (ft_freematrix(arr), new);
+	while (lstenv)
+	{
+		ft_printf("node %d\n[0] - %s\n", i++, lstenv->key);
+		ft_printf("[1] - %s\n", lstenv->value);
+		lstenv = lstenv->next;
+	}
 }
 
-static t_env	*create_env(char *env)
-{
-	t_env	*new;
-
-	new = (t_env *)malloc(sizeof(t_env));
-	if (!new)
-		return (NULL);
-	new = split_env(new, env);
-	if (!new)
-		return (NULL);
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
-}
-
-static t_env	*init_env(char	**env)
+static t_env	*init_env(t_env *lstenv, char **env)
 {
 	t_env	*new;
 	int		i;
@@ -58,11 +37,10 @@ static t_env	*init_env(char	**env)
 		new = create_env(env[i]);
 		if (!new)
 			return (NULL);
-		//new->prev;
-		//new->next;
+		addlast_node(&lstenv, new);
 		i++;
 	}
-	return (new);
+	return (lstenv);
 }
 
 t_shell	*init_mshell(t_shell *mshell, char **envp)
@@ -73,7 +51,7 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 	mshell->env = ft_init_array(envp);
 	if (!mshell->env)
 		return (ft_free_mshell(mshell), NULL);
-	mshell->lstenv = init_env(mshell->env);
+	mshell->lstenv = init_env(mshell->lstenv, mshell->env);
 	if (!mshell->lstenv)
 		return (ft_free_mshell(mshell), NULL);
 	mshell->user_input = NULL;

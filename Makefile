@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+         #
+#    By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 15:47:17 by eduaserr          #+#    #+#              #
-#    Updated: 2025/03/21 13:14:20 by eduaserr         ###   ########.fr        #
+#    Updated: 2025/03/27 23:29:43 by eduaserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,14 @@ MAKE	= make --no-print-directory
 RM		= rm -f
 
 ### SRCS ###
+INIT	= src/init
 SIG		= src/signals
 UTLS	= src/utils
 SRC		= main.c
-SRCS	= $(SIG)/sig_init.c\
-		$(UTLS)/utils.c $(UTLS)/utils_error.c $(UTLS)/utils_free.c\
-		src/init.c
+
+SRCS	= $(INIT)/init_env.c $(INIT)/init.c\
+		$(SIG)/sig_init.c\
+		$(UTLS)/utils_error.c $(UTLS)/utils_free.c $(UTLS)/utils.c
 
 ### OBJS ###
 OBJS	= $(SRC:.c=.o) $(SRCS:.c=.o)

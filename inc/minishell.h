@@ -24,16 +24,27 @@ typedef struct s_shell
 }	t_shell;
 
 /* **************************************** */
+/*					INIT					*/
+/* **************************************** */
+//////////////////////
+//	init_env		//
+//////////////////////
+t_env	*create_env(char *env);
+
+void	addlast_node(t_env **lstenv, t_env *node);
+
+//////////////////////
+//	init.c			//
+//////////////////////
+t_shell	*init_mshell(t_shell *mshell, char **envp);
+
+/* **************************************** */
 /*					SIGNALS					*/
 /* **************************************** */
 //////////////////////
 //	sig_init		//
 //////////////////////
 void	signal_function();
-
-t_shell	*init_mshell(t_shell *mshell, char **envp);
-
-t_env	*split_env(t_env *new, char *env);
 
 /* **************************************** */
 /*					UTILS					*/
@@ -51,11 +62,8 @@ void	ft_free_mshell(t_shell *mshell);
 //////////////////////
 //	utils			//
 //////////////////////
-char	**ft_init_array(char **array);
+t_env	*split_env(t_env *new, char *env);
 
-//////////////////////
-//	init.c			//
-//////////////////////
-t_shell	*init_mshell(t_shell *mshell, char **envp);
+char	**ft_init_array(char **array);
 
 #endif
