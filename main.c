@@ -6,12 +6,13 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/28 16:22:51 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:26:17 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
+//You must indicate the key and it returns the corresponding value"
 static char	*ft_getenv(t_env *env, char *var)
 {
 	while (env)
