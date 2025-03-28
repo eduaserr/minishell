@@ -6,23 +6,23 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/28 16:16:10 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:22:51 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
-static char	*get_envuser(t_env *env)
+static char	*ft_getenv(t_env *env, char *var)
 {
 	while (env)
 	{
-		if (ft_strncmp(env->key, "USER", 4) == 0)
+		if (ft_strncmp(env->key, var, 4) == 0)
 			break ;
 		env = env->next;
 	}
 	if (!env)
 		return (ft_strdup(""));
-	return (ft_strjoin(env->value, "minishell> "));
+	return (env->value);
 }
 
 /* #include <stdlib.h>
@@ -40,8 +40,9 @@ void	promp_input(t_shell *mshell)
 	char	*input;
 
 	input = NULL;
-	input = get_envuser(mshell->lstenv);
-	input = readline(input);
+	input = ft_getenv(mshell->lstenv, "USER");
+	input = ft_strjoin(input, "@mshell> ");
+	readline(input);
 	if (!input)
 	{
 		exit(EXIT_SUCCESS);
