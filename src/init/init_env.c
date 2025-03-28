@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 23:17:36 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/28 03:16:38 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/28 14:05:04 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	addlast_node(t_env **lstenv, t_env *node)
 {
 	t_env	*last;
 
+	last = NULL;
 	if (!lstenv || !node)
 		return ;
 	if (!*lstenv)
