@@ -6,24 +6,11 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/28 14:09:04 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:18:09 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	ft_printenv(t_env *lstenv)
-{
-	int	i;
-
-	i = 0;
-	while (lstenv)
-	{
-		ft_printf("node %d\n[0] - %s\n", i++, lstenv->key);
-		ft_printf("[1] - %s\n", lstenv->value);
-		lstenv = lstenv->next;
-	}
-}
 
 static t_env	*init_env(t_env *lstenv, char **env)
 {

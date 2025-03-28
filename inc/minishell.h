@@ -66,4 +66,6 @@ t_env	*split_env(t_env *new, char *env);
 
 char	**ft_init_array(char **array);
 
+void	ft_printenv(t_env *lstenv);
+
 #endif

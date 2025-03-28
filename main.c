@@ -6,18 +6,42 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/28 14:12:11 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:16:10 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
+
+static char	*get_envuser(t_env *env)
+{
+	while (env)
+	{
+		if (ft_strncmp(env->key, "USER", 4) == 0)
+			break ;
+		env = env->next;
+	}
+	if (!env)
+		return (ft_strdup(""));
+	return (ft_strjoin(env->value, "minishell> "));
+}
+
+/* #include <stdlib.h>
+
+char *pathvar = NULL;
+
+pathvar = getenv("USER");
+ft_printf("pathvar=%s", pathvar);
+free(pathvar);
+ */
 
 void	promp_input(t_shell *mshell)
 {
 	(void)mshell;
 	char	*input;
 
-	input = readline("minishell> ");
+	input = NULL;
+	input = get_envuser(mshell->lstenv);
+	input = readline(input);
 	if (!input)
 	{
 		exit(EXIT_SUCCESS);
@@ -38,8 +62,10 @@ int	main(int argc, char **argv, char **envp)
 	if (!mshell)
 		return (ft_error("init minishell"), 0);
 	while (1)
-		promp_input(mshell);//Ctrl + D signal se maneja con readline ? EOF*/
+	{
+		promp_input(mshell);//Ctrl + D signal se maneja con readline ? EOF
+		ft_free_mshell(mshell);
+	}
 	printf("minishell :)\n");
-	ft_free_mshell(mshell);
 	return (0);
 }
