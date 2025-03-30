@@ -57,7 +57,7 @@ void	ft_error(char *str);
 //////////////////////
 //	utils_free		//
 //////////////////////
-void	ft_free_mshell(t_shell *mshell);
+void	ft_free_mshell(t_shell **mshell);
 
 //////////////////////
 //	utils			//

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/28 16:26:17 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/30 01:43:48 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,32 @@ static char	*ft_getenv(t_env *env, char *var)
 	}
 	if (!env)
 		return (ft_strdup(""));
-	return (env->value);
+	return (ft_strdup(env->value));
 }
-
-/* #include <stdlib.h>
+/*
+#include <stdlib.h>
 
 char *pathvar = NULL;
 
 pathvar = getenv("USER");
 ft_printf("pathvar=%s", pathvar);
 free(pathvar);
- */
+*/
 
 void	promp_input(t_shell *mshell)
 {
-	(void)mshell;
-	char	*input;
+	char	*promp;
 
-	input = NULL;
-	input = ft_getenv(mshell->lstenv, "USER");
-	input = ft_strjoin(input, "@mshell> ");
-	readline(input);
-	if (!input)
+	promp = NULL;
+	promp = ft_getenv(mshell->lstenv, "USER");
+	promp = ft_strjoin_gnl(promp, "@mshell> ");
+	promp = readline(promp);
+	if (!promp)
 	{
 		exit(EXIT_SUCCESS);
 	}
-	ft_printf("%s\n", input);
-	input = ft_free_str(&input);
+	ft_printf("%s\n", promp);
+	free(promp);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -59,15 +58,15 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	mshell = NULL;
-	//signal_function();
+	signal_function();
 	mshell = init_mshell(mshell, envp); //init lstenv as stack
 	if (!mshell)
 		return (ft_error("init minishell"), 0);
 	while (1)
 	{
 		promp_input(mshell);//Ctrl + D signal se maneja con readline ? EOF
-		ft_free_mshell(mshell);
 	}
+	ft_free_mshell(&mshell);
 	printf("minishell :)\n");
 	return (0);
 }

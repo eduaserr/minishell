@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/28 15:15:27 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/03/30 00:21:28 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ t_env	*split_env(t_env *new, char *env)
 
 	arr = NULL;
 	arr = ft_split(env, '=');
-	if (!arr || !arr[0] || !arr[1])
+	if (!arr || !arr[0])
 		return (ft_error("split"), NULL);
 	new->key = ft_strdup(arr[0]);
 	if (!new->key)
 		return (ft_freematrix(arr), NULL);
-	new->value = ft_strdup(arr[1]);
+	if (!arr[1])
+		new->value = ft_strdup("");
+	else
+		new->value = ft_strdup(arr[1]);
 	if (!new->value)
 		return (ft_freematrix(arr), NULL);
 	return (ft_freematrix(arr), new);
