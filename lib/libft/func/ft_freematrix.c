@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_freematrix.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:57:35 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/30 00:46:22 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/01 21:37:22 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -51,6 +51,8 @@ void	signal_function();
 //////////////////////
 //	utils_error		//
 //////////////////////
+void	ft_exit(t_shell **mshell);
+
 void	ft_error(char *str);
 
 //////////////////////
@@ -61,6 +63,8 @@ void	ft_free_mshell(t_shell **mshell);
 //////////////////////
 //	utils			//
 //////////////////////
+char	*ft_getenv(t_env *env, char *var);
+
 t_env	*split_env(t_env *new, char *env);
 
 char	**ft_init_array(char **array);

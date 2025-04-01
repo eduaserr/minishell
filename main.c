@@ -6,14 +6,13 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/01 18:39:11 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/01 22:25:46 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
-#include <stdlib.h>
 
-void	cleanup_readline(void)
+void	ft_clean_rl(void)
 {
     // Limpia el historial de readline
     rl_clear_history();
@@ -28,52 +27,48 @@ void	cleanup_readline(void)
     rl_cleanup_after_signal();
 }
 
-//You must indicate the key and it returns the corresponding value"
-/*static char	*ft_getenv(t_env *env, char *var)
-{
-	while (env)
-	{
-		if (ft_strncmp(env->key, var, 4) == 0)
-			break ;
-		env = env->next;
-	}
-	if (!env)
-		return (ft_strdup("\0"));
-	return (ft_strdup(env->value));
-}*/
 
-void	promp_input(t_shell *mshell)
+char	**ft_split_input(char *str)
+{
+	char	**input;
+	
+	input = ft_split(str, ' ');
+	if (!input || !*input)
+	return (NULL);
+	return (input);
+}
+
+void	parse_input(t_shell **mshell, char *input)
+{
+	(*mshell)->user_input = ft_split_input(input);
+	//if (!(*mshell)->user_input)
+	//	return ;
+	//ft_check_quotes();
+// free user_input
+}
+
+char	*promp_input(t_shell *mshell)
 {
 	char	*promp;
+	char	*input;
 
 	promp = NULL;
-	(void)mshell;
-	//promp = getenv(mshell->lstenv, "USER");
-	//promp = ft_strjoin_gnl(promp, "@mshell> ");
-	promp = readline("@mshell> ");
-	if (promp && promp[0] != '\0')
-	{
-		ft_printf("%s\n", promp);
-		add_history(promp);
-	}
-	else // este else solo se activa cuando se presiona Ctrl + D EOF
-	{
-		ft_printf("exit\n");
-		cleanup_readline();
-		ft_free_mshell(&mshell);
-		exit(EXIT_SUCCESS);
-	}
-/*	char *pathvar = NULL;
-	pathvar = getenv("USER");
-	ft_printf("pathvar=%s", pathvar);
-	free(pathvar);
-*/
+	promp = ft_getenv(mshell->lstenv, "USER");
+	promp = ft_strjoin_gnl(promp, "@mshell> ");
+	input = readline(promp);
+	ft_free_str(&promp);
+	if (!input)
+		return (NULL);
+	if (input && input[0] != '\0')
+		add_history(input);
+	return (input);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*mshell;
-
+	char	*input;
+	
 	(void)argc;
 	(void)argv;
 	mshell = NULL;
@@ -83,10 +78,13 @@ int	main(int argc, char **argv, char **envp)
 		return (ft_error("init minishell"), 0);
 	while (1)
 	{
-		promp_input(mshell);//Ctrl + D signal se maneja con readline EOF
+		input = promp_input(mshell); //Ctrl + D signal se maneja con readline EOF
+		if (!input)
+			ft_exit(&mshell);
+		parse_input(&mshell, input);
+		free(input);
+		//ft_printmatrix(mshell->user_input);
+		
 	}
-	//cleanup_readline();
-	//ft_free_mshell(&mshell);
-	printf("minishell :)\n");
 	return (0);
 }
