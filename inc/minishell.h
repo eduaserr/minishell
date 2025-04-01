@@ -17,7 +17,6 @@ typedef struct s_env //env structure
 
 typedef struct s_shell
 {
-	int		exit_status;
 	char	**user_input;
 	char	**env;
 	t_env	*lstenv;
