@@ -6,14 +6,15 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/30 01:43:48 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/01 01:58:28 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
+#include <stdlib.h>
 
 //You must indicate the key and it returns the corresponding value"
-static char	*ft_getenv(t_env *env, char *var)
+/*static char	*ft_getenv(t_env *env, char *var)
 {
 	while (env)
 	{
@@ -24,31 +25,33 @@ static char	*ft_getenv(t_env *env, char *var)
 	if (!env)
 		return (ft_strdup(""));
 	return (ft_strdup(env->value));
-}
-/*
-#include <stdlib.h>
-
-char *pathvar = NULL;
-
-pathvar = getenv("USER");
-ft_printf("pathvar=%s", pathvar);
-free(pathvar);
-*/
+}*/
 
 void	promp_input(t_shell *mshell)
 {
 	char	*promp;
 
 	promp = NULL;
-	promp = ft_getenv(mshell->lstenv, "USER");
-	promp = ft_strjoin_gnl(promp, "@mshell> ");
-	promp = readline(promp);
-	if (!promp)
+	(void)mshell;
+	//promp = ft_getenv(mshell->lstenv, "USER");
+	//promp = ft_strjoin_gnl(promp, "@mshell> ");
+	promp = readline("@mshell> ");
+	if (promp && promp[0] != '\0')
 	{
+		ft_printf("%s\n", promp);
+		add_history(promp);
+	}
+	else // este else solo se activa cuando se presiona Ctrl + D
+	{
+		free(promp);
+		promp = NULL;
 		exit(EXIT_SUCCESS);
 	}
-	ft_printf("%s\n", promp);
-	free(promp);
+/*	char *pathvar = NULL;
+	pathvar = getenv("USER");
+	ft_printf("pathvar=%s", pathvar);
+	free(pathvar);
+*/
 }
 
 int	main(int argc, char **argv, char **envp)
