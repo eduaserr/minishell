@@ -27,6 +27,7 @@ Búsqueda de nodos:
 
 
 manejar intro en mshell | intro -> promp == NULL -> (!promp)
+liberar intro !!!! free();
 
 [39] : XMODIFIERS=@im=ibus
 
