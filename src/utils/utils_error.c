@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/02 22:21:40 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:18:31 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_clean_rl(void)
 void	ft_exit(t_shell **mshell)
 {
 	ft_printf("exit\n");
-	//ft_clean_rl();
+	ft_clean_rl();
 	ft_free_mshell(mshell);
 	exit(EXIT_SUCCESS);
 }

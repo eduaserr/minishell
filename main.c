@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/02 22:23:45 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/03 18:17:04 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ int	main(int argc, char **argv, char **envp)
 			return (ft_error("init minishell"), 0);
 		input = promp_input(mshell); //Ctrl + D signal se maneja con readline EOF
 		if (!input)
-		ft_exit(&mshell);
-		parse_input(&mshell, input);
+			ft_exit(&mshell);
+		if (input[0] != '\0')
+			parse_input(&mshell, input);
 		free(input);
 		ft_printmatrix(mshell->user_input);
 		ft_free_mshell(&mshell);
