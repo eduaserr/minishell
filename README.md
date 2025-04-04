@@ -24,11 +24,8 @@ Inicialización de la lista:
 
 t_env *init_env_list(char **envp)
 Inicializa la lista enlazada a partir del array envp de variables de entorno.
+
 Búsqueda de nodos:
-
-
-manejar intro en mshell | intro -> promp == NULL -> (!promp)
-liberar intro !!!! free();
 
 [39] : XMODIFIERS=@im=ibus
 

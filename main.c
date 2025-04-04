@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/04 15:17:49 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/04 19:48:03 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	mshell = NULL;
 	signal_function();
+	mshell = init_mshell(mshell, envp);
+	if (!mshell)
+		return (ft_error("init minishell"), 0);
 	while (1)
 	{
-		mshell = init_mshell(mshell, envp);
-		if (!mshell)
-			return (ft_error("init minishell"), 0);
 		input = promp_input(mshell); //Ctrl + D signal se maneja con readline EOF
 		if (!input)
 			ft_exit(&mshell);
@@ -75,7 +75,20 @@ int	main(int argc, char **argv, char **envp)
 			parse_input(&mshell, input);
 		free(input);
 		ft_printmatrix(mshell->user_input);
-		ft_free_mshell(&mshell);
+		ft_freematrix(mshell->user_input);
 	}
+	//ft_free_mshell(&mshell);
 	return (0);
 }
+
+
+
+/*
+	esto nos permite poder hacer malloc fuera del while y liberar solo cuando sea necesario :
+
+- exit_status :
+	ft_exit(int , mshell) con condiciones para liberar distintos elementos de mshell.
+
+- valgrind errors = al ejecutar minishell, printear un input (a) y sea el siguiente input ENTER
+(probablemente se arregle al avanzar el proyecto)
+	*/
