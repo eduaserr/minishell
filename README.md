@@ -17,6 +17,7 @@
 Funciones necesarias para el tratamiento de los nodos:
 Creación de nodos:
 
+Recomendable hacer malloc 1 vez y liberar cuadno sea necesario
 t_env *create_env_node(char *env_var)
 Crea un nuevo nodo a partir de una cadena env_var en formato KEY=VALUE.
 Inicialización de la lista:

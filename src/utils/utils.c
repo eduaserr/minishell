@@ -6,13 +6,13 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/01 21:58:34 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:12:22 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//You must indicate the key and it returns the corresponding value"
+//Creates strdup. You must indicate the key and it returns the corresponding value"
 char	*ft_getenv(t_env *env, char *var)
 {
 	while (env)
