@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 03:16:57 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/05 03:17:00 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/05 03:38:14 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ int	ft_istrchr(char *s, int c)
 	}
 	if (s[i] == c)
 		return (i);
-	return (0);
+	return (-1);
 }
