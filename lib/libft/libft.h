@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:40:57 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/26 20:44:06 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/05 03:15:36 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,17 @@ void	*ft_memmove(void *dst, const void *src, size_t len);
  */
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 
+/**
+ * @brief Locates the first occurence of 'c' in the string pointed to by 's'.
+	Null character terminated is considered to be part of the string;
+	therefor if 'c' is '\0', the function locate the terminating '\0'.
+ * 
+ * @param s 
+ * @param c 
+ * @return (int) Return int to the located character, or 0 if the
+	character does not appear in the string.
+ */
+int		ft_istrchr(char *s, int c);
 /**
  * @brief Locates the first occurence of 'c' (converted to a char) in the string
 	pointed to by 's'. Null character terminated is considered to be part of the
