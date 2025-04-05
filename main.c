@@ -3,19 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/04 19:48:03 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/05 04:08:01 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
-
-void	ft_check_quotes(t_shell **mshell, char **str)
+/*
+int	check_quotes(const char *input)
 {
-	(void)str;
+    int	i;
+    char	quote_type;
+
+    if (!input)
+        return (NO_QUOTES); // No input provided
+
+    i = 0;
+    while (input[i])
+    {
+        if (input[i] == '\'' || input[i] == '\"') // Detect opening quote
+        {
+            quote_type = input[i];
+            i++;
+            while (input[i] && input[i] != quote_type) // Search for closing quote
+                i++;
+            if (!input[i]) // No closing quote found
+                return (UNCLOSED_QUOTE);
+            if (i > 1 && input[i - 1] == quote_type) // Empty quote
+                return (EMPTY_QUOTE);
+        }
+        i++;
+    }
+    return (NO_QUOTES); // No issues found
+}
+*/
+int	ft_check_quotes(t_shell **mshell, char *input)
+{
+	(void)input;
 	(void)mshell;
+	char	quote_type;
+	int	i;
+
+	i = 0;
+	if (!input)
+		return (NO_QUOTES);
+	while (input[i])
+	{
+		if (ft_strchr(input, '\'') || ft_strchr(input, '\"'))
+	}
 }
 
 char	**ft_split_input(char *str)
@@ -30,10 +67,10 @@ char	**ft_split_input(char *str)
 
 void	parse_input(t_shell **mshell, char *input)
 {
+	ft_check_quotes(mshell, (*mshell)->user_input);
 	(*mshell)->user_input = ft_split_input(input);
 	if (!(*mshell)->user_input)
 		return ;
-	ft_check_quotes(mshell, (*mshell)->user_input);
 }
 
 char	*promp_input(t_shell *mshell)

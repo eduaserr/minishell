@@ -7,6 +7,16 @@
 #include <signal.h>
 #include <stdio.h>
 
+typedef enum e_quote_status
+{
+	NO_QUOTES = 0,
+	SINGLE = 1,
+	DOUBLE = 2,
+	CLOSED = 3,
+	UNCLOSED = -1,
+	EMPTY = -2,
+}	t_quote_status;
+
 typedef struct s_env //env structure
 {
 	char	*key;
