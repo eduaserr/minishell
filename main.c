@@ -6,39 +6,13 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/05 04:08:01 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/06 02:12:09 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
-/*
-int	check_quotes(const char *input)
-{
-    int	i;
-    char	quote_type;
 
-    if (!input)
-        return (NO_QUOTES); // No input provided
-
-    i = 0;
-    while (input[i])
-    {
-        if (input[i] == '\'' || input[i] == '\"') // Detect opening quote
-        {
-            quote_type = input[i];
-            i++;
-            while (input[i] && input[i] != quote_type) // Search for closing quote
-                i++;
-            if (!input[i]) // No closing quote found
-                return (UNCLOSED_QUOTE);
-            if (i > 1 && input[i - 1] == quote_type) // Empty quote
-                return (EMPTY_QUOTE);
-        }
-        i++;
-    }
-    return (NO_QUOTES); // No issues found
-}
-*/
+//posible error, comillas anidadas ?
 int	ft_check_quotes(t_shell **mshell, char *input)
 {
 	(void)input;
@@ -52,7 +26,18 @@ int	ft_check_quotes(t_shell **mshell, char *input)
 	while (input[i])
 	{
 		if (ft_strchr(input, '\'') || ft_strchr(input, '\"'))
+		{
+			quote_type = input[i++];
+			while (input[i] && input[i] != quote_type)
+				i++;
+			if (!input[i])
+				return (UNCLOSED);
+			if (i > 1 && input[1 - 1] == quote_type) // comillas vacias "" ''
+				return (EMPTY);
+		}
+		i++;
 	}
+	return (NO_QUOTES);
 }
 
 char	**ft_split_input(char *str)
@@ -67,7 +52,15 @@ char	**ft_split_input(char *str)
 
 void	parse_input(t_shell **mshell, char *input)
 {
-	ft_check_quotes(mshell, (*mshell)->user_input);
+	int	q_state;
+
+	q_state = 0;
+	q_state = ft_check_quotes(mshell, input);
+	if (q_state == -1)
+		return (ft_error, ft_freemshell());
+	if (q_state == -2)
+		remove_quotes();
+	//^ check_input ^ before split into struct
 	(*mshell)->user_input = ft_split_input(input);
 	if (!(*mshell)->user_input)
 		return ;

@@ -10,9 +10,7 @@
 typedef enum e_quote_status
 {
 	NO_QUOTES = 0,
-	SINGLE = 1,
-	DOUBLE = 2,
-	CLOSED = 3,
+	CLOSED = 1,
 	UNCLOSED = -1,
 	EMPTY = -2,
 }	t_quote_status;
@@ -27,6 +25,7 @@ typedef struct s_env //env structure
 
 typedef struct s_shell
 {
+	int		quote;
 	char	**user_input;
 	char	**env;
 	t_env	*lstenv;
