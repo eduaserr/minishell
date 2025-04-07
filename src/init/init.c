@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/01 17:50:01 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:21:15 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 	if (!mshell->lstenv)
 		return (ft_free_mshell(&mshell), NULL);
 	mshell->user_input = NULL;
+	mshell->quote = 0;
 	return (mshell);
 }
