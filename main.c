@@ -6,36 +6,11 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/07 21:03:31 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:47:18 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
-
-//esta funcion comprueba  que la primera ocurrencia de comillas tenga su respectivo cierre,
-//sin importar qué contenga en su interior, incluidas comillas de distinto tipo.
-// ej.: echo "hola'".  echo "a'b""c"
-//		hola'
-int	ft_check_quotes(t_shell **mshell, char *input, int *i)
-{
-	(void)input;
-	(void)mshell;
-	char	quote_type;
-
-	if (!input)
-		return (NO_QUOTES);
-	if (ft_strchr(input, '\'') || ft_strchr(input, '\"'))
-	{
-		quote_type = input[*i++];
-		while (input[*i] && input[*i] != quote_type)
-			*i++;
-		if (!input[*i])
-			return (UNCLOSED);
-		if (*i > 1 && input[*i - 1] == quote_type) // comillas vacias "" ''
-			return (EMPTY);
-	}
-	return (NO_QUOTES);
-}
 
 char	**ft_split_input(char *str)
 {
@@ -45,28 +20,6 @@ char	**ft_split_input(char *str)
 	if (!input || !*input)
 		return (NULL);
 	return (input);
-}
-
-void	parse_input(t_shell **mshell, char *input)
-{
-	int	q_state;
-	int	i;
-
-	i = 0;
-	q_state = 0;
-	while (input[i])
-	{
-		q_state = ft_check_quotes(mshell, input, &i);
-		if (q_state == -1)
-			return (ft_error("Check_quotes"), ft_free_mshell(mshell));
-		if (q_state == -2)
-			printf("remove_quotes\n");
-		i++;
-	}
-	/*^ check_input ^ before split into struct
-	(*mshell)->user_input = ft_split_input(input);
-	if (!(*mshell)->user_input)
-		return ;*/
 }
 
 char	*promp_input(t_shell *mshell)
@@ -106,8 +59,8 @@ int	main(int argc, char **argv, char **envp)
 			ft_exit(&mshell);
 		if (input[0] != '\0') // Si no es ENTER
 			parse_input(&mshell, input);
+		ft_printlines(input);
 		free(input);
-		ft_printmatrix(mshell->user_input);
 		ft_freematrix(mshell->user_input);
 	}
 	//ft_free_mshell(&mshell);
@@ -117,7 +70,8 @@ int	main(int argc, char **argv, char **envp)
 
 
 /*
-	esto nos permite poder hacer malloc fuera del while(1) y liberar solo cuando sea necesario :
+	exit_status : esto nos permite poder hacer malloc fuera del while(1)
+	y liberar solo cuando sea necesario :
 
 - exit_status :
 	ft_exit(int , mshell) con condiciones para liberar distintos elementos de mshell.

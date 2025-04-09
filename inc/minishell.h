@@ -1,11 +1,23 @@
-#ifndef MINISHELL_H
-#define MINISHELL_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
+/*   Updated: 2025/04/09 16:58:16 by eduaserr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../lib/libft/libft.h"
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
-#include <stdio.h>
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+# include "../lib/libft/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+# include <stdio.h>
 
 typedef enum e_quote_status
 {
@@ -17,8 +29,8 @@ typedef enum e_quote_status
 
 typedef struct s_env //env structure
 {
-	char	*key;
-	char	*value;
+	char			*key;
+	char			*value;
 	struct s_env	*next;
 	struct s_env	*prev;
 }	t_env;
@@ -47,12 +59,22 @@ void	addlast_node(t_env **lstenv, t_env *node);
 t_shell	*init_mshell(t_shell *mshell, char **envp);
 
 /* **************************************** */
+/*					QUOTES					*/
+/* **************************************** */
+//////////////////////
+//	quotes_check	//
+//////////////////////
+int		ft_check_quotes(char *input, int i);
+
+void	parse_input(t_shell **mshell, char *input);
+
+/* **************************************** */
 /*					SIGNALS					*/
 /* **************************************** */
 //////////////////////
 //	sig_init		//
 //////////////////////
-void	signal_function();
+void	signal_function(void);
 
 /* **************************************** */
 /*					UTILS					*/
