@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/09 19:28:25 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/09 21:53:10 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,16 @@ significa que las comillas están vacias.*/
 int	ft_check_quotes(char *input, int *i)
 {
 	char	q_type;
-	int		j;
 
-	j = 0;
 	q_type = 0;
 	if (input[*i] == '\'' || input[*i] == '\"') // Verifica si es una comilla
 	{
 		q_type = input[*i];
-		j = (*i)++; // Avanza al siguiente carácter
+		(*i)++; // Avanza al siguiente carácter
 		while (input[*i] && input[*i] != q_type)
 			(*i)++;
 		ft_printf("i is -> %d\n", *i);
-		if (input[j] == q_type && input[j + 1] == q_type)
+		if (input[*i] == q_type && input[*i - 1] == q_type)
 			return (EMPTY); // Comillas vacías
 		if (!input[*i]) // No se encontró el cierre de la comilla
 			return (UNCLOSED);
@@ -46,6 +44,21 @@ int	ft_check_quotes(char *input, int *i)
 		return (NO_QUOTES);
 	return (CLOSED);
 }
+/* Esta función actúa cuando las comiilas estan vacias "". Recoge lo anterior y lo posterior
+de las comillas del input y las joinea. --> hola""adios --> holaadios || ""
+si no hay input anterior ni posterior? Devuelve un input vacio a la funcion parse y esta lo
+vuelve a procesar check_quotes() esta vez sin comillas.
+
+int start -> i - 1. primera comilla
+int end -> i. segunda comilla
+
+depende del funcionamiento de rm_empty_quotes,
+deberia ser : end_str1 = i - 1; start_str2 = i + 1;
+*/
+/* char	*rm_empty_quotes(char *str, int start, int end)
+{
+	
+} */
 
 void	parse_input(t_shell **mshell, char *input)
 {
@@ -55,7 +68,7 @@ void	parse_input(t_shell **mshell, char *input)
 	(void)mshell;
 	i = 0;
 	q_state = 0;
-	/*while (input[i])
+	while (input[i])
 	{
 		q_state = ft_check_quotes(input, &i);
 		printf("quote_state -> %d\n", q_state);
@@ -68,15 +81,15 @@ void	parse_input(t_shell **mshell, char *input)
 		}
 		if (q_state == EMPTY)
 		{
-			//input = ft_substr(input, );
-			//rm_empty_quotes(&input);
+			//input = rm_empty_quotes(&input, i - 1, i);
+			//i = 0;
 			printf("remove_quotes\n");
 		}
 		i++;
-	}*/
+	}
 	//^ check_input ^ before split into struct
-	(*mshell)->user_input = ft_split_input(input);
+/* 	(*mshell)->user_input = ft_split_input(input);
 	if (!(*mshell)->user_input)
 		return ;
-	ft_printmatrix((*mshell)->user_input);
+	ft_printmatrix((*mshell)->user_input); */
 }
