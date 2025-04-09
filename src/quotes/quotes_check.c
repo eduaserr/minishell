@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/09 17:00:50 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:46:43 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,27 @@ significa que las comillas están vacias.*/
 // ej.: echo "hola'".	echo "a'b""c"
 //		hola'			a'bc
 
-int	ft_check_quotes(char *input, int i)
+int	ft_check_quotes(char *input, int *i)
 {
-	char	quote_type;
+	char	q_type;
 	int		j;
 
 	j = 0;
-	quote_type = 0;
-	if (ft_strchr(input, '\'') || ft_strchr(input, '\"'))
+	q_type = 0;
+	if (input[*i] == '\'' || input[*i] == '\"') // Verifica si es una comilla
 	{
-		j = i;
-		quote_type = input[j++];
-		printf("q_type -> %c\n", quote_type);
-		while (input[j] && input[j] != quote_type)
-			j++;
-		if (!input[j])
+		q_type = input[*i];
+		j = (*i)++; // Avanza al siguiente carácter
+	while (input[*i] && input[*i] != q_type)
+			(*i)++;
+		if (input[j] == q_type && input[j + 1] == q_type)
+			return (EMPTY); // Comillas vacías
+		if (!input[*i]) // No se encontró el cierre de la comilla
 			return (UNCLOSED);
-		if (j > 0 && input[j - 1] == quote_type) // comillas vacias "" ''
-			return (EMPTY);
 	}
-	return (NO_QUOTES);
+	else
+		return (NO_QUOTES);
+	return (CLOSED);
 }
 
 void	parse_input(t_shell **mshell, char *input)
@@ -50,15 +51,20 @@ void	parse_input(t_shell **mshell, char *input)
 	int	q_state;
 	int	i;
 
+	(void)mshell;
 	i = 0;
 	q_state = 0;
 	while (input[i])
 	{
-		q_state = ft_check_quotes(input, i);
-		printf("q_state -> %d\n", q_state);
-		printf("%d\n", i);
+		q_state = ft_check_quotes(input, &i);
+		printf("quote_state -> %d\n", q_state);
 		if (q_state == UNCLOSED)
-			return (ft_free_str(&input), ft_error("Check_quotes"), ft_free_mshell(mshell));
+		{
+			ft_free_str(&input);
+			ft_error("Check_quotes");
+			//ft_free_mshell(mshell);
+			return ;
+		}
 		if (q_state == EMPTY)
 		{
 			//rm_empty_quotes(&input);

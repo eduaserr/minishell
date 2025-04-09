@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/09 16:58:16 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/09 18:01:45 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_env //env structure
 
 typedef struct s_shell
 {
-	int		quote;
 	char	**user_input;
 	char	**env;
 	t_env	*lstenv;
@@ -64,7 +63,7 @@ t_shell	*init_mshell(t_shell *mshell, char **envp);
 //////////////////////
 //	quotes_check	//
 //////////////////////
-int		ft_check_quotes(char *input, int i);
+int		ft_check_quotes(char *input, int *i);
 
 void	parse_input(t_shell **mshell, char *input);
 
