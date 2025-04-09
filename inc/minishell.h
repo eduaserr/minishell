@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/09 18:01:45 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:24:04 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,7 @@ t_env	*split_env(t_env *new, char *env);
 char	**ft_init_array(char **array);
 
 void	ft_printenv(t_env *lstenv);
+
+char	**ft_split_input(char *str);
 
 #endif
