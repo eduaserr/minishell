@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/09 19:24:04 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/14 03:43:40 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	ft_free_mshell(t_shell **mshell);
 //////////////////////
 //	utils			//
 //////////////////////
+char	*rm_empty_quotes(char *str, int start, int end);
+
 char	*ft_getenv(t_env *env, char *var);
 
 t_env	*split_env(t_env *new, char *env);

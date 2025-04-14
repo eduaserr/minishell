@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/09 21:53:10 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/14 04:41:19 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+char	*ft_strcpy(char *dest, char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i])
+	{
+	    dest[i] = src[i];
+	    i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
 /*la función ft_check_quotes se llama dentro de un while , mientras el input exista.
 Por cada iteración (por cada carácter del input), comprobamos si la posición es una comilla.
 Si no es comilla devuelve NO_QUOTES;  si hay comilla, comprobamos en el resto del input
@@ -34,7 +48,6 @@ int	ft_check_quotes(char *input, int *i)
 		(*i)++; // Avanza al siguiente carácter
 		while (input[*i] && input[*i] != q_type)
 			(*i)++;
-		ft_printf("i is -> %d\n", *i);
 		if (input[*i] == q_type && input[*i - 1] == q_type)
 			return (EMPTY); // Comillas vacías
 		if (!input[*i]) // No se encontró el cierre de la comilla
@@ -55,10 +68,48 @@ int end -> i. segunda comilla
 depende del funcionamiento de rm_empty_quotes,
 deberia ser : end_str1 = i - 1; start_str2 = i + 1;
 */
-/* char	*rm_empty_quotes(char *str, int start, int end)
+
+char	*rm_empty_quotes(char *str, int start, int end)
 {
-	
-} */
+	char	*s1;
+	char	*s2;
+
+	s1 = ft_substr(str, 0, start - 1);
+	if (!s1)
+		return (ft_error("sub 1"), NULL);
+	s2 = ft_substr(str, end, ft_strlen(str));
+	if (!s2)
+		return (free(s1), ft_error("sub 2"), NULL);
+	ft_printf("s1 ---> %s\n", s1);
+	ft_printf("s2 ---> %s\n", s2);
+	ft_printf("str ---> %s\n", str);
+	free(str);
+	str = NULL;
+	str = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (str);
+}
+
+char	*rm_quotes(char *input, int i)
+{
+	char	c;
+	char	*tmp;
+
+	c = input[i];
+	i = 0;
+	tmp = (char *)malloc(sizeof(char) * (ft_strlen(input) - 2 + 1));
+	if (!tmp)
+	return (NULL);
+	while (input[i])
+	{
+		if (input[i] != c)
+			tmp[i] = input[i];
+		i++;
+	}
+	tmp[i] = '\0';
+	return (tmp);
+}
 
 void	parse_input(t_shell **mshell, char *input)
 {
@@ -70,8 +121,9 @@ void	parse_input(t_shell **mshell, char *input)
 	q_state = 0;
 	while (input[i])
 	{
+		ft_printf("1| i = %d\n", i);
 		q_state = ft_check_quotes(input, &i);
-		printf("quote_state -> %d\n", q_state);
+		ft_printf("2| i = %d\n", i);
 		if (q_state == UNCLOSED)
 		{
 			ft_free_str(&input);
@@ -81,10 +133,21 @@ void	parse_input(t_shell **mshell, char *input)
 		}
 		if (q_state == EMPTY)
 		{
-			//input = rm_empty_quotes(&input, i - 1, i);
-			//i = 0;
+			input = rm_empty_quotes(input, i - 1, i);
+			if (!input)
+			return (ft_error("empty quotes"));
+			i = 0;
 			printf("remove_quotes\n");
 		}
+		if (q_state == CLOSED)
+		{
+			
+			ft_printf("CLOSED\n");
+			input = rm_quotes(input, i);
+			if (!input)
+			return (ft_error("Processing join"));
+		}
+		ft_printf("input -> %s\n", input);
 		i++;
 	}
 	//^ check_input ^ before split into struct
