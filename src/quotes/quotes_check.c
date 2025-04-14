@@ -3,28 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/14 04:41:19 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/14 21:36:41 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*ft_strcpy(char *dest, char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i])
-	{
-	    dest[i] = src[i];
-	    i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
 /*la función ft_check_quotes se llama dentro de un while , mientras el input exista.
 Por cada iteración (por cada carácter del input), comprobamos si la posición es una comilla.
 Si no es comilla devuelve NO_QUOTES;  si hay comilla, comprobamos en el resto del input
@@ -61,28 +48,18 @@ int	ft_check_quotes(char *input, int *i)
 de las comillas del input y las joinea. --> hola""adios --> holaadios || ""
 si no hay input anterior ni posterior? Devuelve un input vacio a la funcion parse y esta lo
 vuelve a procesar check_quotes() esta vez sin comillas.
-
-int start -> i - 1. primera comilla
-int end -> i. segunda comilla
-
-depende del funcionamiento de rm_empty_quotes,
-deberia ser : end_str1 = i - 1; start_str2 = i + 1;
 */
-
 char	*rm_empty_quotes(char *str, int start, int end)
 {
 	char	*s1;
 	char	*s2;
 
-	s1 = ft_substr(str, 0, start - 1);
+	s1 = ft_substr(str, 0, start);
 	if (!s1)
 		return (ft_error("sub 1"), NULL);
-	s2 = ft_substr(str, end, ft_strlen(str));
+	s2 = ft_substr(str, end + 1, ft_strlen(str));
 	if (!s2)
 		return (free(s1), ft_error("sub 2"), NULL);
-	ft_printf("s1 ---> %s\n", s1);
-	ft_printf("s2 ---> %s\n", s2);
-	ft_printf("str ---> %s\n", str);
 	free(str);
 	str = NULL;
 	str = ft_strjoin(s1, s2);
@@ -91,23 +68,35 @@ char	*rm_empty_quotes(char *str, int start, int end)
 	return (str);
 }
 
-char	*rm_quotes(char *input, int i)
+/*problema con la funcion rm_quotes
+"abc""def"  -> procesa las comillas en la misma llamada porque son del mismo tipo, lo que está mal.
+"abc"'def'  -> procesa las primeras comillas y devuelve mal el input
+
+cambiar logica de la función
+*/
+char	*rm_quotes(char **input, int i)
 {
 	char	c;
 	char	*tmp;
+	int		j;
+	int		end;
 
-	c = input[i];
+	c = (*input)[i];
+	end = i;
 	i = 0;
-	tmp = (char *)malloc(sizeof(char) * (ft_strlen(input) - 2 + 1));
+	j = 0;
+	tmp = (char *)malloc(sizeof(char) * (ft_strlen(*input) - 2 + 1));
 	if (!tmp)
-	return (NULL);
-	while (input[i])
+		return (NULL);
+	while ((*input)[i])
 	{
-		if (input[i] != c)
-			tmp[i] = input[i];
+		if ((*input)[i] != c)
+			tmp[j++] = (*input)[i];
 		i++;
 	}
-	tmp[i] = '\0';
+	tmp[j] = '\0';
+	free(*input);
+	*input = NULL;
 	return (tmp);
 }
 
@@ -136,17 +125,19 @@ void	parse_input(t_shell **mshell, char *input)
 			input = rm_empty_quotes(input, i - 1, i);
 			if (!input)
 			return (ft_error("empty quotes"));
-			i = 0;
-			printf("remove_quotes\n");
+			i = -1;
 		}
 		if (q_state == CLOSED)
 		{
 			
 			ft_printf("CLOSED\n");
-			input = rm_quotes(input, i);
+			input = rm_quotes(&input, i);
+			i = -1;
 			if (!input)
 			return (ft_error("Processing join"));
 		}
+		ft_printf("3| i = %d\n", i);
+		ft_printf("len -> %i\n", ft_strlen(input));
 		ft_printf("input -> %s\n", input);
 		i++;
 	}
