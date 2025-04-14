@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:40:57 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/14 02:16:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/14 20:59:42 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,6 +350,15 @@ int		ft_atoi(const char *str);
 	is >= dstsize, the output string has been truncated.
  */
 size_t	ft_strlcat(char *dest, const char *src, size_t dstsize);
+
+/**
+ * @brief Copy strings, and guarantee NUL-termination.
+ * 
+ * @param dest 
+ * @param src 
+ * @return (char *) Return the string it created.
+ */
+char	*ft_strcpy(char *dest, char *src);
 
 /**
  * @brief Copy strings. Function take the full size of the
