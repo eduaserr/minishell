@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/14 03:43:40 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/15 04:51:56 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_shell	*init_mshell(t_shell *mshell, char **envp);
 //////////////////////
 //	quotes_check	//
 //////////////////////
-int		ft_check_quotes(char *input, int *i);
+int		ft_check_quotes(char *input, int i);
 
 void	parse_input(t_shell **mshell, char *input);
 
@@ -93,6 +93,8 @@ void	ft_free_mshell(t_shell **mshell);
 //////////////////////
 //	utils			//
 //////////////////////
+int		get_quote(char *str);
+
 char	*rm_empty_quotes(char *str, int start, int end);
 
 char	*ft_getenv(t_env *env, char *var);

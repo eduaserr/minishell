@@ -6,11 +6,27 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/14 03:44:26 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/15 04:30:32 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int		get_quote(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'')
+			return ('\'');
+		if (str[i] == '\"')
+			return ('\"');
+		i++;
+	}
+	return (0);
+}
 
 char	*get_in_quotes(char *str, int start, int end)
 {
