@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/15 05:26:30 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/15 06:23:19 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,65 +44,6 @@ int	ft_check_quotes(char *input, int i)
 		return (NO_QUOTES);
 	return (CLOSED);
 }
-/* Esta función actúa cuando las comiilas estan vacias "". Recoge lo anterior y lo posterior
-de las comillas del input y las joinea. --> hola""adios --> holaadios || ""
-si no hay input anterior ni posterior? Devuelve un input vacio a la funcion parse y esta lo
-vuelve a procesar check_quotes() esta vez sin comillas.
-*/
-char	*rm_empty_quotes(char *str, int start, int end)
-{
-	char	*s1;
-	char	*s2;
-
-	s1 = ft_substr(str, 0, start);
-	if (!s1)
-		return (ft_error("sub 1"), NULL);
-	s2 = ft_substr(str, end + 1, ft_strlen(str));
-	if (!s2)
-		return (free(s1), ft_error("sub 2"), NULL);
-	free(str);
-	str = NULL;
-	str = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
-	return (str);
-}
-
-/*problema con la funcion rm_quotes
-"abc""def"  -> procesa las comillas en la misma llamada porque son del mismo tipo, lo que está mal.
-"abc"'def'  -> procesa las primeras comillas y devuelve mal el input
-
-cambiar logica de la función
-*/
-char	*rm_quotes(char **input, int i)
-{
-	char	c;
-	char	*tmp;
-	int		j;
-	int		q;
-
-	q = 0;
-	c = (*input)[i];
-	i = 0;
-	j = 0;
-	tmp = (char *)malloc(sizeof(char) * (ft_strlen(*input) - 2 + 1));
-	if (!tmp)
-		return (NULL);
-	while ((*input)[i])
-	{
-		if ((*input)[i] == c && q < 2)
-		{
-			q++;
-			i++;
-		}
-		tmp[j++] = (*input)[i];
-		i++;
-	}
-	tmp[j] = '\0';
-	free(*input);
-	*input = NULL;
-	return (tmp);
-}
 
 void	parse_input(t_shell **mshell, char *input)
 {
@@ -115,6 +56,11 @@ void	parse_input(t_shell **mshell, char *input)
 	while (input[i])
 	{
 		q_state = ft_check_quotes(input, i);
+		if (q_state == CLOSED && get_quote(input) == '\"')
+		{
+			ft_printf("CLOSED y \"\n");
+			//expand_var();
+		}
 		if (q_state == UNCLOSED)
 		{
 			ft_free_str(&input);
@@ -133,7 +79,7 @@ void	parse_input(t_shell **mshell, char *input)
 		{
 			input = rm_quotes(&input, i);
 			if (!input)
-			return (ft_error("Processing join"));
+				return (ft_error("Processing join"));
 			i = ft_istrchr(input, get_quote(input)) - 1;
 		}
 		i++;

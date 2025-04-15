@@ -6,50 +6,11 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/15 04:30:32 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/15 06:22:20 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int		get_quote(char *str)
-{
-	int		i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			return ('\'');
-		if (str[i] == '\"')
-			return ('\"');
-		i++;
-	}
-	return (0);
-}
-
-char	*get_in_quotes(char *str, int start, int end)
-{
-	char	*tmp;
-	int		i;
-	int		len;
-
-	i = 0;
-	len = end - start - 1;
-	if (start < 0)
-		return (NULL);
-	tmp = (char *)malloc(sizeof(char) * (len + 1));
-	if (!tmp)
-		return (NULL);
-	printf("trim quotes in : %s\n", str);
-	while (str[++start] && (--len) >= 0)
-	{
-		tmp[i] = str[start];
-		i++;
-	}
-	tmp[i] = '\0';
-	return (tmp);
-}
 
 //Creates strdup. You must indicate the key and it returns the corresponding value"
 char	*ft_getenv(t_env *env, char *var)

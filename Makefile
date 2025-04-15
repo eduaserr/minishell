@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+         #
+#    By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 15:47:17 by eduaserr          #+#    #+#              #
-#    Updated: 2025/04/08 18:25:54 by eduaserr         ###   ########.fr        #
+#    Updated: 2025/04/15 06:26:23 by eduaserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ UTLS	= src/utils
 SRC		= main.c
 
 SRCS	= $(INIT)/init_env.c $(INIT)/init.c\
-		src/quotes/quotes_check.c\
+		src/quotes/quotes_check.c src/quotes/quotes_utils.c\
 		$(SIG)/sig_init.c\
 		$(UTLS)/utils_error.c $(UTLS)/utils_free.c $(UTLS)/utils.c
 
