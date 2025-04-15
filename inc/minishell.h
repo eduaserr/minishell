@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/15 06:25:37 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:08:06 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ t_shell	*init_mshell(t_shell *mshell, char **envp);
 /*					QUOTES					*/
 /* **************************************** */
 //////////////////////
+//	quotes_expand	//
+//////////////////////
+char	*expand_var(t_shell **mshell, char **input, int i);
+
+//////////////////////
 //	quotes_check	//
 //////////////////////
 int		ft_check_quotes(char *input, int i);
@@ -73,6 +78,8 @@ void	parse_input(t_shell **mshell, char *input);
 int		get_quote(char *str);
 
 char	*rm_empty_quotes(char *str, int start, int end);
+
+char	*get_in_quotes(char *str, int start, int end);
 
 char	*rm_quotes(char **input, int i);
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+         #
+#    By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 15:47:17 by eduaserr          #+#    #+#              #
-#    Updated: 2025/04/15 06:26:23 by eduaserr         ###   ########.fr        #
+#    Updated: 2025/04/15 18:58:32 by eduaserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,11 @@ RM		= rm -f
 INIT	= src/init
 SIG		= src/signals
 UTLS	= src/utils
+QUOTES	= src/quotes
 SRC		= main.c
 
 SRCS	= $(INIT)/init_env.c $(INIT)/init.c\
-		src/quotes/quotes_check.c src/quotes/quotes_utils.c\
+		$(QUOTES)/quotes_expand.c $(QUOTES)/quotes_check.c $(QUOTES)/quotes_utils.c\
 		$(SIG)/sig_init.c\
 		$(UTLS)/utils_error.c $(UTLS)/utils_free.c $(UTLS)/utils.c
 

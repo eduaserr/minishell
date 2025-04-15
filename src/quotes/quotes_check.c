@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/15 06:23:19 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:07:31 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,24 @@ void	parse_input(t_shell **mshell, char *input)
 	q_state = 0;
 	while (input[i])
 	{
+		ft_printf("1| %d\n", i);
+		ft_printlines(input);
 		q_state = ft_check_quotes(input, i);
+		ft_printf("2| %d\n", i);
+		ft_printlines(input);
 		if (q_state == CLOSED && get_quote(input) == '\"')
 		{
-			ft_printf("CLOSED y \"\n");
-			//expand_var();
+			ft_printf("CLOSED y comillas\n");
+			ft_printf("2.1| %d\n", i);
+			input = expand_var(mshell, &input, i);
+			if (!input)
+				return (ft_error("expand var"));
+			ft_printf("2.2| %d\n", i);
+			ft_printf("%s\n", input);
 		}
 		if (q_state == UNCLOSED)
 		{
+			ft_printf("UNCLOSED\n");
 			ft_free_str(&input);
 			ft_error("Check_quotes");
 			//ft_free_mshell(mshell);
@@ -70,19 +80,31 @@ void	parse_input(t_shell **mshell, char *input)
 		}
 		if (q_state == EMPTY)
 		{
+			ft_printf("EMPTY\n");
+			ft_printf("3| %d\n", i);
+			ft_printlines(input);
 			input = rm_empty_quotes(input, i, i + 1);
 			if (!input)
-				return (ft_error("empty quotes"));
+			return (ft_error("empty quotes"));
 			i = ft_istrchr(input, get_quote(input)) - 1;
+			ft_printf("4| %d\n", i);
+			ft_printlines(input);
 		}
 		if (q_state == CLOSED)
 		{
+			ft_printf("CLOSED\n");
+			ft_printf("5| %d\n", i);
+			ft_printlines(input);
 			input = rm_quotes(&input, i);
 			if (!input)
 				return (ft_error("Processing join"));
 			i = ft_istrchr(input, get_quote(input)) - 1;
+			ft_printf("6| %d\n", i);
+			ft_printlines(input);
 		}
 		i++;
+		ft_printf("end| %d\n", i);
+		ft_printlines(input);
 	}
 	//^ check_input ^ before split into struct
 /* 	(*mshell)->user_input = ft_split_input(input);
