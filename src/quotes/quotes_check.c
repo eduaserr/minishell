@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/15 22:07:31 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/16 03:59:30 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	parse_input(t_shell **mshell, char *input)
 		q_state = ft_check_quotes(input, i);
 		ft_printf("2| %d\n", i);
 		ft_printlines(input);
-		if (q_state == CLOSED && get_quote(input) == '\"')
+	/*	if (q_state == CLOSED && get_quote(input) == '\"')
 		{
 			ft_printf("CLOSED y comillas\n");
 			ft_printf("2.1| %d\n", i);
@@ -69,7 +69,11 @@ void	parse_input(t_shell **mshell, char *input)
 				return (ft_error("expand var"));
 			ft_printf("2.2| %d\n", i);
 			ft_printf("%s\n", input);
-		}
+			i = ft_istrchr(input, get_quote(input)) - 1;
+			ft_printf("2.3| %d\n", i);
+			ft_printf("%s\n", input);
+			q_state = -4;
+		}*/
 		if (q_state == UNCLOSED)
 		{
 			ft_printf("UNCLOSED\n");
@@ -95,6 +99,16 @@ void	parse_input(t_shell **mshell, char *input)
 			ft_printf("CLOSED\n");
 			ft_printf("5| %d\n", i);
 			ft_printlines(input);
+			ft_printf("char en %c\n", input[i]);
+			if (input[i] == '\'')
+			{
+				rm_quotes();
+			}
+			else if (input[i] == '\"')
+			{
+				//input = expand_variables(input, i); // Implementa esta función
+                input = rm_quotes(&input, i);
+			}
 			input = rm_quotes(&input, i);
 			if (!input)
 				return (ft_error("Processing join"));
