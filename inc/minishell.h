@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/15 22:08:06 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/22 20:18:14 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,15 @@ int		get_quote(char *str);
 char	*rm_empty_quotes(char *str, int start, int end);
 
 char	*get_in_quotes(char *str, int start, int end);
-
+/**
+ * @brief This function processes the input string, removes the quotes (single or double),
+ * and returns a newly allocated string without the quotes. The original input
+ * string is freed during the process.
+ * 
+ * @param input Pointer to the string to process. The string is freed inside the function.
+ * @param i Index of the first quote in the string.
+ * @return (char *) A new string without quotes. The caller is responsible for freeing it.
+ */
 char	*rm_quotes(char **input, int i);
 
 char	*rm_empty_quotes(char *str, int start, int end);

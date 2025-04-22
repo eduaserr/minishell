@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/16 03:59:30 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/22 21:24:40 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,13 @@ void	parse_input(t_shell **mshell, char *input)
 			ft_printf("char en %c\n", input[i]);
 			if (input[i] == '\'')
 			{
-				rm_quotes();
+				rm_quotes(&input, i);
 			}
 			else if (input[i] == '\"')
 			{
-				//input = expand_variables(input, i); // Implementa esta función
+				input = expand_var(mshell, &input, i); // Implementa esta función
                 input = rm_quotes(&input, i);
 			}
-			input = rm_quotes(&input, i);
 			if (!input)
 				return (ft_error("Processing join"));
 			i = ft_istrchr(input, get_quote(input)) - 1;

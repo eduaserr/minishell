@@ -60,4 +60,7 @@ void print_env_list(t_env *lstenv)
 Recorre la lista y muestra todas las claves y valores (útil para depuración)
 
 ---------
+
+caracteres literales : (", $, \) (comilla doble, dollar y barra invertida).
+    caracteres que dentro de las comillas se interpretan literal .
 -->
