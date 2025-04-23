@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/09 18:01:49 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/23 21:01:26 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 {
 	mshell = (t_shell *)malloc(sizeof(t_shell));
 	if (!mshell)
-	return (NULL);
+		return (NULL);
 	mshell->env = ft_init_array(envp);
 	if (!mshell->env)
 		return (ft_free_mshell(&mshell), NULL);
