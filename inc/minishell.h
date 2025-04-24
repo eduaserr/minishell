@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/22 20:18:14 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/24 20:14:17 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ char	*expand_var(t_shell **mshell, char **input, int i);
 //////////////////////
 //	quotes_check	//
 //////////////////////
-int		ft_check_quotes(char *input, int i);
-
 void	parse_input(t_shell **mshell, char *input);
 
 //////////////////////

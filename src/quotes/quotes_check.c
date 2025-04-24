@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/23 22:11:11 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/24 20:14:54 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ significa que las comillas están vacias.*/
 // ej.: echo "hola'".	echo "a'b""c"
 //		hola'			a'bc
 
-int	ft_check_quotes(char *input, int i)
+int	quotes_status(char *input, int i)
 {
 	char	q_type;
 
@@ -48,12 +48,11 @@ int	ft_check_quotes(char *input, int i)
 		return (NO_QUOTES);
 	return (CLOSED);
 }
-
-void	parse_input(t_shell **mshell, char *input)
+void	check_quotes(t_shell **mshell, char *input)
 {
 	int	q_state;
 	int	i;
-
+	
 	(void)mshell;
 	i = 0;
 	q_state = 0;
@@ -61,7 +60,7 @@ void	parse_input(t_shell **mshell, char *input)
 	{
 		ft_printf("1| %d\n", i);
 		ft_printlines(input);
-		q_state = ft_check_quotes(input, i);
+		q_state = quotes_status(input, i);
 		ft_printf("2| %d\n", i);
 		ft_printlines(input);
 		if (q_state == UNCLOSED)
@@ -103,7 +102,7 @@ void	parse_input(t_shell **mshell, char *input)
 				input = expand_var(mshell, &input, i);
 			}
 			if (!input)
-				return (ft_error("Processing join"));
+			return (ft_error("Processing join"));
 			i = ft_istrchr(input, get_quote(input)) - 1;
 			ft_printf("6| %d\n", i);
 			ft_printlines(input);
@@ -113,8 +112,13 @@ void	parse_input(t_shell **mshell, char *input)
 		ft_printlines(input);
 	}
 	//^ check_input ^ before split into struct
-/* 	(*mshell)->user_input = ft_split_input(input);
+	/* 	(*mshell)->user_input = ft_split_input(input);
 	if (!(*mshell)->user_input)
-		return ;
+	return ;
 	ft_printmatrix((*mshell)->user_input); */
+}
+
+void	parse_input(t_shell **mshell, char *input)
+{
+	check_quotes(mshell, input);
 }

@@ -14,6 +14,21 @@
 
 <!--
 ---------
+
+- gestion de señales
+-INIT_MSHELL();
+-init_shell
+    init_env
+    init_lstenv
+    init_data
+-update_shell
+-update shlvl
+
+-READLINE
+
+
+
+-exit_status()
 Funciones necesarias para el tratamiento de los nodos:
 Creación de nodos:
 
@@ -63,4 +78,14 @@ Recorre la lista y muestra todas las claves y valores (útil para depuración)
 
 caracteres literales : (", $, \) (comilla doble, dollar y barra invertida).
     caracteres que dentro de las comillas se interpretan literal .
+
+
+
+
+
+Ambos comandos se interpretan igual por bash:
+    ls 'a'' 'a''
+> ls: cannot access 'a a': No such file or directory
+    ls 'a a'
+> ls: cannot access 'a a': No such file or directory
 -->

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 15:25:46 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/04/04 15:25:47 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:58:17 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_env
 
 typedef struct s_shell
 {
+	char				**env;
 	t_env				*env_list;
 	t_token				*tokens;
 	t_command			*commands;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/14 00:32:44 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/24 20:49:30 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*promp_input(t_shell *mshell)
 
 	input = NULL;
 	promp = NULL;
+	//getcwd();
 	promp = ft_getenv(mshell->lstenv, "USER");
 	promp = ft_strjoin_gnl(promp, "@mshell> ");
 	input = readline(promp);
