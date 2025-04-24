@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 18:35:08 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/23 22:10:42 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/24 04:27:20 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,16 @@ char	*is_var(char *str, t_env *env)
 	return (ft_getenv(env, str));// devuelve puntero a estructura. //strdup() ?
 }
 
+// if $USER se deberia comprobar en todo el input, no solo en el strign entre comillas. ?
 char	*expand_var(t_shell **mshell, char **input, int i)
 {
 	char	*tmp;
 	char	*value;
-	char	*sub;
 	int		end;
 
-	(void)sub;
 	(void)value;
 	(void)tmp;
 	end = i + 1;
-	sub = NULL;
 	tmp = NULL;
 	value = NULL;
 	while ((*input)[end] && (*input)[end] != '\"') // end = posicion de la segunda doble comilla
@@ -64,7 +62,12 @@ char	*expand_var(t_shell **mshell, char **input, int i)
 		return (NULL);
 	ft_printf("TMP\n");
 	ft_printlines(tmp);
-	value = is_var(tmp, (*mshell)->lstenv);
+	/*tmp "USER" || "hola USER"
+	antes de usar tmp, comprobar que :
+	- USER no contenga caracteres alfanumericos detrás (numero y letras).
+	ej.: "hola USER" || "hola USER, bienvenido"
+	*/
+	value = is_var(tmp, (*mshell)->lstenv); // si hay value porque devuelve NULL si no hya coincidencia despues del dollar $
 	ft_printf("value is -> %s\n", value);
 	if (!value)
 	{
