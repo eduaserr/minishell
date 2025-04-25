@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/15 18:44:15 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:52:46 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		get_quote(char *str)
 	}
 	return (0);
 }
+
 /*Start -> posición 1º comilla
 End -> posición 2º comilla*/
 char	*get_in_quotes(char *str, int start, int end)
@@ -96,8 +97,7 @@ char	*rm_quotes(char **input, int i)
 			q++;
 			i++;
 		}
-		tmp[j++] = (*input)[i];
-		i++;
+		tmp[j++] = (*input)[i++];
 	}
 	tmp[j] = '\0';
 	free(*input);

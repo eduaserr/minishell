@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/24 20:49:30 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:54:39 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,16 @@ char	*promp_input(t_shell *mshell)
 {
 	char	*promp;
 	char	*input;
+	char	*cwd;
 
+	cwd = NULL;
 	input = NULL;
 	promp = NULL;
-	//getcwd();
+//	cwd = getcwd(NULL, 0);
 	promp = ft_getenv(mshell->lstenv, "USER");
-	promp = ft_strjoin_gnl(promp, "@mshell> ");
+	promp = ft_strjoin_gnl(promp, "@mshell");
+//	promp = ft_strjoin_gnl(promp, cwd);
+	promp = ft_strjoin_gnl(promp, "$ ");
 	input = readline(promp);
 	ft_free_str(&promp);
 	if (!input)

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/24 20:14:54 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:28:03 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	check_quotes(t_shell **mshell, char *input)
 			ft_printlines(input);
 			input = rm_empty_quotes(input, i, i + 1);
 			if (!input)
-			return (ft_error("empty quotes"));
+				return (ft_error("empty quotes"));
 			i = ft_istrchr(input, get_quote(input)) - 1;
 			ft_printf("4| %d\n", i);
 			ft_printlines(input);
@@ -102,7 +102,7 @@ void	check_quotes(t_shell **mshell, char *input)
 				input = expand_var(mshell, &input, i);
 			}
 			if (!input)
-			return (ft_error("Processing join"));
+				return (ft_error("Processing join"));
 			i = ft_istrchr(input, get_quote(input)) - 1;
 			ft_printf("6| %d\n", i);
 			ft_printlines(input);
@@ -112,10 +112,11 @@ void	check_quotes(t_shell **mshell, char *input)
 		ft_printlines(input);
 	}
 	//^ check_input ^ before split into struct
-	/* 	(*mshell)->user_input = ft_split_input(input);
+	/*	(*mshell)->user_input = ft_split_input(input);
 	if (!(*mshell)->user_input)
-	return ;
+		return ;
 	ft_printmatrix((*mshell)->user_input); */
+	free(input);
 }
 
 void	parse_input(t_shell **mshell, char *input)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 18:35:08 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/24 04:27:20 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:48:33 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,14 @@ void	swp_value(char **input, char *value, int i, int end)
 
 char	*is_var(char *str, t_env *env)
 {
+	char	*value;
+
 	if (!str)
 		return (NULL);
-	if (!ft_getenv(env, str))
+	value = ft_getenv(env, str);
+	if (!value)
 		return (ft_error("no env key match"), NULL);
-	return (ft_getenv(env, str));// devuelve puntero a estructura. //strdup() ?
+	return (value);// devuelve puntero a estructura. //strdup() ?
 }
 
 // if $USER se deberia comprobar en todo el input, no solo en el strign entre comillas. ?
@@ -67,14 +70,16 @@ char	*expand_var(t_shell **mshell, char **input, int i)
 	- USER no contenga caracteres alfanumericos detrás (numero y letras).
 	ej.: "hola USER" || "hola USER, bienvenido"
 	*/
-	value = is_var(tmp, (*mshell)->lstenv); // si hay value porque devuelve NULL si no hya coincidencia despues del dollar $
+	value = is_var(tmp, (*mshell)->lstenv); // si hay value porque devuelve NULL si no hay coincidencia despues del dollar $
 	ft_printf("value is -> %s\n", value);
+	free(tmp);
 	if (!value)
 	{
 		*input = rm_quotes(input, i);
 		return (*input);
 	}
 	swp_value(input, value, i, end);
+	free(value);
 	ft_printf("posjoin input -> %s\n", *input);
 	return (*input);
 }

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/15 22:05:54 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:11:45 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**ft_init_array(char **array)
 	int		i;
 
 	i = 0;
-	if (!array)
+	if (!array || !*array)
 		return (NULL);
 	while (array && array[i])
 		i++;
