@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/25 17:28:03 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/30 20:25:12 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,78 +48,55 @@ int	quotes_status(char *input, int i)
 		return (NO_QUOTES);
 	return (CLOSED);
 }
-void	check_quotes(t_shell **mshell, char *input)
+
+void	check_quotes(char *input)
 {
 	int	q_state;
 	int	i;
 	
-	(void)mshell;
 	i = 0;
 	q_state = 0;
 	while (input[i])
 	{
-		ft_printf("1| %d\n", i);
-		ft_printlines(input);
+		printf("index -> %d\n", i);
+		printf("%s\n", input);
 		q_state = quotes_status(input, i);
-		ft_printf("2| %d\n", i);
-		ft_printlines(input);
 		if (q_state == UNCLOSED)
 		{
-			ft_printf("UNCLOSED\n");
-			ft_free_str(&input);
-			ft_error("Check_quotes");
+			//ft_free_str(&input);
 			//ft_free_mshell(mshell);
+			ft_error("Check_quotes");
 			return ;
 		}
 		if (q_state == EMPTY)
 		{
-			ft_printf("EMPTY\n");
-			ft_printf("3| %d\n", i);
-			ft_printlines(input);
 			input = rm_empty_quotes(input, i, i + 1);
 			if (!input)
 				return (ft_error("empty quotes"));
 			i = ft_istrchr(input, get_quote(input)) - 1;
-			ft_printf("4| %d\n", i);
-			ft_printlines(input);
 		}
 		if (q_state == CLOSED)
 		{
-			ft_printf("CLOSED\n");
-			ft_printf("5| %d\n", i);
-			ft_printlines(input);
-			ft_printf("char en %c\n", input[i]);
-			if (input[i] == '\'')
-			{
-				ft_printf("RM QUOTES\n");
-				ft_printf("pre input -> %s\n", input);
-				input = rm_quotes(&input, i);
-				ft_printf("pos input -> %s\n", input);
-			}
-			else if (input[i] == '\"')
-			{
-				ft_printf("EXPAND QT\n");
-				input = expand_var(mshell, &input, i);
-			}
+			input = rm_quotes(&input, i);
 			if (!input)
-				return (ft_error("Processing join"));
+				return (ft_error("closed quotes"));
 			i = ft_istrchr(input, get_quote(input)) - 1;
-			ft_printf("6| %d\n", i);
-			ft_printlines(input);
 		}
 		i++;
-		ft_printf("end| %d\n", i);
-		ft_printlines(input);
 	}
-	//^ check_input ^ before split into struct
-	/*	(*mshell)->user_input = ft_split_input(input);
-	if (!(*mshell)->user_input)
-		return ;
-	ft_printmatrix((*mshell)->user_input); */
+	
+	printf("last index -> %d\n", i);
+	printf("%s\n", input);
 	free(input);
 }
 
 void	parse_input(t_shell **mshell, char *input)
 {
-	check_quotes(mshell, input);
+	(void)mshell;
+	check_quotes(input);
+	//^ check_input ^ before split into struct
+	/*	(*mshell)->user_input = ft_split_input(input);
+	if (!(*mshell)->user_input)
+		return ;
+	ft_printmatrix((*mshell)->user_input); */
 }
