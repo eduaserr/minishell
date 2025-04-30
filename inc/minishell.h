@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/25 18:40:04 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/04/30 19:58:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,23 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <stdio.h>
+
+typedef enum e_token_type
+{
+	WORD,
+	DOUBLE,
+	SIMPLE,
+	REDIR,
+	PIPE,
+}	t_token_type;
+
+typedef enum e_redir_status
+{
+	REDIR_IN,		// <
+	REDIR_OUT,		// >
+	APPEND,			// >>
+	HEREDOC,		// <<
+}	t_redir_status;
 
 typedef enum e_quote_status
 {
