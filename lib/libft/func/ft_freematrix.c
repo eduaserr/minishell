@@ -6,22 +6,22 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:57:35 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/01 21:37:22 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:43:32 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-void	ft_freematrix(char **matrix)
+void	ft_freematrix(char ***matrix)
 {
 	int	i;
 
 	i = 0;
-	while (matrix && matrix[i])
+	while ((*matrix) && (*matrix)[i])
 	{
-		free(matrix[i]);
+		free((*matrix)[i]);
 		i++;
 	}
-	free(matrix);
-	matrix = NULL;
+	free(*matrix);
+	*matrix = NULL;
 }

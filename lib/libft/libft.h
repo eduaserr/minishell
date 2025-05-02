@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:40:57 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/14 20:59:42 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:45:17 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -482,7 +482,7 @@ char	**ft_arrdup(char **arr);
  * @brief frees any 2D array matrix allocated.
  * @param matrix 2D matrix array.
  */
-void	ft_freematrix(char **matrix);
+void	ft_freematrix(char ***matrix);
 
 /* FT_PRINTF FOLDER */
 
