@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/02 20:57:36 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/02 21:09:21 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ char	*check_quotes(char *input)
 	}
 	return (input);
 }
+//comprobar si debe devolver NULL en cada caso.
 
 void	parse_input(t_shell **mshell, char *input)
 {
