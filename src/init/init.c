@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/29 13:16:59 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:06:58 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 	mshell->lstenv = init_env(mshell->lstenv, mshell->env);
 	if (!mshell->lstenv)
 		return (ft_free_mshell(&mshell), NULL);
+	mshell->input = NULL;
 	mshell->user_input = NULL;
 	return (mshell);
 }

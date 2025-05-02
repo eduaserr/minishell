@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:28:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/01 17:56:57 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:46:23 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	ft_free_mshell(t_shell **mshell)
 	if ((*mshell)->lstenv)
 		ft_free_env(&(*mshell)->lstenv);
 	if ((*mshell)->user_input)
-		ft_freematrix((*mshell)->user_input);
+		ft_freematrix(&(*mshell)->user_input);
 	if ((*mshell)->env)
-		ft_freematrix((*mshell)->env);
+		ft_freematrix(&(*mshell)->env);
 	free(*mshell);
 	*mshell = NULL;
 }

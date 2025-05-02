@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/25 17:54:39 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:31:58 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ char	**ft_split_input(char *str)
 {
 	char	**input;
 
+	if (!str)
+		return (NULL);
 	input = ft_split(str, ' ');
-	if (!input || !*input)
+	if (!input || !(*input))
 		return (NULL);
 	return (input);
 }
@@ -66,7 +68,6 @@ int	main(int argc, char **argv, char **envp)
 			parse_input(&mshell, ft_strdup(input));
 		//ft_printlines(input);
 		free(input);
-		//ft_freematrix(mshell->user_input);
 	}
 	//ft_free_mshell(&mshell);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/25 18:11:45 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:47:23 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ t_env	*split_env(t_env *new, char *env)
 		return (ft_error("split"), NULL);
 	new->key = ft_strdup(arr[0]);
 	if (!new->key)
-		return (ft_freematrix(arr), NULL);
+		return (ft_freematrix(&arr), NULL);
 	if (!arr[1])
 		new->value = ft_strdup("");
 	else
-		new->value = ft_strdup(arr[1]);
+		new->value = ft_strdup(getenv(arr[0]));
 	if (!new->value)
-		return (ft_freematrix(arr), NULL);
-	return (ft_freematrix(arr), new);
+		return (ft_freematrix(&arr), NULL);
+	return (ft_freematrix(&arr), new);
 }
 
 char	**ft_init_array(char **array)
@@ -65,7 +65,7 @@ char	**ft_init_array(char **array)
 		tmp[i] = ft_strdup(array[i]);
 		if (!tmp[i])
 		{
-			ft_freematrix(tmp);
+			ft_freematrix(&tmp);
 			return (NULL);
 		}
 		i++;

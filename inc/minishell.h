@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/30 19:58:57 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/02 20:00:07 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_command
 
 typedef struct s_shell
 {
+	char				*input;
 	char				**user_input;
 	char				**env;
 	t_env				*lstenv;
@@ -90,6 +91,11 @@ typedef struct s_shell
 //////////////////////
 //	init_env		//
 //////////////////////
+/**
+ * @brief creates env variables struct. Asing the correspondign key and value.
+ * If there is no value, ft_strdup("");
+ * @return (t_env) returns new node.
+ */
 t_env	*create_env(char *env);
 
 void	addlast_node(t_env **lstenv, t_env *node);
@@ -117,20 +123,28 @@ void	parse_input(t_shell **mshell, char *input);
 //////////////////////
 int		get_quote(char *str);
 
-char	*rm_empty_quotes(char *str, int start, int end);
-
 char	*get_in_quotes(char *str, int start, int end);
+
 /**
  * @brief This function processes the input string, removes the quotes (single or double),
  * and returns a newly allocated string without the quotes. The original input
  * string is freed during the process.
  * 
- * @param input Pointer to the string to process. The string is freed inside the function.
+ * @param input Pointer to the string to process.
  * @param i Index of the first quote in the string.
  * @return (char *) A new string without quotes. The caller is responsible for freeing it.
  */
 char	*rm_quotes(char **input, int i);
 
+/**
+ * @brief This function processes the input string, removes the empty quotes (single or double),
+ * and returns a newly allocated string without them.
+ * 
+ * @param input Pointer to the string to process. The string is freed inside the function.
+ * @param start The index of the first quote.
+ * @param end The index of the final quote.
+ * @return (char *) A new string without quotes. The caller is responsible for freeing it.
+ */
 char	*rm_empty_quotes(char *str, int start, int end);
 
 /* **************************************** */
@@ -159,6 +173,13 @@ void	ft_free_mshell(t_shell **mshell);
 //////////////////////
 //	utils			//
 //////////////////////
+/**
+ * @brief You must indicate the key and it returns the corresponding value.
+ * 
+ * @param env content data.
+ * @param var variable for being search.
+ * @return (char *) A new dup string. The caller is responsible for freeing it.
+ */
 char	*ft_getenv(t_env *env, char *var);
 
 t_env	*split_env(t_env *new, char *env);
