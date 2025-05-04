@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/02 21:09:21 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/04 03:05:54 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,69 @@ significa que las comillas están vacias.*/
 // ej.: echo "hola'".	echo "a'b""c"
 //		hola'			a'bc
 
-/* void	get_command(char *input, )
+
+
+
+/* 
+*/
+
+t_command	*create_cmd(char **sub)
+{
+	t_command	*new;
+
+	new->args = ft_arrdup(sub); //meterlos 1 a 1? o tras procesar el input
+	if (!new)
+		return (NULL);
+	new->redirs = NULL;
+	new->next = NULL;
+	return (new);
+}
+
+t_command	*ft_nodecmd(t_command *cmd, char *input, int pipe)
+{
+	char	*sub;
+	char	**arrsub;
+
+	arrsub = NULL;
+	sub = NULL;
+	cmd = NULL;
+
+	cmd = (t_command *)malloc(sizeof(t_command));
+	if (!cmd)
+		return (NULL);
+	sub = ft_substr(input, 0, pipe);
+	if (!sub)
+		return (NULL);
+
+	//check_quotes , check_redir
+	//sub = check_quotes(sub); // esta funcion podria continuarse ddesde el main?
+	//if (!sub)
+	//	return (NULL);
+	//cmd = create_cmd(sub);
+	//if (!cmd)
+	//	return (NULL);
+	//addlast_node(&cmd); //hacer funcion con t_cmd
+	return (cmd);
+}
+
+/*funcion para meter 1 comando en arg por cada vez que hay pipe o nulo.
+mete lo anterior del input hasta que acaba el bucle*/
+void	get_command(t_command *cmd, char *input)
 {
 	int	i;
 
 	i = 0;
 	while (input[i])
 	{
-		if ()
+		if (input[i] == '|' || input[i] == '\0')
+		{
+			cmd = ft_nodecmd(cmd, input, i); // hay que guardar cada palabra por separado !!! split !!!!1
+			if (!cmd)
+				return (ft_error(0));
+		}
+		i++;
 	}
-} */
+}
 
 int	quotes_status(char *input, int *i)
 {
@@ -97,7 +150,7 @@ char	*check_quotes(char *input)
 
 void	parse_input(t_shell **mshell, char *input)
 {
-	//get_command();
+	get_command((*mshell)->commands, input);
 	(*mshell)->input = check_quotes(input);
 	if (!(*mshell)->input)
 		return (free(input));
