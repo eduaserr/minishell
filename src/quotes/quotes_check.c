@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/04 03:05:54 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:07:50 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_command	*create_cmd(char **sub)
 {
 	t_command	*new;
 
+	new = NULL;
 	new->args = ft_arrdup(sub); //meterlos 1 a 1? o tras procesar el input
 	if (!new)
 		return (NULL);
@@ -48,20 +49,23 @@ t_command	*create_cmd(char **sub)
 
 t_command	*ft_nodecmd(t_command *cmd, char *input, int pipe)
 {
+	t_command	*new;
 	char	*sub;
 	char	**arrsub;
 
 	arrsub = NULL;
 	sub = NULL;
+	new = NULL;
 	cmd = NULL;
 
-	cmd = (t_command *)malloc(sizeof(t_command));
-	if (!cmd)
+	new = (t_command *)malloc(sizeof(t_command));
+	if (!new)
 		return (NULL);
 	sub = ft_substr(input, 0, pipe);
 	if (!sub)
 		return (NULL);
-
+	cmd->cmd = sub;
+	addlastcmd_node(&cmd, new); // cmd = NULL , new
 	//check_quotes , check_redir
 	//sub = check_quotes(sub); // esta funcion podria continuarse ddesde el main?
 	//if (!sub)
@@ -69,7 +73,6 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int pipe)
 	//cmd = create_cmd(sub);
 	//if (!cmd)
 	//	return (NULL);
-	//addlast_node(&cmd); //hacer funcion con t_cmd
 	return (cmd);
 }
 
@@ -77,16 +80,20 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int pipe)
 mete lo anterior del input hasta que acaba el bucle*/
 void	get_command(t_command *cmd, char *input)
 {
-	int	i;
+	int		is_pipe;
+	int		i;
 
+	is_pipe = 0;
 	i = 0;
 	while (input[i])
 	{
 		if (input[i] == '|' || input[i] == '\0')
 		{
-			cmd = ft_nodecmd(cmd, input, i); // hay que guardar cada palabra por separado !!! split !!!!1
+			if (input[i] == '|')
+				is_pipe = 1; 					// que hacer con la pipe
+			cmd = ft_nodecmd(cmd, input, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
 			if (!cmd)
-				return (ft_error(0));
+				return (ft_error("Parse command"));
 		}
 		i++;
 	}
@@ -150,18 +157,19 @@ char	*check_quotes(char *input)
 
 void	parse_input(t_shell **mshell, char *input)
 {
+	(*mshell)->user_input = input;
 	get_command((*mshell)->commands, input);
-	(*mshell)->input = check_quotes(input);
-	if (!(*mshell)->input)
+	(*mshell)->p_input = check_quotes(input);
+	if (!(*mshell)->p_input)
 		return (free(input));
 	//^ check_input ^ before split into struct
-	(*mshell)->user_input = ft_split_input((*mshell)->input);
-	if (!(*mshell)->user_input)
+	(*mshell)->commands->args = ft_split_input((*mshell)->p_input);
+	if (!(*mshell)->commands->args)
 		return (free(input));
-	if ((*mshell)->user_input)
+	if ((*mshell)->commands->args)
 	{
-		ft_printmatrix((*mshell)->user_input);
-		ft_freematrix(&(*mshell)->user_input);
+		ft_printmatrix((*mshell)->commands->args);
+		ft_freematrix(&(*mshell)->commands->args);
 	}
 	input = ft_free_str(&input);
 }

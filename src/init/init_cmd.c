@@ -1,54 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env.c                                         :+:      :+:    :+:   */
+/*   init_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/27 23:17:36 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/05 17:27:27 by eduaserr         ###   ########.fr       */
+/*   Created: 2025/05/05 17:25:52 by eduaserr          #+#    #+#             */
+/*   Updated: 2025/05/05 18:07:04 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_env	*create_env(char *env)
-{
-	t_env	*new;
-
-	new = (t_env *)malloc(sizeof(t_env));
-	if (!new)
-		return (NULL);
-	new->key = NULL;
-	new->value = NULL;
-	new = split_env(new, env);
-	if (!new)
-		return (NULL);
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
-}
-
-static t_env	*get_last_node(t_env *node)
+static t_command	*get_lastcmd_node(t_command *node)
 {
 	while (node->next)
 		node = node->next;
 	return (node);
 }
 
-void	addlast_node(t_env **lstenv, t_env *node)
+void	addlastcmd_node(t_command **lstcmd, t_command *node)
 {
-	t_env	*last;
+	t_command	*last;
 
 	last = NULL;
-	if (!lstenv || !node)
+	if (!lstcmd || !node)
 		return ;
-	if (!*lstenv)
-		*lstenv = node;
+	if (!*lstcmd)
+		*lstcmd = node;
 	else
 	{
-		last = get_last_node(*lstenv);
+		last = get_lastcmd_node(*lstcmd);
 		last->next = node;
-		node->prev = last;
 	}
 }

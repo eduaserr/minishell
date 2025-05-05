@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/02 20:00:07 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:42:10 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef enum e_token_type
 
 typedef enum e_redir_status
 {
+	//PIPE			// cuenta '|' como redirección?
 	REDIR_IN,		// <
 	REDIR_OUT,		// >
 	APPEND,			// >>
@@ -68,26 +69,29 @@ typedef struct s_redir
 
 typedef struct s_command
 {
-	char				**args;
-	t_redir				*redirs;
+	char				*cmd;				//comando a procesar
+	char				**args;				//argumentos de un mismo cmd por separado
+	t_redir				*redirs;			//redirs en el input
 	struct s_command	*next;
 }						t_command;
 
 typedef struct s_shell
 {
-	char				*input;
-	char				**user_input;
-	char				**env;
-	t_env				*lstenv;
+	char				*p_input;			//processed input
+	char				*user_input;		//input orriginal del usuario
+	char				**env;				//doble array de envp del sistema
+	t_env				*lstenv;			//lista de las env
 	t_token				*tokens;
-	t_command			*commands;
-	int					exit_status;
-	int					running;
+	t_command			*commands;			//lista de comandos y args
+	int					exit_status;		//estado de la proxima salida del programa
+	int					running;			//estado actual del programa
 }						t_shell;
 
 /* **************************************** */
 /*					INIT					*/
 /* **************************************** */
+void	addlastcmd_node(t_command **lstcmd, t_command *node);
+
 //////////////////////
 //	init_env		//
 //////////////////////
