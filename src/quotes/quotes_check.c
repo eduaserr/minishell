@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/05 18:07:50 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:37:28 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,12 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int pipe)
 		return (NULL);
 	cmd->cmd = sub;
 	addlastcmd_node(&cmd, new); // cmd = NULL , new
-	//check_quotes , check_redir
-	//sub = check_quotes(sub); // esta funcion podria continuarse ddesde el main?
-	//if (!sub)
-	//	return (NULL);
-	//cmd = create_cmd(sub);
+	//create_args();
+		//check_quotes , check_redir
+		//sub = check_quotes(sub); // esta funcion podria continuarse ddesde el main?
+		//if (!sub)
+		//	return (NULL);
+	//cmd = create_redir(sub); // if (redir)
 	//if (!cmd)
 	//	return (NULL);
 	return (cmd);
