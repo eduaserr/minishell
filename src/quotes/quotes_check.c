@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/14 21:16:33 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/14 21:59:40 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,6 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int pipe)
 	if (!sub)
 		return (NULL);
 	cmd->cmd = sub;
-	ft_printf("LLEGA 1\n");
-	cmd->args = ft_split_input(ft_strdup(sub));
-	if (!cmd->args)
-		return (ft_free_str(&sub), NULL); // este free realmente se debe hacer en free_mshell liberando cmd_args.
 	addlastcmd_node(&cmd, new); // cmd = NULL , new
 	//create_args();
 		//check_quotes , check_redir
@@ -92,11 +88,11 @@ t_command	*get_command(t_command *cmd, char *input)
 	i = 0;
 	while (input[i])
 	{
+		ft_printf("LLEGA \n");
 		if (input[i] == '|' || input[i] == '\0')
 		{
 			if (input[i] == '|')
 				is_pipe = 1;					// que hacer con la pipe
-			ft_printf("LLEGA \n");
 			cmd = ft_nodecmd(cmd, input, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
 			if (!cmd)
 				return (ft_error("Parse command"), NULL);
