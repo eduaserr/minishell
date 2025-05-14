@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/07 20:37:28 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/14 21:16:33 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int pipe)
 	if (!sub)
 		return (NULL);
 	cmd->cmd = sub;
+	ft_printf("LLEGA 1\n");
+	cmd->args = ft_split_input(ft_strdup(sub));
+	if (!cmd->args)
+		return (ft_free_str(&sub), NULL); // este free realmente se debe hacer en free_mshell liberando cmd_args.
 	addlastcmd_node(&cmd, new); // cmd = NULL , new
 	//create_args();
 		//check_quotes , check_redir
@@ -79,7 +83,7 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int pipe)
 
 /*funcion para meter 1 comando en arg por cada vez que hay pipe o nulo.
 mete lo anterior del input hasta que acaba el bucle*/
-void	get_command(t_command *cmd, char *input)
+t_command	*get_command(t_command *cmd, char *input)
 {
 	int		is_pipe;
 	int		i;
@@ -91,13 +95,15 @@ void	get_command(t_command *cmd, char *input)
 		if (input[i] == '|' || input[i] == '\0')
 		{
 			if (input[i] == '|')
-				is_pipe = 1; 					// que hacer con la pipe
+				is_pipe = 1;					// que hacer con la pipe
+			ft_printf("LLEGA \n");
 			cmd = ft_nodecmd(cmd, input, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
 			if (!cmd)
-				return (ft_error("Parse command"));
+				return (ft_error("Parse command"), NULL);
 		}
 		i++;
 	}
+	return (cmd);
 }
 
 int	quotes_status(char *input, int *i)
@@ -155,18 +161,20 @@ char	*check_quotes(char *input)
 	return (input);
 }
 //comprobar si debe devolver NULL en cada caso.
-
+//input no cambia fuera de la funcion
 void	parse_input(t_shell **mshell, char *input)
 {
 	(*mshell)->user_input = input;
-	get_command((*mshell)->commands, input);
-	(*mshell)->p_input = check_quotes(input);
-	if (!(*mshell)->p_input)
-		return (free(input));
+	(*mshell)->commands = get_command((*mshell)->commands, input);
+	if (!(*mshell)->commands)
+		return (ft_free_mshell(mshell));
+	//(*mshell)->p_input = check_quotes(input);
+	//if (!(*mshell)->p_input)
+	//	return ;
 	//^ check_input ^ before split into struct
-	(*mshell)->commands->args = ft_split_input((*mshell)->p_input);
-	if (!(*mshell)->commands->args)
-		return (free(input));
+	//(*mshell)->commands->args = ft_split_input((*mshell)->p_input);
+	//if (!(*mshell)->commands->args)
+	//	return ;
 	if ((*mshell)->commands->args)
 	{
 		ft_printmatrix((*mshell)->commands->args);

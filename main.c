@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/03 05:04:59 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/14 21:12:19 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@ char	**ft_split_input(char *str)
 
 	if (!str)
 		return (NULL);
+	ft_printf("LLEGA 2\n");
+	str = check_quotes(str);
+	if (!str)
+		return (NULL);
 	input = ft_split(str, ' ');
+	str = ft_free_str(&str);
 	if (!input || !(*input))
 		return (NULL);
 	return (input);
@@ -40,7 +45,7 @@ char	*promp_input(t_shell *mshell)
 //	promp = ft_strjoin_gnl(promp, cwd);
 	promp = ft_strjoin_gnl(promp, "$ ");
 	input = readline(promp);
-	ft_free_str(&promp);
+	promp = ft_free_str(&promp);
 	if (!input)
 		return (NULL);
 	if (input && input[0] != '\0')
@@ -60,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	mshell = init_mshell(mshell, envp);
 	if (!mshell)
 		return (ft_error("init minishell"), 0);
-	while (1)
+	while (mshell->running)
 	{
 		input = promp_input(mshell); //Ctrl + D signal se maneja con readline EOF
 		if (!input)

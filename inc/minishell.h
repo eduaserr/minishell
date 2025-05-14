@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/05 17:42:10 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/14 20:27:21 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ char	*expand_var(t_shell **mshell, char **input, int i);
 //////////////////////
 //	quotes_check	//
 //////////////////////
+char	*check_quotes(char *input);
+
 void	parse_input(t_shell **mshell, char *input);
 
 //////////////////////
