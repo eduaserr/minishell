@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/14 21:59:40 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:43:33 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int pipe)
 
 	arrsub = NULL;
 	sub = NULL;
-	new = NULL;
-	cmd = NULL;
 
 	new = (t_command *)malloc(sizeof(t_command));
 	if (!new)
@@ -64,7 +62,7 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int pipe)
 	sub = ft_substr(input, 0, pipe);
 	if (!sub)
 		return (NULL);
-	cmd->cmd = sub;
+	new->cmd = sub;
 	addlastcmd_node(&cmd, new); // cmd = NULL , new
 	//create_args();
 		//check_quotes , check_redir
@@ -88,7 +86,6 @@ t_command	*get_command(t_command *cmd, char *input)
 	i = 0;
 	while (input[i])
 	{
-		ft_printf("LLEGA \n");
 		if (input[i] == '|' || input[i] == '\0')
 		{
 			if (input[i] == '|')
@@ -179,3 +176,17 @@ void	parse_input(t_shell **mshell, char *input)
 	input = ft_free_str(&input);
 }
 //sobran free();
+
+
+
+/* CONTINUAR A PARTIR DE AQUI. PREGUNTAR A COPILOT SONNET
+	Ayudame desde la función parse_input.
+
+la función 163. get_command(), recibe un t_command *(mshell)->commands. quiero crear un nodo por cada vez que encuentro pipe o nulo en el input. entro en ft_nodecmd() recibiendo un cmd aun sin incializar.
+
+En ft_nodecmd ya le asigno a cmd = NULL. puede que aqui esto no sea correcto ya que cmd = NULL; y luego asigno cmd->cmd = sub; y esto no existe (linea 67).
+
+addlastcmd_node que no debería dar fallo.
+
+Revisa la lógica del código y que es lo que puede estar fallando.
+*/
