@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/14 20:27:21 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/21 18:29:28 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void	ft_error(char *str);
 //////////////////////
 void	ft_free_mshell(t_shell **mshell);
 
+void	ft_free_cmd(t_command **cmd);
 //////////////////////
 //	utils			//
 //////////////////////
@@ -193,6 +194,8 @@ t_env	*split_env(t_env *new, char *env);
 char	**ft_init_array(char **array);
 
 void	ft_printenv(t_env *lstenv);
+
+void	ft_printcmd(t_command *cmd);
 
 char	**ft_split_input(char *str);
 

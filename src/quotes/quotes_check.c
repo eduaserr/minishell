@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/16 13:43:33 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/21 20:48:03 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,49 +29,24 @@ significa que las comillas están vacias.*/
 //		hola'			a'bc
 
 
-
-
-/* 
-*/
-
-t_command	*create_cmd(char **sub)
-{
-	t_command	*new;
-
-	new = NULL;
-	new->args = ft_arrdup(sub); //meterlos 1 a 1? o tras procesar el input
-	if (!new)
-		return (NULL);
-	new->redirs = NULL;
-	new->next = NULL;
-	return (new);
-}
-
-t_command	*ft_nodecmd(t_command *cmd, char *input, int pipe)
+t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 {
 	t_command	*new;
 	char	*sub;
-	char	**arrsub;
 
-	arrsub = NULL;
 	sub = NULL;
-
 	new = (t_command *)malloc(sizeof(t_command));
 	if (!new)
 		return (NULL);
-	sub = ft_substr(input, 0, pipe);
+	new->args = NULL;
+	new->cmd = NULL;
+	new->redirs = NULL;
+	new->next = NULL;
+	sub = ft_substr(input, start, pipe - start);
 	if (!sub)
-		return (NULL);
+		return (free(new), NULL);
 	new->cmd = sub;
-	addlastcmd_node(&cmd, new); // cmd = NULL , new
-	//create_args();
-		//check_quotes , check_redir
-		//sub = check_quotes(sub); // esta funcion podria continuarse ddesde el main?
-		//if (!sub)
-		//	return (NULL);
-	//cmd = create_redir(sub); // if (redir)
-	//if (!cmd)
-	//	return (NULL);
+	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
 
@@ -86,15 +61,20 @@ t_command	*get_command(t_command *cmd, char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '|' || input[i] == '\0')
+		if (input[i] == '|')
 		{
-			if (input[i] == '|')
-				is_pipe = 1;					// que hacer con la pipe
-			cmd = ft_nodecmd(cmd, input, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
+			cmd = ft_nodecmd(cmd, input, is_pipe, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
 			if (!cmd)
-				return (ft_error("Parse command"), NULL);
+			return (ft_error("Parse command"), NULL);
+			is_pipe = i;					// que hacer con la pipe
 		}
 		i++;
+	}
+	if (input[i] == '\0')
+	{
+		cmd = ft_nodecmd(cmd, input, is_pipe, i);
+			if (!cmd)
+				return (ft_error("Parse command"), NULL);
 	}
 	return (cmd);
 }
@@ -133,7 +113,6 @@ char	*check_quotes(char *input)
 		if (q_state == UNCLOSED)
 		{
 			input = ft_free_str(&input);
-			//ft_free_mshell(mshell);
 			return (ft_error("Check_quotes"), NULL);
 		}
 		if (q_state == EMPTY)
@@ -141,14 +120,15 @@ char	*check_quotes(char *input)
 			input = rm_empty_quotes(input, i - 1, i);
 			if (!input)
 				return (ft_error("empty quotes"), NULL);
+			i = i - 2;
 		}
-		if (q_state == CLOSED)
+/*		if (q_state == CLOSED)
 		{
 			input = rm_quotes(&input, i);
 			if (!input)
 				return (ft_error("closed quotes"), NULL);
 			i = i - 2;
-		}
+		} */
 		i++;
 	}
 	return (input);
@@ -160,33 +140,15 @@ void	parse_input(t_shell **mshell, char *input)
 	(*mshell)->user_input = input;
 	(*mshell)->commands = get_command((*mshell)->commands, input);
 	if (!(*mshell)->commands)
-		return (ft_free_mshell(mshell));
-	//(*mshell)->p_input = check_quotes(input);
-	//if (!(*mshell)->p_input)
-	//	return ;
+		return (ft_error("get command"));
+	(*mshell)->p_input = check_quotes(input);
+	if (!(*mshell)->p_input)
+		return (ft_error("check quotes"));
 	//^ check_input ^ before split into struct
-	//(*mshell)->commands->args = ft_split_input((*mshell)->p_input);
-	//if (!(*mshell)->commands->args)
-	//	return ;
-	if ((*mshell)->commands->args)
-	{
-		ft_printmatrix((*mshell)->commands->args);
-		ft_freematrix(&(*mshell)->commands->args);
-	}
+	(*mshell)->commands->args = ft_split_input((*mshell)->p_input);
+	if (!(*mshell)->commands->args)
+		return (ft_error("split input")); //free(p_input);
+	// fallo en split, cuando no hay argumentos para split ?
+	// mshell> "";
 	input = ft_free_str(&input);
 }
-//sobran free();
-
-
-
-/* CONTINUAR A PARTIR DE AQUI. PREGUNTAR A COPILOT SONNET
-	Ayudame desde la función parse_input.
-
-la función 163. get_command(), recibe un t_command *(mshell)->commands. quiero crear un nodo por cada vez que encuentro pipe o nulo en el input. entro en ft_nodecmd() recibiendo un cmd aun sin incializar.
-
-En ft_nodecmd ya le asigno a cmd = NULL. puede que aqui esto no sea correcto ya que cmd = NULL; y luego asigno cmd->cmd = sub; y esto no existe (linea 67).
-
-addlastcmd_node que no debería dar fallo.
-
-Revisa la lógica del código y que es lo que puede estar fallando.
-*/

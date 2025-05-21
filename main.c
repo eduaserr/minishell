@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/14 21:12:19 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/21 20:44:52 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,9 @@ char	**ft_split_input(char *str)
 
 	if (!str)
 		return (NULL);
-	ft_printf("LLEGA 2\n");
-	str = check_quotes(str);
-	if (!str)
-		return (NULL);
 	input = ft_split(str, ' ');
-	str = ft_free_str(&str);
 	if (!input || !(*input))
-		return (NULL);
+		return (ft_error("split error"), NULL);
 	return (input);
 }
 
@@ -72,10 +67,14 @@ int	main(int argc, char **argv, char **envp)
 			ft_exit(&mshell);
 		if (input[0] != '\0') // Si no es ENTER
 			parse_input(&mshell, ft_strdup(input));
-		//ft_printlines(input);
+		ft_printf("main input -> %s\n", input);
 		free(input);
+		input = NULL;
+		ft_printcmd(mshell->commands);
+		ft_free_cmd(&mshell->commands);
+		//update_shell();
+		//updateshlvl();
 	}
-	//ft_free_mshell(&mshell);
 	return (0);
 }
 

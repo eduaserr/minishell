@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/02 20:47:23 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/21 17:41:18 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,19 @@ char	**ft_init_array(char **array)
 	}
 	tmp[i] = NULL;
 	return (tmp);
+}
+void	ft_printcmd(t_command *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd)
+	{
+		ft_printf("node %d\ncommand - %s\n", i++, cmd->cmd);
+		ft_printmatrix(cmd->args);
+		//ft_printredir();
+		cmd = cmd->next;
+	}
 }
 
 void	ft_printenv(t_env *lstenv)
