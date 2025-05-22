@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 04:24:56 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/22 04:26:55 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/22 05:28:36 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,3 +87,53 @@ char	*ft_rm_db_spaces(char **str)
 	ft_free_str(str);
 	return (tmp);
 }
+
+/*char	*ft_rm_db_spaces(char **str)
+{
+    char	*tmp;
+    int		i;
+    int		j;
+    int		wrote_char;
+
+    if (!str || !*str)
+        return (NULL);
+	i = 0;
+    j = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			j++;
+		i++;
+	}
+	i = i - j;
+    tmp = (char *)malloc(sizeof(char) * (i + 1));
+    if (!tmp)
+        return (NULL);
+
+    wrote_char = 0;
+    // Saltar espacios iniciales
+    while ((*str)[i] && ft_isspace((*str)[i]))
+        i++;
+    while ((*str)[i])
+    {
+        if (!ft_isspace((*str)[i]))
+        {
+            tmp[j++] = (*str)[i];
+            wrote_char = 1;
+        }
+        else if (wrote_char)
+        {
+            // Saltar todos los espacios consecutivos
+            while ((*str)[i] && ft_isspace((*str)[i]))
+                i++;
+            // Si no es el final, añade un solo espacio
+            if ((*str)[i])
+                tmp[j++] = ' ';
+            i--; // Para compensar el incremento extra del bucle principal
+        }
+        i++;
+    }
+    tmp[j] = '\0';
+    ft_free_str(str);
+    return (tmp);
+}*/
