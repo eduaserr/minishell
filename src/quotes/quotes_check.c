@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/21 20:48:03 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/22 05:01:02 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,27 @@ significa que las comillas están vacias.*/
 // ej.: echo "hola'".	echo "a'b""c"
 //		hola'			a'bc
 
+char	*parse_cmd(char *input, int start, int pipe)
+{
+	char	*sub;
+	char	*tmp;
+
+	tmp = NULL;
+	sub = NULL;
+	sub = ft_substr(input, start, pipe - start);
+	if (!sub)
+		return (NULL);
+	tmp = ft_strtrim(sub, " \t\n\r\v\f");
+	sub = ft_free_str(&sub);
+	if (!tmp)
+		return (NULL);
+	return (tmp);
+}
 
 t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 {
 	t_command	*new;
-	char	*sub;
 
-	sub = NULL;
 	new = (t_command *)malloc(sizeof(t_command));
 	if (!new)
 		return (NULL);
@@ -42,10 +56,12 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 	new->cmd = NULL;
 	new->redirs = NULL;
 	new->next = NULL;
-	sub = ft_substr(input, start, pipe - start);
-	if (!sub)
-		return (free(new), NULL);
-	new->cmd = sub;
+	new->cmd = parse_cmd(input, start, pipe);
+	if (!new->cmd)
+		return (free(new), ft_error("trim input"), NULL);
+	new->args = ft_split_input(new->cmd);
+	if (!new->args)
+		return (free(new), ft_error("split input"), NULL);
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
@@ -63,10 +79,10 @@ t_command	*get_command(t_command *cmd, char *input)
 	{
 		if (input[i] == '|')
 		{
-			cmd = ft_nodecmd(cmd, input, is_pipe, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
+			cmd = ft_nodecmd(cmd, input, is_pipe, i + 1);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
 			if (!cmd)
-			return (ft_error("Parse command"), NULL);
-			is_pipe = i;					// que hacer con la pipe
+				return (ft_error("Parse command"), NULL);
+			is_pipe = i + 1;					// que hacer con la pipe
 		}
 		i++;
 	}
@@ -138,16 +154,17 @@ char	*check_quotes(char *input)
 void	parse_input(t_shell **mshell, char *input)
 {
 	(*mshell)->user_input = input;
-	(*mshell)->commands = get_command((*mshell)->commands, input);
+	(*mshell)->p_input = ft_strtrim(input, " \t\n\r\v\f");
+	(*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
 		return (ft_error("get command"));
-	(*mshell)->p_input = check_quotes(input);
-	if (!(*mshell)->p_input)
-		return (ft_error("check quotes"));
+	//(*mshell)->p_input = check_quotes((*mshell)->p_input);
+	//if (!(*mshell)->p_input)
+	//	return (ft_error("check quotes"));
 	//^ check_input ^ before split into struct
-	(*mshell)->commands->args = ft_split_input((*mshell)->p_input);
-	if (!(*mshell)->commands->args)
-		return (ft_error("split input")); //free(p_input);
+	//(*mshell)->commands->args = ft_split_input((*mshell)->p_input);
+	//if (!(*mshell)->commands->args)
+	//	return (ft_error("split input")); //free(p_input);
 	// fallo en split, cuando no hay argumentos para split ?
 	// mshell> "";
 	input = ft_free_str(&input);

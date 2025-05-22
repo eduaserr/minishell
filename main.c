@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/21 20:44:52 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/22 05:01:16 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ char	**ft_split_input(char *str)
 
 	if (!str)
 		return (NULL);
+	//str = check_quotes(str);
+	//if (!str)
+	//	return ((ft_error("check quotes"), NULL));
 	input = ft_split(str, ' ');
 	if (!input || !(*input))
 		return (ft_error("split error"), NULL);
@@ -72,6 +75,8 @@ int	main(int argc, char **argv, char **envp)
 		input = NULL;
 		ft_printcmd(mshell->commands);
 		ft_free_cmd(&mshell->commands);
+		ft_printf("process input -> %s\n", mshell->p_input);
+		mshell->p_input = ft_free_str(&mshell->p_input);
 		//update_shell();
 		//updateshlvl();
 	}
@@ -89,4 +94,14 @@ int	main(int argc, char **argv, char **envp)
 
 - valgrind errors = al ejecutar minishell, printear un input (a) y sea el siguiente input ENTER
 (probablemente se arregle al avanzar el proyecto)
+
+
+
+
+eserraga@mshell$ a ver con esto | |
+Error : split error
+Error : split input
+Error : Parse command
+Error : get command
+main input -> a ver con esto | |
 	*/
