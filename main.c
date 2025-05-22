@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/22 19:00:31 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:09:58 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,7 @@ int	main(int argc, char **argv, char **envp)
 		if (input[0] != '\0') // Si no es ENTER
 			parse_input(&mshell, ft_strdup(input));
 		ft_printf("main input -> %s\n", input);
-		free(input);
-		input = NULL;
+		input = ft_free_str(&input);
 		ft_printcmd(mshell->commands);
 		ft_free_cmd(&mshell->commands);
 		ft_printf("process input -> %s\n", mshell->p_input);
