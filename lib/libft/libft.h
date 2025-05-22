@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:40:57 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/22 04:30:40 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:40:55 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,15 @@ int		ft_isalnum(int a);
  */
 int		ft_isspace(int a);
 
+/**
+ * @brief Remove all double spaces in str. Doesn't add aditionals spaces
+ * at the start, neither at the end.
+ * 
+ * @param str
+ * @return (char *) Realloc the same str. Received ass char **.
+ */
 char	*ft_rm_db_spaces(char **str);
+
 /**
  * @brief Tests for any character for which isupper or islower is true. 
  * 
