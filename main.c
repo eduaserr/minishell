@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/22 19:09:58 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/23 20:43:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@ char	**ft_split_input(char *str)
 {
 	char	**input;
 
+	input = NULL;
 	if (!str)
 		return (NULL);
-	//str = check_quotes(str);
-	//if (!str)
-	//	return ((ft_error("check quotes"), NULL));
 	input = ft_split(str, ' ');
-	if (!input || !(*input))
+	if (!input || !*input) //(|| !*input) comprobar que debe ser
 		return (ft_error("split error"), NULL);
 	return (input);
 }
+
 static char	*parse_pwd(t_shell *mshell, char *pwd)
 {
 	char	*home;
@@ -84,7 +83,7 @@ int	main(int argc, char **argv, char **envp)
 	mshell = init_mshell(mshell, envp);
 	if (!mshell)
 		return (ft_error("init minishell"), 0);
-	while (mshell->running)
+	while (1)
 	{
 		input = promp_input(mshell); //Ctrl + D signal se maneja con readline EOF
 		if (!input)
