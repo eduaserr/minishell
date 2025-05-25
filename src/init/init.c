@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/21 18:08:03 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/26 01:11:51 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static char	**new_env()
+{
+	/*
+		HOME
+		USER
+		SHLVL
+		PWD
+		OLDPWD
+	*/
+}
 
 static t_env	*init_env(t_env *lstenv, char **env)
 {
@@ -36,7 +47,10 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 	mshell = (t_shell *)malloc(sizeof(t_shell));
 	if (!mshell)
 		return (NULL);
-	mshell->env = ft_init_array(envp);
+	if (envp && *envp)
+		mshell->env = ft_init_array(envp);
+	else
+		mshell->env = new_env();
 	if (!mshell->env)
 		return (ft_free_mshell(&mshell), NULL);
 	mshell->lstenv = init_env(mshell->lstenv, mshell->env);
