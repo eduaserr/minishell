@@ -1,0 +1,11 @@
+{
+	"files.associations": {
+		"signal.h": "c",
+		"stat.h": "c",
+		"wait.h": "c",
+		"string.h": "c",
+		"stdlib.h": "c",
+		"stdio.h": "c",
+		"history.h": "c"
+	}
+}
