@@ -3,25 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/26 01:11:51 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/26 20:21:54 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char	**new_env()
+/* static char	**new_env()
 {
-	/*
+	char	**env;
+
+	env = ft_init_array();
+	env[0] = ft_strjoin("PATH=", getcwd(NULL, 0));
+	env[1] = ft_strdup("SHLVL=1");
+	execve();
+
 		HOME
 		USER
 		SHLVL
 		PWD
 		OLDPWD
-	*/
-}
+		_
+	
+	return (env);
+} */
 
 static t_env	*init_env(t_env *lstenv, char **env)
 {
@@ -49,8 +57,8 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 		return (NULL);
 	if (envp && *envp)
 		mshell->env = ft_init_array(envp);
-	else
-		mshell->env = new_env();
+	//else
+	//	mshell->env = new_env();
 	if (!mshell->env)
 		return (ft_free_mshell(&mshell), NULL);
 	mshell->lstenv = init_env(mshell->lstenv, mshell->env);

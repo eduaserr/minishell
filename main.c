@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/23 20:43:57 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/26 20:20:14 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	main(int argc, char **argv, char **envp)
 			parse_input(&mshell, ft_strdup(input));
 		ft_printf("main input -> %s\n", input);
 		input = ft_free_str(&input);
+		ft_printenv(mshell->lstenv);
 		ft_printcmd(mshell->commands);
 		ft_free_cmd(&mshell->commands);
 		ft_printf("process input -> %s\n", mshell->p_input);
