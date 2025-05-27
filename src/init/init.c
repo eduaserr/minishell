@@ -6,30 +6,45 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/26 20:21:54 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:06:00 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/* static char	**new_env()
+/*
+variables que tambien se deben añadir por default, en otro momento
+		OLDPWD	(anterior ruta)
+		_		(se crea manejando el ultimo comando usado)
+*/	
+static char	**new_env(int i)
 {
 	char	**env;
+	char	*pwd;
 
-	env = ft_init_array();
-	env[0] = ft_strjoin("PATH=", getcwd(NULL, 0));
-	env[1] = ft_strdup("SHLVL=1");
-	execve();
-
-		HOME
-		USER
-		SHLVL
-		PWD
-		OLDPWD
-		_
-	
+	pwd = NULL;
+	env = NULL;
+	env = (char **)ft_calloc(i + 1, sizeof(char *));
+	if (!env)
+		return (NULL);
+	env[0] = ft_strdup("USER=");
+	if (!env[0])
+		return (free(env), NULL);
+	env[1] = ft_strdup("HOME=");
+	if (!env[1])
+		return (ft_freematrix(&env), NULL);
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (ft_freematrix(&env), NULL);
+	env[2] = ft_strjoin("PWD=", pwd);
+	pwd = ft_free_str(&pwd);
+	if (!env[2])
+		return (ft_freematrix(&env), NULL);
+	env[3] = ft_strdup("SHLVL=1");
+	if (!env[3])
+		return (ft_freematrix(&env), NULL);
 	return (env);
-} */
+}
 
 static t_env	*init_env(t_env *lstenv, char **env)
 {
@@ -55,10 +70,10 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 	mshell = (t_shell *)malloc(sizeof(t_shell));
 	if (!mshell)
 		return (NULL);
-	if (envp && *envp)
+	if (!envp || !*envp)
+		mshell->env = new_env(5);
+	else
 		mshell->env = ft_init_array(envp);
-	//else
-	//	mshell->env = new_env();
 	if (!mshell->env)
 		return (ft_free_mshell(&mshell), NULL);
 	mshell->lstenv = init_env(mshell->lstenv, mshell->env);

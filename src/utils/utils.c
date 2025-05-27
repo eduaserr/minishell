@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/26 20:08:08 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/27 18:05:13 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_env	*split_env(t_env *new, char *env)
 	if (!arr[1])
 		new->value = ft_strdup("");
 	else
-		new->value = ft_strdup(getenv(arr[0]));
+		new->value = ft_strdup(arr[1]);
 	if (!new->value)
 		return (ft_freematrix(&arr), NULL);
 	return (ft_freematrix(&arr), new);

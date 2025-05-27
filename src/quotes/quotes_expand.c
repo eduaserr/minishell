@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 18:35:08 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/30 19:03:49 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:50:13 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*expand_var(t_shell **mshell, char **input, int i)
 		return (*input);
 	}
 	swp_value(input, value, i, end);
-	free(value);
+	value = ft_free_str(&value);
 	ft_printf("posjoin input -> %s\n", *input);
 	return (*input);
 }
