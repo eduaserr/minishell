@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/27 18:06:00 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:25:46 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	**new_env(int i)
 
 	pwd = NULL;
 	env = NULL;
-	env = (char **)ft_calloc(i + 1, sizeof(char *));
+	env = (char **)ft_calloc(i, sizeof(char *));
 	if (!env)
 		return (NULL);
 	env[0] = ft_strdup("USER=");
