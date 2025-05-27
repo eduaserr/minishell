@@ -6,11 +6,19 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/26 20:20:14 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:35:06 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
+
+void	update_shell(t_shell **mshell)
+{
+	//update_struct();
+	if ((*mshell)->exit_status)
+		(*mshell)->running = 0;
+	ft_free_mshell(mshell);
+}
 
 char	**ft_split_input(char *str)
 {
@@ -83,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 	mshell = init_mshell(mshell, envp);
 	if (!mshell)
 		return (ft_error("init minishell"), 0);
-	while (1)
+	while (mshell->running)
 	{
 		input = promp_input(mshell); //Ctrl + D signal se maneja con readline EOF
 		if (!input)
@@ -92,12 +100,10 @@ int	main(int argc, char **argv, char **envp)
 			parse_input(&mshell, ft_strdup(input));
 		ft_printf("main input -> %s\n", input);
 		input = ft_free_str(&input);
-		ft_printenv(mshell->lstenv);
+		//ft_printenv(mshell->lstenv);
 		ft_printcmd(mshell->commands);
-		ft_free_cmd(&mshell->commands);
 		ft_printf("process input -> %s\n", mshell->p_input);
-		mshell->p_input = ft_free_str(&mshell->p_input);
-		//update_shell();
+		update_shell(&mshell);
 		//updateshlvl();
 	}
 	return (0);

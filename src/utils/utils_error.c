@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/25 16:43:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/27 19:38:02 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	ft_clean_rl(void)
 
 void	ft_exit(t_shell **mshell)
 {
+	(*mshell)->exit_status = 1;
+	(*mshell)->running = 0;
 	ft_printf("exit\n");
 	ft_clean_rl(); // buena práctica
 	ft_free_mshell(mshell);
