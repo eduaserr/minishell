@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:28:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/27 20:59:26 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:38:39 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	ft_free_env(t_env **lstenv)
 {
 	t_env	*swp;
 
+	swp = NULL;
 	if ((!lstenv) || (!*lstenv))
 		return ;
 	while (*lstenv)
@@ -35,6 +36,7 @@ void	ft_free_cmd(t_command **cmd)
 {
 	t_command	*swp;
 
+	swp = NULL;
 	if ((!cmd) || (!*cmd))
 		return ;
 	while (*cmd)

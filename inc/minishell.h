@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/22 04:27:14 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:57:00 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 typedef enum e_token_type
 {
 	WORD,
-	DOUBLE,
-	SIMPLE,
+//	DOUBLE,
+//	SIMPLE,
 	REDIR,
 	PIPE,
 }	t_token_type;
@@ -39,10 +39,10 @@ typedef enum e_redir_status
 
 typedef enum e_quote_status
 {
-	NO_QUOTES = 0,
-	CLOSED = 1,
-	UNCLOSED = -1,
-	EMPTY = -2,
+	NO_QUOTES	= 0,
+	CLOSED		= 1,
+	UNCLOSED	= -1,
+	EMPTY		= -2,
 }	t_quote_status;
 
 typedef struct s_env //env structure
@@ -50,7 +50,6 @@ typedef struct s_env //env structure
 	char				*key;
 	char				*value;
 	struct s_env		*next;
-	struct s_env		*prev;
 }						t_env;
 
 typedef struct s_token
@@ -90,7 +89,12 @@ typedef struct s_shell
 /* **************************************** */
 /*					INIT					*/
 /* **************************************** */
+//////////////////////
+//	init_cmd		//
+//////////////////////
 void	addlastcmd_node(t_command **lstcmd, t_command *node);
+
+t_command	*create_cmd(t_command *new);
 
 //////////////////////
 //	init_env		//
@@ -198,5 +202,7 @@ void	ft_printenv(t_env *lstenv);
 void	ft_printcmd(t_command *cmd);
 
 char	**ft_split_input(char *str);
+
+char	**ft_mshell_split(char const *s, char c);
 
 #endif

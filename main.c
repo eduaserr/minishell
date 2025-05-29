@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/27 19:35:06 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:55:08 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,6 @@ void	update_shell(t_shell **mshell)
 	if ((*mshell)->exit_status)
 		(*mshell)->running = 0;
 	ft_free_mshell(mshell);
-}
-
-char	**ft_split_input(char *str)
-{
-	char	**input;
-
-	input = NULL;
-	if (!str)
-		return (NULL);
-	input = ft_split(str, ' ');
-	if (!input || !*input) //(|| !*input) comprobar que debe ser
-		return (ft_error("split error"), NULL);
-	return (input);
 }
 
 static char	*parse_pwd(t_shell *mshell, char *pwd)

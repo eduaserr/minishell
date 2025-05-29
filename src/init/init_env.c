@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 23:17:36 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/27 18:06:26 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/29 19:57:43 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_env	*create_env(char *env)
 	if (!new)
 		return (NULL);
 	new->next = NULL;
-	new->prev = NULL;
 	return (new);
 }
 
@@ -49,6 +48,5 @@ void	addlast_node(t_env **lstenv, t_env *node)
 	{
 		last = get_last_node(*lstenv);
 		last->next = node;
-		node->prev = last;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/23 21:08:26 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/29 20:03:42 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ significa que las comillas están vacias.*/
 //sin importar qué contenga en su interior, incluidas comillas de distinto tipo.
 // ej.: echo "hola'".	echo "a'b""c"
 //		hola'			a'bc
+/* t_redir	*parse_redirs(char *cmd, t_redir_status *redir)
+{
+	
+} */
 
 char	*parse_cmd(char *input, int start, int pipe)
 {
@@ -49,19 +53,19 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 {
 	t_command	*new;
 
-	new = (t_command *)malloc(sizeof(t_command));
+	new = NULL;
+	new = create_cmd(new);
 	if (!new)
 		return (NULL);
-	new->args = NULL;
-	new->cmd = NULL;
-	new->redirs = NULL;
-	new->next = NULL;
 	new->cmd = parse_cmd(input, start, pipe);
 	if (!new->cmd)
 		return (free(new), ft_error("trim input"), NULL);
+	/* new->redirs = parse_redirs(new->cmd, 0);
+	if (!new->redirs)
+		return (free(new->cmd), free(new), ft_error("parse redir"), NULL); */
 	new->args = ft_split_input(new->cmd);
 	if (!new->args)
-		return (free(new->cmd), free(new), ft_error("split input"), NULL);
+		return ((free(new->redirs), free(new->cmd), free(new), ft_error("split input"), NULL));
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
@@ -170,13 +174,7 @@ void	parse_input(t_shell **mshell, char *input)
 	(*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
 		return (free(input), ft_error("get command"));		//free_mshell
-	//(*mshell)->p_input = check_quotes((*mshell)->p_input);
-	//if (!(*mshell)->p_input)
-	//	return (ft_error("check quotes"));
 	//^ check_input ^ before split into struct
-	//(*mshell)->commands->args = ft_split_input((*mshell)->p_input);
-	//if (!(*mshell)->commands->args)
-	//	return (ft_error("split input")); //free(p_input);
 	// fallo en split, cuando no hay argumentos para split ?
 	// mshell> "";
 	input = ft_free_str(&input);
