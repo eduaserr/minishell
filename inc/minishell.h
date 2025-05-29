@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/29 19:57:00 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/29 21:16:49 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ void	ft_exit(t_shell **mshell);
 
 void	ft_error(char *str);
 
+void	ft_error_exit(t_shell **mshell, char *message, int code);
 //////////////////////
 //	utils_free		//
 //////////////////////

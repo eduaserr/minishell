@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/29 20:03:42 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/05/29 22:12:03 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,20 @@ significa que las comillas están vacias.*/
 //sin importar qué contenga en su interior, incluidas comillas de distinto tipo.
 // ej.: echo "hola'".	echo "a'b""c"
 //		hola'			a'bc
-/* t_redir	*parse_redirs(char *cmd, t_redir_status *redir)
+/* t_redir	*parse_redirs(char *cmd)
 {
-	
+	if (ft_strchr(cmd, '<'))
+	{}
 } */
+
+int	handle_pipes_err(char *str, int i)
+{
+	if (str[i] == '|' && i == 0)
+		return (1);
+	if (str[i] == '|' && str[i + 1] == '|')
+		return (1);
+	return (0);
+}
 
 char	*parse_cmd(char *input, int start, int pipe)
 {
@@ -60,7 +70,7 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 	new->cmd = parse_cmd(input, start, pipe);
 	if (!new->cmd)
 		return (free(new), ft_error("trim input"), NULL);
-	/* new->redirs = parse_redirs(new->cmd, 0);
+	/* new->redirs = parse_redirs(new->cmd);
 	if (!new->redirs)
 		return (free(new->cmd), free(new), ft_error("parse redir"), NULL); */
 	new->args = ft_split_input(new->cmd);
@@ -79,17 +89,16 @@ t_command	*get_command(t_command *cmd, char *input)
 	int		is_pipe;
 	int		i;
 
-	if (input[0] == '|') //Hacer función de errores
-		return (ft_error("Parse first command"), NULL); //esto tiene que dar error de syntax.
 	is_pipe = 0;
 	i = 0;
 	while (input[i])
 	{
+		if (handle_pipes_err(input, i))
+			return (NULL); //return algo que me permita cambiar mshell->exit_status. El bucle sigue pero libera
+		//if (comilla)
+		//	itera hasta que cierre o encuentr coincidencia
 		if (input[i] == '|')
 		{
-			//TO DO (error function)
-			// Check if there's command content before this pipe
-			// Check if next character is another pipe
 			cmd = ft_nodecmd(cmd, input, is_pipe, i + 1);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
 			if (!cmd)
 				return (ft_error("Parse command"), NULL);
@@ -97,8 +106,8 @@ t_command	*get_command(t_command *cmd, char *input)
 		}
 		i++;
 	}
-	// Check for pipe at the end // esto lo puedo comprobar en la linea guardada del comando
-	if (i > 0 && input[i-1] == '|')
+	// esto lo puedo comprobar en la linea guardada del comando
+	if (i > 0 && input[i - 1] == '|')// Check for pipe at the end
 		return (ft_error("syntax error near unexpected token `|'"), NULL);
 	if (input[i] == '\0')
 	{
@@ -173,7 +182,7 @@ void	parse_input(t_shell **mshell, char *input)
 		return (free(input), ft_error("process input"));	//free_mshell. Por algun motivo no hace falta?. no hace falta porqe el bucle vuelve y salgo con ctrl + D? necesito función de errores
 	(*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
-		return (free(input), ft_error("get command"));		//free_mshell
+		return (ft_free_mshell(mshell), free(input), ft_error("get command"));		//free_mshell
 	//^ check_input ^ before split into struct
 	// fallo en split, cuando no hay argumentos para split ?
 	// mshell> "";
