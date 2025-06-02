@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/29 22:12:03 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/02 20:19:49 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,16 @@ significa que las comillas están vacias.*/
 
 int	handle_pipes_err(char *str, int i)
 {
-	if (str[i] == '|' && i == 0)
-		return (1);
-	if (str[i] == '|' && str[i + 1] == '|')
+	while (str[i])
+	{
+		if (str[i] == '|' && i == 0)
+			return (1);
+		if (str[i] == '|' && str[i + 1] == '|')
+			return (1);
+		i++;
+	}
+		// esto lo puedo comprobar en la linea guardada del comando
+	if (i > 0 && str[i - 1] == '|')// Check for pipe at the end
 		return (1);
 	return (0);
 }
@@ -93,8 +100,6 @@ t_command	*get_command(t_command *cmd, char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (handle_pipes_err(input, i))
-			return (NULL); //return algo que me permita cambiar mshell->exit_status. El bucle sigue pero libera
 		//if (comilla)
 		//	itera hasta que cierre o encuentr coincidencia
 		if (input[i] == '|')
@@ -106,9 +111,6 @@ t_command	*get_command(t_command *cmd, char *input)
 		}
 		i++;
 	}
-	// esto lo puedo comprobar en la linea guardada del comando
-	if (i > 0 && input[i - 1] == '|')// Check for pipe at the end
-		return (ft_error("syntax error near unexpected token `|'"), NULL);
 	if (input[i] == '\0')
 	{
 		cmd = ft_nodecmd(cmd, input, is_pipe, i);
@@ -177,13 +179,15 @@ char	*check_quotes(char *input)
 void	parse_input(t_shell **mshell, char *input)
 {
 	(*mshell)->user_input = input;
-	(*mshell)->p_input = check_quotes(ft_strtrim(input, " \t\n\r\v\f"));
+	(*mshell)->p_input = check_quotes(ft_strtrim(input, " \t\n\r\v\f")); // strtrim hace malloc
 	if (!(*mshell)->p_input)
 		return (free(input), ft_error("process input"));	//free_mshell. Por algun motivo no hace falta?. no hace falta porqe el bucle vuelve y salgo con ctrl + D? necesito función de errores
+	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
+		return (ft_free_str(&(*mshell)->p_input), free(input), ft_error("syntax error near unexpected token `|'"));
 	(*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
 		return (ft_free_mshell(mshell), free(input), ft_error("get command"));		//free_mshell
-	//^ check_input ^ before split into struct
+		//^ check_input ^ before split into struct
 	// fallo en split, cuando no hay argumentos para split ?
 	// mshell> "";
 	input = ft_free_str(&input);

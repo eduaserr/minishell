@@ -105,4 +105,18 @@ cursus/minishell/./minishell     -> eduaserr@minishell$ (en DESKTOP).
                 ./minishell     -> eduaserr@minishell~/cursus/minishell$ (En carpeta minishell).
 
 
+@mshell~/42cursus/minishell$ bash     | | hola
+main input -> bash     | | hola
+node 0
+command - bash     |
+[0] : bash
+[1] : |
+node 1
+command - |
+[0] : |
+node 2
+command - hola
+[0] : hola
+process input -> bash     | | hola
+
 -->
