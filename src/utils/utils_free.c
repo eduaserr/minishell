@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:28:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/29 19:38:39 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:37:46 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_free_cmd(t_command **cmd)
 	*cmd = NULL;
 }
 
-void	ft_free_mshell(t_shell **mshell)
+void	ft_free_mshell(t_shell **mshell) // free_all
 {
 	if (!mshell || !*mshell)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/29 22:04:32 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/03 13:09:13 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,19 @@ void	ft_clean_rl(void)
 
 void	ft_exit(t_shell **mshell)
 {
-	if ((*mshell)->exit_status == 1)
-		(*mshell)->running = 0;
+	(*mshell)->running = 0;
+	(*mshell)->exit_status = 1;
 	ft_free_mshell(mshell);
 	ft_clean_rl(); // buena práctica
 	exit(EXIT_SUCCESS);
+}
+
+void	ft_exit2(t_shell **mshell)
+{
+	ft_clean_rl(); // buena práctica
+	if ((*mshell)->exit_status == 1)
+		(*mshell)->running = 0;
+	ft_free_mshell(mshell);
 }
 
 void	ft_error(char *str)
@@ -56,5 +64,5 @@ void ft_error_exit(t_shell **mshell, char *message, int code)
 	else
 		write(STDERR_FILENO, "exit\n", 5);
 	(*mshell)->exit_status = code;
-	ft_exit(mshell);
+	ft_exit2(mshell);
 }

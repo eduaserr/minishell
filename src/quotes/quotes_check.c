@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/02 20:19:49 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:27:16 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,14 +176,40 @@ char	*check_quotes(char *input)
 }
 //comprobar si debe devolver NULL en cada caso.
 //input no cambia fuera de la funcion
+
+char	*preparate_input(char *input)
+{
+	char	*tmp;
+
+	tmp = ft_strtrim(input, " \t\n\r\v\f");
+	if (!tmp)
+		return (free(input), NULL);
+	if (tmp[0] == '\0')
+		return (free(tmp), free(input), NULL);
+	input = ft_free_str(&input);
+	input = tmp;
+	tmp = NULL;
+	return (input);
+}
+
 void	parse_input(t_shell **mshell, char *input)
 {
-	(*mshell)->user_input = input;
+/* 	char	*tmp;
+
+	tmp = ft_strtrim(input, " \t\n\r\v\f");
+	if (!tmp)
+		return (free(input));
+	if (tmp[0] == '\0')
+		return (free(input), free(tmp));
+	tmp = ft_free_str(&tmp); */
+	input = preparate_input(input);
+	if (!input)
+		return ;
 	(*mshell)->p_input = check_quotes(ft_strtrim(input, " \t\n\r\v\f")); // strtrim hace malloc
 	if (!(*mshell)->p_input)
-		return (free(input), ft_error("process input"));	//free_mshell. Por algun motivo no hace falta?. no hace falta porqe el bucle vuelve y salgo con ctrl + D? necesito función de errores
+		return (free(input), ft_error_exit(mshell, "process input", 0));	//free_mshell. Por algun motivo no hace falta?. no hace falta porqe el bucle vuelve y salgo con ctrl + D? necesito función de errores
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
-		return (ft_free_str(&(*mshell)->p_input), free(input), ft_error("syntax error near unexpected token `|'"));
+		return (ft_free_str(&(*mshell)->p_input), free(input), ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
 	(*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
 		return (ft_free_mshell(mshell), free(input), ft_error("get command"));		//free_mshell

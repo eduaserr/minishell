@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/29 22:05:05 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:33:41 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ int	main(int argc, char **argv, char **envp)
 		return (ft_error("init minishell"), 0);
 	while (mshell->running)
 	{
+		mshell->user_input = input;
 		input = promp_input(mshell); //Ctrl + D signal se maneja con readline EOF
 		if (!input)
-			ft_error_exit(&mshell, NULL, 1);
+			ft_exit(&mshell);
 		if (input[0] != '\0') // Si no es ENTER
 			parse_input(&mshell, ft_strdup(input));
 		ft_printf("main input -> %s\n", input);
