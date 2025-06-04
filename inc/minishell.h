@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/29 21:16:49 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/04 19:53:17 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,6 @@ void	ft_printcmd(t_command *cmd);
 
 char	**ft_split_input(char *str);
 
-char	**ft_mshell_split(char const *s, char c);
+char	**ft_mshell_split(char *s);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/03 23:03:17 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/04 21:33:12 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ char	*parse_cmd(char *input, int start, int pipe)
 	sub = ft_free_str(&sub);
 	if (!tmp)
 		return (NULL);
+	if (tmp[0] == '\0')
+		return (free(tmp), ft_error("syntax error near unexpected token `|'"), NULL);
 	return (tmp);
 }
 
@@ -76,13 +78,18 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 		return (NULL);
 	new->cmd = parse_cmd(input, start, pipe);
 	if (!new->cmd)
-		return (free(new), ft_error("trim input"), NULL);
+		return (free(new), ft_free_cmd(&cmd), ft_error("trim input"), NULL);
+	//Por qué free_cmd aqui? porque el return NULL hace que yo no pueda liberar
+	//el cmd fuera de esta función ya que return NULL asigna NULL a la lista (cmd = NULL)
+	//y pierdo las referencias antes de poder liberar desde fuera (process_input)
+
 	/* new->redirs = parse_redirs(new->cmd);
 	if (!new->redirs)
 		return (free(new->cmd), free(new), ft_error("parse redir"), NULL); */
 	new->args = ft_split_input(new->cmd);
 	if (!new->args)
-		return ((free(new->redirs), free(new->cmd), free(new), ft_error("split input"), NULL));
+		return (free(new->redirs), free(new->cmd), free(new),
+			ft_free_cmd(&cmd), ft_error("split input"), NULL);
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
@@ -184,7 +191,7 @@ char	*preparate_input(char *input)
 	tmp = ft_strtrim(input, " \t\n\r\v\f");
 	if (!tmp)
 		return (free(input), NULL);
-	if (tmp[0] == '\0')
+	if (tmp[0] == '\0')		//intro con solo espacios
 		return (free(tmp), free(input), NULL);
 	input = ft_free_str(&input);
 	input = tmp;
@@ -201,10 +208,10 @@ void	parse_input(t_shell **mshell, char *input)
 	if (!(*mshell)->p_input)
 		return (free(input), ft_error_exit(mshell, "process input", 0));	//free_mshell. Por algun motivo no hace falta?. no hace falta porqe el bucle vuelve y salgo con ctrl + D? necesito función de errores
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
-		return (ft_free_str(&(*mshell)->p_input), free(input), ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
+		return (free(input), ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
 	(*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
-		return (ft_free_mshell(mshell), free(input), ft_error("get command"));		//free_mshell
+		return (free(input), ft_error_exit(mshell, "get command", 0));		//free_mshell
 		//^ check_input ^ before split into struct
 	// fallo en split, cuando no hay argumentos para split ?
 	// mshell> "";
