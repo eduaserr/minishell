@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/03 18:27:16 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/03 23:03:17 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_command	*get_command(t_command *cmd, char *input)
 		//	itera hasta que cierre o encuentr coincidencia
 		if (input[i] == '|')
 		{
-			cmd = ft_nodecmd(cmd, input, is_pipe, i + 1);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
+			cmd = ft_nodecmd(cmd, input, is_pipe, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
 			if (!cmd)
 				return (ft_error("Parse command"), NULL);
 			is_pipe = i + 1;					// que hacer con la pipe
@@ -194,14 +194,6 @@ char	*preparate_input(char *input)
 
 void	parse_input(t_shell **mshell, char *input)
 {
-/* 	char	*tmp;
-
-	tmp = ft_strtrim(input, " \t\n\r\v\f");
-	if (!tmp)
-		return (free(input));
-	if (tmp[0] == '\0')
-		return (free(input), free(tmp));
-	tmp = ft_free_str(&tmp); */
 	input = preparate_input(input);
 	if (!input)
 		return ;
