@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/04 21:33:12 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/05 00:18:14 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@ significa que las comillas están vacias.*/
 	if (ft_strchr(cmd, '<'))
 	{}
 } */
+
+void	ft_free_node(t_command **new)
+{
+	if (!*new)
+		return ;
+	if ((*new)->redirs)
+		free((*new)->redirs);
+	if ((*new)->cmd)
+		ft_free_str(&(*new)->cmd);
+	free(*new);
+	*new = NULL;
+}
 
 int	handle_pipes_err(char *str, int i)
 {
@@ -88,8 +100,7 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 		return (free(new->cmd), free(new), ft_error("parse redir"), NULL); */
 	new->args = ft_split_input(new->cmd);
 	if (!new->args)
-		return (free(new->redirs), free(new->cmd), free(new),
-			ft_free_cmd(&cmd), ft_error("split input"), NULL);
+		return (ft_free_node(&new), ft_free_cmd(&cmd), ft_error("split input"), NULL);
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
