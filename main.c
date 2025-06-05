@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/03 15:33:41 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:46:34 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,26 +96,3 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
-
-
-/*
-	exit_status : esto nos permite poder hacer malloc fuera del while(1)
-	y liberar solo cuando sea necesario :
-
-- exit_status :
-	ft_exit(int , mshell) con condiciones para liberar distintos elementos de mshell.
-
-- valgrind errors = al ejecutar minishell, printear un input (a) y sea el siguiente input ENTER
-(probablemente se arregle al avanzar el proyecto)
-
-
-
-
-eserraga@mshell$ a ver con esto | |
-Error : split error
-Error : split input
-Error : Parse command
-Error : get command
-main input -> a ver con esto | |
-	*/

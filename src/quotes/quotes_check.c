@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/05 00:18:14 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/05 13:52:35 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void	parse_input(t_shell **mshell, char *input)
 	(*mshell)->p_input = check_quotes(ft_strtrim(input, " \t\n\r\v\f")); // strtrim hace malloc
 	if (!(*mshell)->p_input)
 		return (free(input), ft_error_exit(mshell, "process input", 0));	//free_mshell. Por algun motivo no hace falta?. no hace falta porqe el bucle vuelve y salgo con ctrl + D? necesito función de errores
+	
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
 		return (free(input), ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
 	(*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
