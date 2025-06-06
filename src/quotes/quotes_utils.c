@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/04/30 20:21:38 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:30:29 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		get_quote(char *str)
 			return ('\"');
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 /*Start -> posición 1º comilla

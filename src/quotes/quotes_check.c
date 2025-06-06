@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/05 13:52:35 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:28:34 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 
 	/* new->redirs = parse_redirs(new->cmd);
 	if (!new->redirs)
-		return (free(new->cmd), free(new), ft_error("parse redir"), NULL); */
+		return (free(new->cmd), free(new), ft_free_cmd(&cmd), ft_error("parse redir"), NULL); */
 	new->args = ft_split_input(new->cmd);
 	if (!new->args)
 		return (ft_free_node(&new), ft_free_cmd(&cmd), ft_error("split input"), NULL);
@@ -109,6 +109,25 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 mete lo anterior del input hasta que acaba el bucle
 
 primero guardar y luego comprobar?*/
+
+static int	skip_quoted(char *str, int *i)
+{
+	int	q;
+
+	q = 0;
+	if (str[*i] == '\'' || str[*i] == '\"')
+	{
+		q = str[(*i)++];
+		while (str[*i] && str[*i] != q)
+			(*i)++;
+		if (str[*i] == q)
+			(*i)++;
+		return (1);		//Comillas saltadas
+	}
+	else
+		return (0);		//No habia comillas
+}
+
 t_command	*get_command(t_command *cmd, char *input)
 {
 	int		is_pipe;
@@ -118,8 +137,8 @@ t_command	*get_command(t_command *cmd, char *input)
 	i = 0;
 	while (input[i])
 	{
-		//if (comilla)
-		//	itera hasta que cierre o encuentr coincidencia
+		if (skip_quoted(input, &i))
+			continue ;
 		if (input[i] == '|')
 		{
 			cmd = ft_nodecmd(cmd, input, is_pipe, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
@@ -218,14 +237,13 @@ void	parse_input(t_shell **mshell, char *input)
 	(*mshell)->p_input = check_quotes(ft_strtrim(input, " \t\n\r\v\f")); // strtrim hace malloc
 	if (!(*mshell)->p_input)
 		return (free(input), ft_error_exit(mshell, "process input", 0));	//free_mshell. Por algun motivo no hace falta?. no hace falta porqe el bucle vuelve y salgo con ctrl + D? necesito función de errores
-	
+	//parse_tokens
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
 		return (free(input), ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
+	
 	(*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
 		return (free(input), ft_error_exit(mshell, "get command", 0));		//free_mshell
 		//^ check_input ^ before split into struct
-	// fallo en split, cuando no hay argumentos para split ?
-	// mshell> "";
 	input = ft_free_str(&input);
 }

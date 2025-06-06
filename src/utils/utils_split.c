@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:45:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/04 19:53:47 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:38:00 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,14 @@ char	**ft_mshell_split(char *str)
 char	**ft_split_input(char *str)
 {
 	char	**input;
+/* 	int		q;
 
+	q = ft_istrchr(str, get_quote(str)); */
 	input = NULL;
 	if (!str)
 		return (NULL);
+/* 	if (q != -1)
+		str = rm_quotes(&str, q); */
 	input = ft_mshell_split(str);
 	if (!input)
 		return (ft_error("split error"), NULL);
