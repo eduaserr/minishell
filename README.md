@@ -105,18 +105,19 @@ cursus/minishell/./minishell     -> eduaserr@minishell$ (en DESKTOP).
                 ./minishell     -> eduaserr@minishell~/cursus/minishell$ (En carpeta minishell).
 
 
-@mshell~/42cursus/minishell$ bash     | | hola
-main input -> bash     | | hola
-node 0
-command - bash     |
-[0] : bash
-[1] : |
-node 1
-command - |
-[0] : |
-node 2
-command - hola
-[0] : hola
-process input -> bash     | | hola
 
+NUEVA ESTRUCTURA
+
+// Tu estructura actual después del parsing:
+// cmd->args[0] = "ls"
+// cmd->args[1] = "-l"  
+// cmd->args[2] = "-a"
+// cmd->args[3] = NULL
+// cmd->redirs->type = REDIR_OUT
+// cmd->redirs->file = "file.txt"
+
+int result = execute_command(cmd, envp);
+
+// Internamente execve se llama así:
+// execve("/bin/ls", cmd->args, envp);
 -->

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/03 13:41:05 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:31:13 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 	mshell->running = 1;
 	mshell->exit_status = 0;
 	mshell->commands = NULL;
-	mshell->tokens = NULL;
 	mshell->p_input = NULL;
 	mshell->user_input = NULL;
 	if (!envp || !*envp)

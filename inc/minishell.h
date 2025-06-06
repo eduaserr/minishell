@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/04 19:53:17 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/06 14:50:48 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_command
 {
 	char				*cmd;				//comando a procesar
 	char				**args;				//argumentos de un mismo cmd por separado
+	t_token				*tkn;				//args separados, y divididos por tokens
 	t_redir				*redirs;			//redirs en el input
 	struct s_command	*next;
 }						t_command;
@@ -80,7 +81,6 @@ typedef struct s_shell
 	char				*user_input;		//input orriginal del usuario
 	char				**env;				//doble array de envp del sistema
 	t_env				*lstenv;			//lista de las env
-	t_token				*tokens;
 	t_command			*commands;			//lista de comandos y args
 	int					exit_status;		//estado de la proxima salida del programa
 	int					running;			//estado actual del programa
