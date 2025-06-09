@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:45:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/06 15:38:00 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:50:17 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,14 @@ static char	**free_split(char **str, int i)
 	return (NULL);
 }
 
-static int	many_words(char *str, int *i, int quote)
+static int	many_words(char *str, int *i)
 {
 	int	count;
 
 	count = 0;
 	if (str[*i])
 	{
-		if (str[*i] == '\"' || str[*i] == '\'')
-		{
-			quote = str[(*i)++];
-			while (str[*i] && str[*i] != quote)
-				(*i)++;
-			if (str[*i] == quote)
-				(*i)++;
-		}
-		else
+		if (!skip_quoted(str, i))
 		{
 			while (str[*i] && !ft_isspace(str[*i])
 				&& str[*i] != '\"' && str[*i] != '\'')
@@ -50,16 +42,14 @@ int	countwords(char *str)
 {
 	int		i;
 	int		count;
-	char	quote;
 
 	i = 0;
 	count = 0;
-	quote = 0;
 	while (str[i])
 	{
 		while (str[i] && ft_isspace(str[i]))
 			i++;
-		count += many_words(str, &i, quote);
+		count += many_words(str, &i);
 	}
 	return (count);
 }
@@ -87,19 +77,10 @@ static char	*getword(char *str, int *i)
 {
 	int	start;
 	int	end;
-	int	quote;
 
 	end = 0;
 	start = *i;
-	if (str[*i] == '\"' || str[*i] == '\'')
-	{
-		quote = str[(*i)++];
-		while (str[*i] && str[*i] != quote)
-			(*i)++;
-		if (str[*i] == quote)
-			(*i)++;
-	}
-	else
+	if (!skip_quoted(str, i))
 	{
 		while (str[*i] && !ft_isspace(str[*i]) && str[*i] != '\"' && str[*i] != '\'')
 			(*i)++;

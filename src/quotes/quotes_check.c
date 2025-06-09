@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/06 16:28:34 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:20:02 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,24 +109,6 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 mete lo anterior del input hasta que acaba el bucle
 
 primero guardar y luego comprobar?*/
-
-static int	skip_quoted(char *str, int *i)
-{
-	int	q;
-
-	q = 0;
-	if (str[*i] == '\'' || str[*i] == '\"')
-	{
-		q = str[(*i)++];
-		while (str[*i] && str[*i] != q)
-			(*i)++;
-		if (str[*i] == q)
-			(*i)++;
-		return (1);		//Comillas saltadas
-	}
-	else
-		return (0);		//No habia comillas
-}
 
 t_command	*get_command(t_command *cmd, char *input)
 {

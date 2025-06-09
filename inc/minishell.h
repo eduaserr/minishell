@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/06 14:50:48 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:21:05 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,8 @@ void	ft_free_cmd(t_command **cmd);
  * @return (char *) A new dup string. The caller is responsible for freeing it.
  */
 char	*ft_getenv(t_env *env, char *var);
+
+int		skip_quoted(char *str, int *i);
 
 t_env	*split_env(t_env *new, char *env);
 

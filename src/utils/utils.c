@@ -6,11 +6,29 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/27 18:05:13 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:20:15 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	skip_quoted(char *str, int *i)
+{
+	int	q;
+
+	q = 0;
+	if (str[*i] == '\'' || str[*i] == '\"')
+	{
+		q = str[(*i)++];
+		while (str[*i] && str[*i] != q)
+			(*i)++;
+		if (str[*i] == q)
+			(*i)++;
+		return (1);		//Comillas saltadas
+	}
+	else
+		return (0);		//No habia comillas
+}
 
 //Creates strdup. You must indicate the key and it returns the corresponding value"
 char	*ft_getenv(t_env *env, char *var)
