@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/09 13:16:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:17:08 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*rm_empty_quotes(char *str, int start, int end)
 	return (str);
 }
 
-char	*rm_quotes(char **input, int i)
+char	*rm_quotes(char *input, int i)
 {
 	char	c;
 	char	*tmp;
@@ -84,23 +84,22 @@ char	*rm_quotes(char **input, int i)
 	int		q;
 
 	q = 0;
-	c = (*input)[i];
+	c = input[i];
 	i = 0;
 	j = 0;
-	tmp = (char *)malloc(sizeof(char) * (ft_strlen(*input) - 2 + 1));
+	tmp = (char *)malloc(sizeof(char) * (ft_strlen(input) - 1));
 	if (!tmp)
 		return (NULL);
-	while ((*input)[i])
+	while (input[i])
 	{
-		if ((*input)[i] == c && q < 2)
+		if (input[i] == c && q < 2)
 		{
 			q++;
 			i++;
 		}
-		tmp[j++] = (*input)[i++];
+		else
+			tmp[j++] = input[i++];
 	}
 	tmp[j] = '\0';
-	free(*input);
-	*input = NULL;
 	return (tmp);
 }

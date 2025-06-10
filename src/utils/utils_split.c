@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:45:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/09 13:50:17 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:51:29 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,16 +121,30 @@ char	**ft_mshell_split(char *str)
 char	**ft_split_input(char *str)
 {
 	char	**input;
-/* 	int		q;
 
-	q = ft_istrchr(str, get_quote(str)); */
-	input = NULL;
 	if (!str)
 		return (NULL);
-/* 	if (q != -1)
-		str = rm_quotes(&str, q); */
-	input = ft_mshell_split(str);
+	input = NULL;
+	input = ft_mshell_split(str); // no usar este split
 	if (!input)
 		return (ft_error("split error"), NULL);
 	return (input);
 }
+
+
+/* 
+este split no funciona, se necesita de otra lógica.
+separar por tokens
+
+//
+resultado esperado
+[0]: a
+[1]: b'c'     ← Un solo token (sin las comillas externas)
+[2]: d
+
+resultado actual
+[0]: a
+[1]: b
+[2]: 'c'      ← Incorrectamente separado
+[3]: d 
+*/

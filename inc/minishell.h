@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/09 13:21:05 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:19:08 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ typedef enum e_token_type
 	WORD,
 //	DOUBLE,
 //	SIMPLE,
-	REDIR,
-	PIPE,
+	PIPE,			// cuenta '|' como redirección?
+	REDIR_IN,		// <
+	REDIR_OUT,		// >
+	APPEND,			// >>
+	HEREDOC,		// <<
 }	t_token_type;
 
 typedef enum e_redir_status
@@ -144,7 +147,7 @@ char	*get_in_quotes(char *str, int start, int end);
  * @param i Index of the first quote in the string.
  * @return (char *) A new string without quotes. The caller is responsible for freeing it.
  */
-char	*rm_quotes(char **input, int i);
+char	*rm_quotes(char *input, int i);
 
 /**
  * @brief This function processes the input string, removes the empty quotes (single or double),

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/09 13:20:02 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/10 21:52:06 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,90 @@ significa que las comillas están vacias.*/
 //sin importar qué contenga en su interior, incluidas comillas de distinto tipo.
 // ej.: echo "hola'".	echo "a'b""c"
 //		hola'			a'bc
+
+//INIT_TOKEN.C
+static t_token	*get_lastcmd_node(t_token *node)
+{
+	while (node->next)
+		node = node->next;
+	return (node);
+}
+
+void	addlast_tknnode(t_token **token_list, t_token *node)
+{
+		t_token	*last;
+
+	last = NULL;
+	if (!token_list || !node)
+		return ;
+	if (!*token_list)
+		*token_list = node;
+	else
+	{
+		last = get_lastcmd_node(*token_list);
+		last->next = node;
+	}
+}
+
+static int	iterator(t_token_type tkn, int i)
+{
+	if (tkn == HEREDOC)
+		i += 2;
+	if (tkn == APPEND)
+		i += 2;
+	if (tkn == REDIR_IN)
+		i++;
+	if (tkn == REDIR_OUT)
+		i++;
+	if (tkn == PIPE)
+		i++;
+	return (i);
+}
+// TOKEN.C
+t_token	*get_token(t_token *new, t_token_type tkn, char *value, int *i)
+{
+	new = (t_token *)malloc(sizeof(t_token));
+	if (!new)
+		return (NULL);
+	*i = iterator(tkn, *i);
+	new->type = tkn;
+	new->value = ft_strdup(value);
+	if (!new->value)
+		return (free(new), ft_error("dup value"), NULL);
+	return (new);
+}
+
+//problema con la pipe, ya que input[i] nunca llega a pipe
+t_token	*parse_tkn(t_token *token_list, char *input, int pipe)
+{
+	t_token	*new;
+	int	i;
+
+	new = NULL;
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '<' && input[i + 1] == '<')
+			new = get_token(new, HEREDOC, "<<", &i);
+		else if (input[i] == '>' && input[i + 1] == '>')
+			new = get_token(new, APPEND, ">>", &i);
+		else if (input[i] == '<')
+			new = get_token(new, REDIR_IN, '<', &i);
+		else if (input[i] == '>')
+			new = get_token(new, REDIR_OUT, '>', &i);
+		else if (input[i] == '|')
+			new = get_token(new, PIPE, '|', &i);
+/*		else if (input[i])
+			get_word(WORD, &i);*/
+		else
+		{
+			addlast_tknnode(&token_list, new);
+			i++;
+		}
+	}
+	return (new);
+}
+
 /* t_redir	*parse_redirs(char *cmd)
 {
 	if (ft_strchr(cmd, '<'))
@@ -37,6 +121,8 @@ void	ft_free_node(t_command **new)
 {
 	if (!*new)
 		return ;
+	if ((*new)->tkn)
+		free((*new)->tkn);
 	if ((*new)->redirs)
 		free((*new)->redirs);
 	if ((*new)->cmd)
@@ -94,7 +180,9 @@ t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 	//Por qué free_cmd aqui? porque el return NULL hace que yo no pueda liberar
 	//el cmd fuera de esta función ya que return NULL asigna NULL a la lista (cmd = NULL)
 	//y pierdo las referencias antes de poder liberar desde fuera (process_input)
-
+	new->tkn = parse_tkn(new->tkn, new->cmd, pipe);
+	if (!new->tkn)
+		return (ft_free_node(&new), ft_free_cmd(&cmd), ft_error("token"), NULL);
 	/* new->redirs = parse_redirs(new->cmd);
 	if (!new->redirs)
 		return (free(new->cmd), free(new), ft_free_cmd(&cmd), ft_error("parse redir"), NULL); */
@@ -220,6 +308,7 @@ void	parse_input(t_shell **mshell, char *input)
 	if (!(*mshell)->p_input)
 		return (free(input), ft_error_exit(mshell, "process input", 0));	//free_mshell. Por algun motivo no hace falta?. no hace falta porqe el bucle vuelve y salgo con ctrl + D? necesito función de errores
 	//parse_tokens
+	tokenizer();
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
 		return (free(input), ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
 	

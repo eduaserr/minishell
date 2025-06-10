@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 18:35:08 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/27 17:50:13 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/10 18:24:49 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,15 @@ char	*expand_var(t_shell **mshell, char **input, int i)
 
 	value = is_var(tmp, (*mshell)->lstenv); // devuelve NULL si no hay coincidencia despues del dollar $
 	ft_printf("value is -> %s\n", value);
-	free(tmp);
+	tmp = ft_free_str(&tmp);
 	if (!value)
 	{
-		*input = rm_quotes(input, i);
+		tmp = rm_quotes(*input, i);
+		if (tmp)
+		{
+			*input = ft_free_str(input);
+			*input = tmp;
+		}
 		return (*input);
 	}
 	swp_value(input, value, i, end);
