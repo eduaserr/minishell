@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sig_init.c                                         :+:      :+:    :+:   */
+/*   signal2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 19:35:22 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/11 19:29:05 by eduaserr         ###   ########.fr       */
+/*   Created: 2025/06/11 19:19:24 by eduaserr          #+#    #+#             */
+/*   Updated: 2025/06/11 19:19:44 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	handle_sigint(int sign)
-{
-	g_signal_received = sign;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-static void	handle_sigquit(int sig)
+/* static void	handle_heredoc_sigint(int sig)
 {
 	g_signal_received = sig;
-	(void)sig;
+	write(STDOUT_FILENO, "\n", 1);
 }
 
-void	signal_function(void)
+void	setup_heredoc_signals(void)
 {
-	g_signal_received = 0;
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
-	signal(SIGTERM, SIG_IGN);
+	signal(SIGINT, handle_heredoc_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
+ */

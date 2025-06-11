@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/11 19:07:39 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/11 19:53:29 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,7 +321,6 @@ void	parse_input(t_shell **mshell, char *input)
 	(*mshell)->tkn = tokenizer((*mshell)->tkn, (*mshell)->p_input);
 	if (!(*mshell)->tkn)
 		return (free(input), ft_error("token"), NULL);
-	lexer();
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
 		return (free(input), ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
 	

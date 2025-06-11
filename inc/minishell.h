@@ -6,18 +6,33 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/11 15:18:38 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/11 19:34:16 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define EXIT_CMD_NOT_FOUND 127
+# define EXIT_GENERAL_ERROR 1
+# define EXIT_EXEC_FAILURE 126
+# define EXIT_BUILTIN_MISUSE 2
+# define SYNTAX_ERROR_STATUS 2
+# define EXIT_SIGINT 130
+# define EXIT_SIGQUIT 131
+# define EXIT_REQUEST_SIG_OFFSET 256
+
+# define STDIN_FD 0
+# define STDOUT_FD 1
+# define STDERR_FD 2
+
 # include "../lib/libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
 # include <stdio.h>
+
+extern volatile sig_atomic_t	g_signal_received;
 
 typedef enum e_token_type
 {
@@ -85,6 +100,7 @@ typedef struct s_shell
 	t_env				*lstenv;			//lista de las env
 	t_token				*tkn;				//args separados, y divididos por tokens
 	t_command			*commands;			//lista de comandos y args
+	int					last_exit_status;	//anterior codigo de error
 	int					exit_status;		//estado de la proxima salida del programa
 	int					running;			//estado actual del programa
 }						t_shell;

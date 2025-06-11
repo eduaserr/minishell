@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/06 15:21:45 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/11 19:34:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ char	*promp_input(t_shell *mshell)
 	pwd = NULL;
 	input = NULL;
 	promp = NULL;
+/* 	if (g_signal_received == SIGINT)
+		mshell->last_exit_status = EXIT_SIGINT; */
 	pwd = ft_getenv(mshell->lstenv, "PWD");		// /home/eduaserr/cursus/minishell
 	pwd = parse_pwd(mshell, pwd);
 	promp = ft_getenv(mshell->lstenv, "USER");	//eduaserr
