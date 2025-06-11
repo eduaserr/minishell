@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/11 17:09:11 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/11 19:07:39 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,6 +301,8 @@ char	*preparate_input(char *input)
 		return (free(input), NULL);
 	if (tmp[0] == '\0')		//intro con solo espacios
 		return (free(tmp), free(input), NULL);
+	//funcion de separar por comillas split(str, quotes). y asi
+	//separar luego por tokens o palabras
 	input = ft_free_str(&input);
 	input = tmp;
 	tmp = NULL;
