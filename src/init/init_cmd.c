@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:25:52 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/10 21:02:31 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:47:24 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_command	*create_cmd(t_command *new)
 		return (NULL);
 	new->cmd = NULL;
 	new->args = NULL;
-	new->tkn = NULL;
 	new->redirs = NULL;
 	new->next = NULL;
 	return (new);

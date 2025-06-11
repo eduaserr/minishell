@@ -110,7 +110,7 @@ NUEVA ESTRUCTURA
 
 // Tu estructura actual después del parsing:
 // cmd->args[0] = "ls"
-// cmd->args[1] = "-l"  
+// cmd->args[1] = "-l"
 // cmd->args[2] = "-a"
 // cmd->args[3] = NULL
 // cmd->redirs->type = REDIR_OUT
@@ -120,4 +120,20 @@ int result = execute_command(cmd, envp);
 
 // Internamente execve se llama así:
 // execve("/bin/ls", cmd->args, envp);
+
+
+input_user -> ls -l  >| cd dir >> file
+node [0]
+char *cmd -> "ls -l"
+char **str;
+
+str[0][0] = "ls"
+str[0][1] = "-l"
+
+node [1]
+char *cmd -> "cd dir"
+char **str;
+
+str[0][0] = "cd"
+str[0][1] = "dir"
 -->
