@@ -6,11 +6,13 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:35:22 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/11 19:29:05 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:30:48 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+volatile sig_atomic_t	g_signal_received;
 
 static void	handle_sigint(int sign)
 {
