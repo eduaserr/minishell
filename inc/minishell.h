@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/11 19:34:16 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:51:39 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef enum e_token_type
 	HEREDOC,		// <<
 }	t_token_type;
 
-typedef enum e_redir_status
+/* typedef enum e_redir_status
 {
 	//PIPE			// cuenta '|' como redirección?
 	REDIR_IN,		// <
@@ -54,7 +54,7 @@ typedef enum e_redir_status
 	APPEND,			// >>
 	HEREDOC,		// <<
 }	t_redir_status;
-
+ */
 typedef enum e_quote_status
 {
 	NO_QUOTES	= 0,
@@ -195,12 +195,16 @@ void	ft_exit(t_shell **mshell);
 void	ft_error(char *str);
 
 void	ft_error_exit(t_shell **mshell, char *message, int code);
+
 //////////////////////
 //	utils_free		//
 //////////////////////
 void	ft_free_mshell(t_shell **mshell);
 
 void	ft_free_cmd(t_command **cmd);
+
+void	ft_free_tkn(t_token **tkn);
+
 //////////////////////
 //	utils			//
 //////////////////////
@@ -220,6 +224,8 @@ t_env	*split_env(t_env *new, char *env);
 char	**ft_init_array(char **array);
 
 void	ft_printenv(t_env *lstenv);
+
+void	ft_printtkn(t_token *tkn);
 
 void	ft_printcmd(t_command *cmd);
 

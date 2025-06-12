@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/11 19:53:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:26:12 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,45 @@ t_token	*get_token(t_token *new, t_token_type tkn, char *value, int *i)
 	new->next = NULL;
 	return (new);
 }
+static char	*get_word(char *str, int i)
+{
+	char	*word;
+	int		j;
+
+	if (!str)
+		return (NULL);
+	j = 0;
+	while (str[i] && !ft_isspace(str[i]))
+		j++;
+	word = (char *)malloc(sizeof(char) * j + 1);
+	if (!word)
+		return (NULL);
+	j = 0;
+	while (str[i] && !ft_isspace(str[i]))
+		word[j++] = str[i++];
+	word[j] = '\0';
+	return (word);
+}
+
+t_token	*get_tkn_word(t_token *new, char *str, int *i)
+{
+	char	*word;
+	int		start;
+	int		j;
+
+	word = NULL;
+	start = *i;
+	j = *i;
+	if (!skip_quoted(str, &j))
+		word = get_word(str, j);
+	else
+		word = ft_substr(str, start, j - start);
+	if (!word)
+			return (NULL);
+	new = get_token(new, WORD, word, i);
+	word = ft_free_str(&word);
+	return (new);
+}
 
 t_token	*parse_tkn(t_token *new, char *input, int *i)
 {
@@ -100,10 +139,10 @@ t_token	*parse_tkn(t_token *new, char *input, int *i)
 		new = get_token(new, PIPE, "|", i);
 	else if (input[*i])
 	{
-		get_tkn_word();
+		new = get_tkn_word(new, input, i);
 	}
 	if (!new)
-		return (ft_error("new is NULL") ,NULL);
+		return (ft_error("new is NULL"), NULL);
 	return (new);
 }
 
@@ -116,9 +155,13 @@ t_token	*tokenizer(t_token *token_list, char *input)
 	i = 0;
 	while (input[i])
 	{
+		while (input[i] && ft_isspace(input[i]))
+			i++;
+		if (!input[i])
+			return (token_list);
 		new = parse_tkn(new, input, &i);
 		if (!new)
-			return (/* ft_free_tkn(), */ ft_error("parse token"), NULL);
+			return (ft_free_tkn(&token_list), ft_error("parse token"), NULL);
 		addlast_tknnode(&token_list, new);
 	}
 	return (token_list);
@@ -320,13 +363,13 @@ void	parse_input(t_shell **mshell, char *input)
 	//parse_tokens
 	(*mshell)->tkn = tokenizer((*mshell)->tkn, (*mshell)->p_input);
 	if (!(*mshell)->tkn)
-		return (free(input), ft_error("token"), NULL);
+		return (free(input), ft_error("token"));
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
 		return (free(input), ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
 	
-	(*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
+	 (*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
-		return (free(input), ft_error_exit(mshell, "get command", 0));		//free_mshell
+		return (free(input), ft_error_exit(mshell, "get command", 0));		//free_mshell */
 		//^ check_input ^ before split into struct
 	input = ft_free_str(&input);
 }

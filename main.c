@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/11 19:34:57 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:24:26 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("main input -> %s\n", input);
 		input = ft_free_str(&input);
 		//ft_printenv(mshell->lstenv);
-		ft_printcmd(mshell->commands);
+		/* ft_printcmd(mshell->commands); */
+		ft_printtkn(mshell->tkn);
 		ft_printf("process input -> %s\n", mshell->p_input);
 		update_shell(&mshell);
 		//updateshlvl();

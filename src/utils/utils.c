@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/09 13:20:15 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:23:35 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,19 @@ char	**ft_init_array(char **array)
 	}
 	tmp[i] = NULL;
 	return (tmp);
+}
+
+void	ft_printtkn(t_token *tkn)
+{
+	int	i;
+
+	i = 0;
+	while (tkn)
+	{
+		ft_printf("node %d\ntoken->value - %s\n", i++, tkn->value);
+		ft_printf("int type - %i\n", tkn->type);
+		tkn = tkn->next;
+	}
 }
 
 void	ft_printcmd(t_command *cmd)

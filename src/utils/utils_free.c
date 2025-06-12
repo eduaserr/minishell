@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:28:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/06 14:52:35 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:27:30 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,23 @@ static void	ft_free_env(t_env **lstenv)
 	}
 	*lstenv = NULL;
 }
+void	ft_free_tkn(t_token **tkn)
+{
+	t_token	*swp;
+
+	swp = NULL;
+	if ((!tkn) || (!*tkn))
+		return ;
+	while (*tkn)
+	{
+		swp = (*tkn)->next;
+		if ((*tkn)->value)
+			free((*tkn)->value);
+		free(*tkn);
+		*tkn = swp;
+	}
+	*tkn = NULL;
+}
 
 void	ft_free_cmd(t_command **cmd)
 {
@@ -46,8 +63,6 @@ void	ft_free_cmd(t_command **cmd)
 			free((*cmd)->cmd);
 		if ((*cmd)->args)
 			ft_freematrix(&(*cmd)->args);
-		//if ((*cmd)->tkn)
-			//ft_free_tkn();
 		//if ((*cmd)->redirs)
 			//ft_free_redirs();
 		free(*cmd);
@@ -60,6 +75,8 @@ void	ft_free_mshell(t_shell **mshell) // free_all
 {
 	if (!mshell || !*mshell)
 		return ;
+	if ((*mshell)->tkn)
+		ft_free_tkn(&(*mshell)->tkn);
 	if ((*mshell)->commands)
 		ft_free_cmd(&(*mshell)->commands);
 	if ((*mshell)->lstenv && (!(*mshell)->running))
