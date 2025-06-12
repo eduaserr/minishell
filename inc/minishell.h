@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 14:51:39 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:56:38 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,22 @@ typedef struct s_shell
 }						t_shell;
 
 /* **************************************** */
+/*					COMMAND					*/
+/* **************************************** */
+//////////////////////
+//	cmd				//
+//////////////////////
+t_command	*get_command(t_command *cmd, char *input);
+
+/* **************************************** */
 /*					INIT					*/
 /* **************************************** */
 //////////////////////
 //	init_cmd		//
 //////////////////////
-void	addlastcmd_node(t_command **lstcmd, t_command *node);
-
 t_command	*create_cmd(t_command *new);
+
+void	addlastcmd_node(t_command **lstcmd, t_command *node);
 
 //////////////////////
 //	init_env		//
@@ -128,24 +136,42 @@ t_env	*create_env(char *env);
 void	addlast_node(t_env **lstenv, t_env *node);
 
 //////////////////////
-//	init.c			//
+//	init_tkn		//
+//////////////////////
+t_token	*get_token(t_token *new, t_token_type tkn, char *value, int *i);
+
+void	addlast_tknnode(t_token **token_list, t_token *node);
+
+//////////////////////
+//	init			//
 //////////////////////
 t_shell	*init_mshell(t_shell *mshell, char **envp);
+
+/* **************************************** */
+/*					PARSER					*/
+/* **************************************** */
+//////////////////////
+//	parser			//
+//////////////////////
+void	parse_input(t_shell **mshell, char *input);
+
+//////////////////////
+//	promp			//
+//////////////////////
+char	*promp_input(t_shell *mshell);
 
 /* **************************************** */
 /*					QUOTES					*/
 /* **************************************** */
 //////////////////////
-//	quotes_expand	//
-//////////////////////
-char	*expand_var(t_shell **mshell, char **input, int i);
-
-//////////////////////
 //	quotes_check	//
 //////////////////////
 char	*check_quotes(char *input);
 
-void	parse_input(t_shell **mshell, char *input);
+//////////////////////
+//	quotes_expand	//
+//////////////////////
+char	*expand_var(t_shell **mshell, char **input, int i);
 
 //////////////////////
 //	quotes_utils	//
@@ -153,17 +179,6 @@ void	parse_input(t_shell **mshell, char *input);
 int		get_quote(char *str);
 
 char	*get_in_quotes(char *str, int start, int end);
-
-/**
- * @brief This function processes the input string, removes the quotes (single or double),
- * and returns a newly allocated string without the quotes. The original input
- * string is freed during the process.
- * 
- * @param input Pointer to the string to process.
- * @param i Index of the first quote in the string.
- * @return (char *) A new string without quotes. The caller is responsible for freeing it.
- */
-char	*rm_quotes(char *input, int i);
 
 /**
  * @brief This function processes the input string, removes the empty quotes (single or double),
@@ -176,6 +191,17 @@ char	*rm_quotes(char *input, int i);
  */
 char	*rm_empty_quotes(char *str, int start, int end);
 
+/**
+ * @brief This function processes the input string, removes the quotes (single or double),
+ * and returns a newly allocated string without the quotes. The original input
+ * string is freed during the process.
+ * 
+ * @param input Pointer to the string to process.
+ * @param i Index of the first quote in the string.
+ * @return (char *) A new string without quotes. The caller is responsible for freeing it.
+ */
+char	*rm_quotes(char *input, int i);
+
 /* **************************************** */
 /*					SIGNALS					*/
 /* **************************************** */
@@ -183,6 +209,19 @@ char	*rm_empty_quotes(char *str, int start, int end);
 //	sig_init		//
 //////////////////////
 void	signal_function(void);
+
+//////////////////////
+//	signal2			//
+//////////////////////
+void	setup_heredoc_signals(void);
+
+/* **************************************** */
+/*					TOKENS					*/
+/* **************************************** */
+//////////////////////
+//	tokens			//
+//////////////////////
+t_token	*tokenizer(t_token *token_list, char *input);
 
 /* **************************************** */
 /*					UTILS					*/
@@ -199,15 +238,34 @@ void	ft_error_exit(t_shell **mshell, char *message, int code);
 //////////////////////
 //	utils_free		//
 //////////////////////
-void	ft_free_mshell(t_shell **mshell);
+void	ft_free_tkn(t_token **tkn);
 
 void	ft_free_cmd(t_command **cmd);
 
-void	ft_free_tkn(t_token **tkn);
+void	ft_free_mshell(t_shell **mshell);
+
+//////////////////////
+//	utils_print		//
+//////////////////////
+void	ft_printenv(t_env *lstenv);
+
+void	ft_printtkn(t_token *tkn);
+
+void	ft_printcmd(t_command *cmd);
+
+//////////////////////
+//	utils_split		//
+//////////////////////
+char	**ft_split_input(char *str);
 
 //////////////////////
 //	utils			//
 //////////////////////
+
+int		ft_isredir(int a);
+
+int		skip_quoted(char *str, int *i);
+
 /**
  * @brief You must indicate the key and it returns the corresponding value.
  * 
@@ -217,20 +275,6 @@ void	ft_free_tkn(t_token **tkn);
  */
 char	*ft_getenv(t_env *env, char *var);
 
-int		skip_quoted(char *str, int *i);
-
-t_env	*split_env(t_env *new, char *env);
-
 char	**ft_init_array(char **array);
-
-void	ft_printenv(t_env *lstenv);
-
-void	ft_printtkn(t_token *tkn);
-
-void	ft_printcmd(t_command *cmd);
-
-char	**ft_split_input(char *str);
-
-char	**ft_mshell_split(char *s);
 
 #endif

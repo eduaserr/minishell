@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 16:45:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/10 18:51:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:55:39 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	countwords(char *str)
 	return (count);
 }
 
-char	*ft_getword(char *str, int start, int end)
+static char	*ft_getword(char *str, int start, int end)
 {
 	char	*word;
 	int		j;
@@ -73,7 +73,7 @@ char	*ft_getword(char *str, int start, int end)
 	return (word);
 }
 
-static char	*getword(char *str, int *i)
+char	*getword(char *str, int *i)
 {
 	int	start;
 	int	end;
@@ -89,7 +89,7 @@ static char	*getword(char *str, int *i)
 	return (ft_getword(str, start, end));
 }
 
-char	**ft_mshell_split(char *str)
+static char	**ft_mshell_split(char *str)
 {
 	int		i;
 	int		j;
@@ -125,6 +125,7 @@ char	**ft_split_input(char *str)
 	if (!str)
 		return (NULL);
 	input = NULL;
+	// se pueden recoger los comandos de la estructura de tokens
 	input = ft_mshell_split(str); // no usar este split
 	if (!input)
 		return (ft_error("split error"), NULL);

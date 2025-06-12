@@ -6,11 +6,16 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 19:02:58 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:07:10 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	ft_isredir(int a)
+{
+	return (a == '<' || a == '>' || a == '|');
+}
 
 int	skip_quoted(char *str, int *i)
 {
@@ -44,26 +49,6 @@ char	*ft_getenv(t_env *env, char *var)
 	return (ft_strdup(env->value));
 }
 
-t_env	*split_env(t_env *new, char *env)
-{
-	char	**arr;
-
-	arr = NULL;
-	arr = ft_split(env, '=');
-	if (!arr || !arr[0])
-		return (ft_error("split"), NULL);
-	new->key = ft_strdup(arr[0]);
-	if (!new->key)
-		return (ft_freematrix(&arr), NULL);
-	if (!arr[1])
-		new->value = ft_strdup("");
-	else
-		new->value = ft_strdup(arr[1]);
-	if (!new->value)
-		return (ft_freematrix(&arr), NULL);
-	return (ft_freematrix(&arr), new);
-}
-
 char	**ft_init_array(char **array)
 {
 	char	**tmp;
@@ -90,44 +75,4 @@ char	**ft_init_array(char **array)
 	}
 	tmp[i] = NULL;
 	return (tmp);
-}
-
-void	ft_printtkn(t_token *tkn)
-{
-	int	i;
-
-	i = 0;
-	while (tkn)
-	{
-		ft_printf("node %d\ntoken->value - %s\n", i++, tkn->value);
-		ft_printf("int type - %i\n", tkn->type);
-		tkn = tkn->next;
-	}
-}
-
-void	ft_printcmd(t_command *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd)
-	{
-		ft_printf("node %d\ncommand - %s\n", i++, cmd->cmd);
-		ft_printmatrix(cmd->args);
-		//ft_printredir();
-		cmd = cmd->next;
-	}
-}
-
-void	ft_printenv(t_env *lstenv)
-{
-	int	i;
-
-	i = 0;
-	while (lstenv)
-	{
-		ft_printf("node %d\n[0] - %s\n", i++, lstenv->key);
-		ft_printf("[1] - %s\n", lstenv->value);
-		lstenv = lstenv->next;
-	}
 }

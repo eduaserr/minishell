@@ -1,48 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_cmd.c                                         :+:      :+:    :+:   */
+/*   init_tkn.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 17:25:52 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:37:38 by eduaserr         ###   ########.fr       */
+/*   Created: 2025/06/12 21:04:02 by eduaserr          #+#    #+#             */
+/*   Updated: 2025/06/12 21:40:01 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_command	*create_cmd(t_command *new)
+t_token	*get_token(t_token *new, t_token_type tkn, char *value, int *i)
 {
-	new = (t_command *)malloc(sizeof(t_command));
+	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
-	new->cmd = NULL;
-	new->args = NULL;
-	new->redirs = NULL;
+	*i += ft_strlen(value);
+	new->type = tkn;
+	new->value = ft_strdup(value);
+	if (!new->value)
+		return (free(new), ft_error("dup value"), NULL);
 	new->next = NULL;
 	return (new);
 }
 
-static t_command	*get_lastcmd_node(t_command *node)
+static t_token	*get_lasttkn_node(t_token *node)
 {
 	while (node->next)
 		node = node->next;
 	return (node);
 }
 
-void	addlastcmd_node(t_command **lstcmd, t_command *node)
+void	addlast_tknnode(t_token **token_list, t_token *node)
 {
-	t_command	*last;
+		t_token	*last;
 
 	last = NULL;
-	if (!lstcmd || !node)
+	if (!token_list || !node)
 		return ;
-	if (!*lstcmd)
-		*lstcmd = node;
+	if (!*token_list)
+		*token_list = node;
 	else
 	{
-		last = get_lastcmd_node(*lstcmd);
+		last = get_lasttkn_node(*token_list);
 		last->next = node;
 	}
 }

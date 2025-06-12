@@ -6,7 +6,7 @@
 #    By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 15:47:17 by eduaserr          #+#    #+#              #
-#    Updated: 2025/05/29 16:45:56 by eduaserr         ###   ########.fr        #
+#    Updated: 2025/06/12 22:14:40 by eduaserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,16 +21,23 @@ MAKE	= make --no-print-directory
 RM		= rm -f
 
 ### SRCS ###
+CMD		= src/command
 INIT	= src/init
-SIG		= src/signals
-UTLS	= src/utils
+PRS		= src/parser
 QUOTES	= src/quotes
+SIG		= src/signals
+TKN		= src/tokens
+UTLS	= src/utils
+
 SRC		= main.c
 
-SRCS	= $(INIT)/init_env.c $(INIT)/init.c $(INIT)/init_cmd.c\
+SRCS	= $(CMD)/cmd.c\
+		$(INIT)/init_cmd.c $(INIT)/init_env.c $(INIT)/init_tkn.c $(INIT)/init.c\
+		$(PRS)/parser.c $(PRS)/promp.c\
 		$(QUOTES)/quotes_expand.c $(QUOTES)/quotes_check.c $(QUOTES)/quotes_utils.c\
-		$(SIG)/sig_init.c\
-		$(UTLS)/utils_error.c $(UTLS)/utils_free.c $(UTLS)/utils_split.c $(UTLS)/utils.c
+		$(SIG)/sig_init.c $(SIG)/signal2.c\
+		$(TKN)/tokens.c\
+		$(UTLS)/utils_error.c $(UTLS)/utils_free.c $(UTLS)/utils_print.c $(UTLS)/utils_split.c $(UTLS)/utils.c
 
 ### OBJS ###
 OBJS	= $(SRC:.c=.o) $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/10 18:17:08 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:46:19 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ de las comillas del input y las joinea. --> hola""adios --> holaadios || ""
 si no hay input anterior ni posterior? Devuelve un input vacio a la funcion parse y esta lo
 vuelve a procesar check_quotes() esta vez sin comillas.
 */
+
 char	*rm_empty_quotes(char *str, int start, int end)
 {
 	char	*s1;

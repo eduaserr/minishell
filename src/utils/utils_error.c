@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/11 19:18:23 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:51:40 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_exit(t_shell **mshell)
 	exit(EXIT_SUCCESS);
 }
 
-void	ft_exit2(t_shell **mshell)
+static void	ft_exit2(t_shell **mshell)
 {
 	if ((*mshell)->exit_status == 1)
 		(*mshell)->running = 0;
@@ -57,14 +57,6 @@ void	ft_error(char *str)
 	ft_printf("\x1b[31m%s\x1B[37m%s\n", "Error : ", str);
 }
 
-/* NEW FT_ERROR FUNCTION
- Add this to minishell.h
-#define ERR_SYNTAX 2
-#define ERR_CMD_NOT_FOUND 127
-#define ERR_PERMISSION 126
-#define ERR_GENERAL 1
- */
-// Enhance your error function
 void ft_error_exit(t_shell **mshell, char *message, int code)
 {
 	ft_error(message);
