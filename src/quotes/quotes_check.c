@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 16:26:12 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/12 20:14:50 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ void	addlast_tknnode(t_token **token_list, t_token *node)
 	return (i);
 } */
 // TOKEN.C
+int	ft_isredir(int a)
+{
+	return (a == '<' || a == '>' || a == '|');
+}
+
 t_token	*get_token(t_token *new, t_token_type tkn, char *value, int *i)
 {
 	new = (t_token *)malloc(sizeof(t_token));
@@ -86,18 +91,20 @@ static char	*get_word(char *str, int i)
 {
 	char	*word;
 	int		j;
+	int		start;
 
 	if (!str)
 		return (NULL);
 	j = 0;
-	while (str[i] && !ft_isspace(str[i]))
+	start = i;
+	while (str[i] && !ft_isspace(str[i]) && !ft_isredir(str[i++]))
 		j++;
 	word = (char *)malloc(sizeof(char) * j + 1);
 	if (!word)
 		return (NULL);
 	j = 0;
-	while (str[i] && !ft_isspace(str[i]))
-		word[j++] = str[i++];
+	while (start < i)
+		word[j++] = str[start++];
 	word[j] = '\0';
 	return (word);
 }
@@ -112,7 +119,12 @@ t_token	*get_tkn_word(t_token *new, char *str, int *i)
 	start = *i;
 	j = *i;
 	if (!skip_quoted(str, &j))
+	{
+		ft_printf("ENTRA\n");
 		word = get_word(str, j);
+		ft_printf("valor de i al salir getword %d\n", *i);
+		ft_printf("SALE\n");
+	}
 	else
 		word = ft_substr(str, start, j - start);
 	if (!word)
@@ -155,11 +167,13 @@ t_token	*tokenizer(t_token *token_list, char *input)
 	i = 0;
 	while (input[i])
 	{
+		ft_printf("1 - nuestro iterador vale: %d\n", i);
 		while (input[i] && ft_isspace(input[i]))
 			i++;
 		if (!input[i])
 			return (token_list);
 		new = parse_tkn(new, input, &i);
+		ft_printf("2 - nuestro iterador vale: %d\n", i);
 		if (!new)
 			return (ft_free_tkn(&token_list), ft_error("parse token"), NULL);
 		addlast_tknnode(&token_list, new);
