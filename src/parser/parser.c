@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:28:12 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:06:28 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,34 +33,47 @@ static char	*preparate_input(char *input)
 	char	*tmp;
 
 	tmp = ft_strtrim(input, " \t\n\r\v\f");
+	ft_free_str(&input);
 	if (!tmp)
-		return (free(input), NULL);
+		return (NULL);
 	if (tmp[0] == '\0')		//intro con solo espacios
-		return (free(tmp), free(input), NULL);
-	input = ft_free_str(&input);
-	input = tmp;
-	tmp = NULL;
+		return (ft_free_str(&tmp));
+	tmp = check_quotes(tmp);
+	if (!tmp)
+		return (NULL);
+	if (tmp[0] == '\0')
+		return (ft_free_str(&tmp));
+	input = ft_strtrim(tmp, " \t\n\r\v\f");
+	ft_free_str(&tmp);
+	if (!input)
+		return (NULL);
+	if (input[0] == '\0')
+		return (ft_free_str(&input));
 	return (input);
 }
 
 void	parse_input(t_shell **mshell, char *input)
 {
-	input = preparate_input(input);
-	if (!input)
-		return ;
-	(*mshell)->p_input = check_quotes(ft_strtrim(input, " \t\n\r\v\f")); // strtrim hace malloc
+	(*mshell)->p_input = preparate_input(input);
 	if (!(*mshell)->p_input)
-		return (free(input), ft_error_exit(mshell, "process input", 0));
+		return ;
 	//parse_tokens
 	(*mshell)->tkn = tokenizer((*mshell)->tkn, (*mshell)->p_input);
 	if (!(*mshell)->tkn)
-		return (free(input), ft_error("token"));
+		return (ft_error("token"));
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
-		return (free(input), ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
+		return (ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
 	//split por comillas¿
 	 (*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
-		return (free(input), ft_error_exit(mshell, "get command", 0));		//free_mshell
+		return (ft_error_exit(mshell, "get command", 0));		//free_mshell
 		//^ check_input ^ before split into struct
-	input = ft_free_str(&input);
 }
+
+/* 
+CASO STRING NULO
+input -> "" = str[0] = '\0'; command not found
+CASO STRING COMILLAS
+input -> "''" = *str = ''; command not found
+input -> "'   '" = *str = '   '; command not found
+*/
