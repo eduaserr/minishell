@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/13 14:08:48 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/13 20:15:55 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	update_shell(t_shell **mshell)
 {
-	//update_struct();
-	if ((*mshell)->exit_status)
+	// update struct() ?
+	if ((*mshell)->exit_status == 1)
 		(*mshell)->running = 0;
 	ft_free_mshell(mshell);
 }
@@ -40,14 +40,13 @@ int	main(int argc, char **argv, char **envp)
 			ft_exit(&mshell);
 		if (input[0] != '\0') // Si no es ENTER
 			parse_input(&mshell, ft_strdup(input));
-		ft_printf("main input -> %s\n", input);
+		//ft_printf("main input -> %s\n", input);
 		input = ft_free_str(&input);
 		//ft_printenv(mshell->lstenv);
 		ft_printtkn(mshell->tkn);
 		//ft_printcmd(mshell->commands);
-		ft_printf("process input -> %s\n", mshell->p_input);
-		update_shell(&mshell);
-		//updateshlvl();
+		//ft_printf("process input -> %s\n", mshell->p_input);
+		update_shell(&mshell); // la funcionalidad pensada de updatear shell/env seria fuera del bucle
 	}
 	return (0);
 }

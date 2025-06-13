@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/13 15:06:28 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:41:05 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,12 @@ void	parse_input(t_shell **mshell, char *input)
 	//parse_tokens
 	(*mshell)->tkn = tokenizer((*mshell)->tkn, (*mshell)->p_input);
 	if (!(*mshell)->tkn)
-		return (ft_error("token"));
+		return (free((*mshell)->p_input), ft_error("token"));
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
-		return (ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
+		return (free((*mshell)->p_input), ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
 	//split por comillas¿
 	 (*mshell)->commands = get_command((*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
-		return (ft_error_exit(mshell, "get command", 0));		//free_mshell
+		return (free((*mshell)->p_input), ft_error_exit(mshell, "get command", 0));		//free_mshell
 		//^ check_input ^ before split into struct
 }
-
-/* 
-CASO STRING NULO
-input -> "" = str[0] = '\0'; command not found
-CASO STRING COMILLAS
-input -> "''" = *str = ''; command not found
-input -> "'   '" = *str = '   '; command not found
-*/

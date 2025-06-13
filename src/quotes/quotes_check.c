@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:43:55 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:41:12 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*check_quotes(char *input)
 		if (q_state == UNCLOSED)
 		{
 			input = ft_free_str(&input);
-			return (ft_error("Check_quotes"), NULL);
+			return (ft_error("unclosed quotes"), NULL);
 		}
 		if (q_state == EMPTY)
 		{
