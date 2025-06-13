@@ -5,11 +5,74 @@
 </div>
 <p align="center">My own shell developed in C.<br></p>
 
+### PROJECT STRUCTURE
+```
+minishell/
+├── Makefile
+├── main.c
+├── inc/
+│   └── minishell.h
+├── lib/
+│   └── libft/
+│       └── [archivos de libft]
+└── src/
+	├── command/
+	│   └── cmd.c
+	├── init/
+	│   ├── init.c
+	│   ├── init_cmd.c
+	│   ├── init_env.c
+	│   └── init_tkn.c
+	├── parser/
+	│   ├── parser.c
+	│   └── promp.c
+	├── quotes/
+	│   ├── quotes_check.c
+	│   ├── quotes_expand.c
+	│   └── quotes_utils.c
+	├── signals/
+	│   ├── sig_init.c
+	│   └── signal2.c
+	├── tokens/
+	│   └── tokens.c
+	└── utils/
+		├── utils.c
+		├── utils_error.c
+		├── utils_free.c
+		├── utils_print.c
+		└── utils_split.c
 
+```
 
+### Organización por módulos:
+📁 **Archivos principales**
+- main.c - Función principal y bucle del shell
+- minishell.h - Header con todas las definiciones.
 
+📁 **src/command/**
+- Gestión y parseo de comandos.
 
+📁 **src/init/**
+- Inicialización de estructuras (shell, env, - tokens, comandos).
 
+📁 **src/parser/**
+- Parseo del input del usuario y generación del prompt.
+
+📁 **src/quotes/**
+- Manejo de comillas (validación, expansión, utilidades).
+
+📁 **src/signals/**
+- Gestión de señales (SIGINT, SIGQUIT, etc.).
+
+📁 **src/tokens/**
+- Tokenización del input.
+
+📁 **src/utils/**
+- Funciones auxiliares (errores, liberación de memoria, impresión, split).
+
+📁 **lib/libft/**
+- Biblioteca de funciones personalizadas.
+Esta estructura modular facilita el mantenimiento y desarrollo del proyecto, separando claramente las responsabilidades de cada componente.
 
 
 <!--
