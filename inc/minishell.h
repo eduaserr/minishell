@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 14:59:25 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 21:21:14 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,6 @@ int		get_quote(char *str);
 
 char	*get_in_quotes(char *str, int start, int end);
 
-char	*rm_cmdquotes(char *str, int start, int end);
 /**
  * @brief This function processes the input string, removes the empty quotes (single or double),
  * and returns a newly allocated string without them.
@@ -193,13 +192,12 @@ char	*rm_cmdquotes(char *str, int start, int end);
 char	*rm_empty_quotes(char *str, int start, int end);
 
 /**
- * @brief This function processes the input string, removes the quotes (single or double),
- * and returns a newly allocated string without the quotes. The original input
- * string is freed during the process.
- * 
+ * @brief This function processes the input string, and copy all character except both chars indicated
+ * by index in the parameter from the function.
  * @param input Pointer to the string to process.
  * @param i Index of the first quote in the string.
- * @return (char *) A new string without quotes. The caller is responsible for freeing it.
+ * @param j Index of the first quote in the string.
+ * @return (char *) A new string without pair quotes. The caller is responsible for freeing it.
  */
 char	*rm_quotes(char *input, int i, int j);
 

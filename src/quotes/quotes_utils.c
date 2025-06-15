@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 15:01:36 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 21:16:21 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,32 +77,6 @@ char	*rm_empty_quotes(char *str, int start, int end)
 	return (str);
 }
 
-/*char	*rm_cmdquotes(char *str, int start, int end)
-{
-	char	*tmp;
-	char	*s1;
-	char	*s2;
-	char	*in_q;
-
-	in_q = NULL;
-	s1 = ft_substr(str, 0, start);
-	if (!s1)
-		return (ft_error("sub 1"), NULL);
-	in_q = get_in_quotes(str, start, end);
-	if (!in_q)
-		return (free(s1), ft_error("sub in_quotes"), NULL);
-	tmp = ft_strjoin(s1, in_q);
-	free(s1);
-	if (!tmp)
-		return (ft_error("join in_quotes"), NULL);
-	s2 = ft_substr(str, end + 1, ft_strlen(str));
-	if (!s2)
-		return (ft_error("sub 2"), NULL);
-	tmp = ft_strjoin_gnl(tmp, s2);
-	free(s2);
-	return (tmp);
-}*/
-
 char	*rm_quotes(char *input, int i, int end)
 {
 	char	c;
@@ -120,18 +94,6 @@ char	*rm_quotes(char *input, int i, int end)
 	tmp = (char *)malloc(sizeof(char) * (ft_strlen(input) - 1));
 	if (!tmp)
 		return (NULL);
-	/*
-	while (input[start])
-	{
-		if ((start == i || start == end) && input[start] == c && q < 2)
-		{
-			ft_printf("		comilla en rm_quote[%i] -> %c\n", start, input[start]);
-			q++;
-			start++;
-		}
-		else
-			tmp[j++] = input[start++];
-	}*/
 	while (input[start])
 	{
 		if (start == i || start == end)
