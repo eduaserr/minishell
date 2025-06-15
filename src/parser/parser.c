@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 05:49:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 13:15:13 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*rm_quotes2(char *str)
 		j = i;
 		if (str[i] == '\'' || str[i] == '\"')
 			skip_quoted(str, &i);
-		tmp = rm_cmdquotes(str, j, i);
+		tmp = rm_cmdquotes(str, j, i - 1);
 		if (!tmp)
 			return (NULL);
 		i++;
@@ -106,22 +106,30 @@ char **ft_ndtoarr(t_token *src)
 	while (src)
 	{
 		swp = src->next;
+		ft_printf("src->value %s\n", (src->value));
 		str = ft_strdup(src->value);
+		if (!str)
+			return (NULL);
+		ft_printf("strdup is %s\n", (str));
 		q = get_quote(str);
-		if (q != -1)
+		if (q != 0)
 		{
 			arr[i] = rm_quotes2(str);
-			ft_free_str(&str);
-			if (!arr[i])
-				return (ft_error("rm_quotes"), NULL);
+			ft_printf("	array[%i] quotes %s\n", i, (arr[i]));
 		}
 		else
-			arr[i] = str;
+		{
+			arr[i] = ft_strdup(str);
+			ft_printf("	array[%i] no quotes %s\n", i, (arr[i]));
+		}
+		ft_free_str(&str);
 		if (!arr[i])
 			return (ft_freematrix(&arr), NULL);
+		ft_printf("array[%i] al final %s\n", i, (arr[i]));
 		i++;
 		src = swp;
 	}
+	ft_printmatrix(arr);
 	arr[i] = NULL;
 	return (arr);
 }

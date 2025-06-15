@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 03:14:54 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:32:37 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 		input = ft_free_str(&input);
 		//ft_printenv(mshell->lstenv);
 		ft_printtkn(mshell->tkn);
-		ft_printcmd(mshell->commands);
+		//ft_printcmd(mshell->commands);
 		//ft_printf("process input -> %s\n", mshell->p_input);
 		update_shell(&mshell); // la funcionalidad pensada de updatear shell/env seria fuera del bucle
 	}

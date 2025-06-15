@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 05:35:32 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 13:20:02 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,23 @@ char	*rm_cmdquotes(char *str, int start, int end)
 	char	*tmp;
 	char	*s1;
 	char	*s2;
+	char	*in_q;
 
+	in_q = NULL;
 	s1 = ft_substr(str, 0, start);
 	if (!s1)
 		return (ft_error("sub 1"), NULL);
+	in_q = get_in_quotes(str, start, end);
+	if (!in_q)
+		return (free(s1), ft_error("sub in_quotes"), NULL);
+	tmp = ft_strjoin(s1, in_q);
+	free(s1);
+	if (!tmp)
+		return (ft_error("join in_quotes"), NULL);
 	s2 = ft_substr(str, end + 1, ft_strlen(str));
 	if (!s2)
-		return (free(s1), ft_error("sub 2"), NULL);
-	tmp = ft_strjoin(s1, s2);
-	free(s1);
+		return (ft_error("sub 2"), NULL);
+	tmp = ft_strjoin_gnl(tmp, s2);
 	free(s2);
 	return (tmp);
 }
