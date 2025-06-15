@@ -98,11 +98,12 @@ char *rm_quotes2(char *str)
 			tmp = rm_quotes(str, j, i - 1);
                 if (!tmp)
                     return (NULL);
-			ft_printf("	-string str before -> %s\n", tmp);
+			ft_printf("	-string str before -> %s\n", str);
 			ft_printf("	-string tmp after -> %s\n", tmp);
 			ft_free_str(&str);
 			str = tmp;
-			ft_printf("	-string str after -> %s\n", tmp);
+			ft_printf("	-string str after -> %s\n", str);
+			i = i - 2;
 		}
 		else
 		{

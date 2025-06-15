@@ -111,6 +111,8 @@ char	*rm_quotes(char *input, int i, int end)
 	int		q;
 	int		start;
 
+	(void)c;
+	(void)q;
 	q = 0;
 	c = input[i];
 	j = 0;
@@ -118,14 +120,22 @@ char	*rm_quotes(char *input, int i, int end)
 	tmp = (char *)malloc(sizeof(char) * (ft_strlen(input) - 1));
 	if (!tmp)
 		return (NULL);
+	/*
 	while (input[start])
 	{
-		if (start != i && start != end && input[start] == c && q < 2)
+		if ((start == i || start == end) && input[start] == c && q < 2)
 		{
-			ft_printf("		comilla en rm_quote[%i] -> %c\n", i, input[i]);
+			ft_printf("		comilla en rm_quote[%i] -> %c\n", start, input[start]);
 			q++;
 			start++;
 		}
+		else
+			tmp[j++] = input[start++];
+	}*/
+	while (input[start])
+	{
+		if (start == i || start == end)
+			start++;
 		else
 			tmp[j++] = input[start++];
 	}
