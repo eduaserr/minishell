@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 13:15:13 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:08:55 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,30 @@ static char	*preparate_input(char *input)
 	return (input);
 }
 
-char	*rm_quotes2(char *str)
+char *rm_quote_chars(char *str, int start_quote, int end_quote)
+{
+	char	*result;
+	int		i;
+	int		j;
+	int		len;
+
+	len = ft_strlen(str);
+	i = 0; 
+	j = 0;
+	result = (char *)malloc(sizeof(char) * (len - 1));  // -1 porque eliminamos 2 caracteres
+	if (!result)
+		return (NULL);
+	while (str[i])
+	{
+		if (i != start_quote && i != end_quote)  // Salta las posiciones de las comillas
+			result[j++] = str[i];
+		i++;
+	}
+	result[j] = '\0';
+	return (result);
+}
+
+char *rm_quotes2(char *str)
 {
 	char	*tmp;
 	int		i;
@@ -60,16 +83,33 @@ char	*rm_quotes2(char *str)
 
 	i = 0;
 	j = 0;
-
+	tmp = NULL;
 	while (str[i])
 	{
+		ft_printf("while %i\n", i);
 		j = i;
-		if (str[i] == '\'' || str[i] == '\"')
-			skip_quoted(str, &i);
-		tmp = rm_cmdquotes(str, j, i - 1);
-		if (!tmp)
-			return (NULL);
-		i++;
+		if (skip_quoted(str, &i))
+		{
+			ft_printf("ENTRA SKIP_QUOTED\n");
+			ft_printf("	first_quotes = %i\n", j);
+			ft_printf("	str[%i] -> %c\n", j, str[j]);
+			ft_printf("	last_quotes = %i\n", i - 1);
+			ft_printf("	str[%i] -> %c\n", i - 1, str[i - 1]);
+			tmp = rm_quotes(str, j, i - 1);
+                if (!tmp)
+                    return (NULL);
+			ft_printf("	-string str before -> %s\n", tmp);
+			ft_printf("	-string tmp after -> %s\n", tmp);
+			ft_free_str(&str);
+			str = tmp;
+			ft_printf("	-string str after -> %s\n", tmp);
+		}
+		else
+		{
+			ft_printf("NO SKIP_QUOTED\n");
+			i++;
+		}
+		
 	}
 	return (tmp);
 }

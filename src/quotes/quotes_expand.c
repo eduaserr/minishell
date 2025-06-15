@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 18:35:08 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/10 18:24:49 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:00:26 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*expand_var(t_shell **mshell, char **input, int i)
 	tmp = ft_free_str(&tmp);
 	if (!value)
 	{
-		tmp = rm_quotes(*input, i);
+		tmp = rm_quotes(*input, i, 0);
 		if (tmp)
 		{
 			*input = ft_free_str(input);

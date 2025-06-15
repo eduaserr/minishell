@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 05:33:14 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:59:25 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ char	*rm_empty_quotes(char *str, int start, int end);
  * @param i Index of the first quote in the string.
  * @return (char *) A new string without quotes. The caller is responsible for freeing it.
  */
-char	*rm_quotes(char *input, int i);
+char	*rm_quotes(char *input, int i, int j);
 
 /* **************************************** */
 /*					SIGNALS					*/
