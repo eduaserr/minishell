@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 05:33:33 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 05:49:29 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	parse_input(t_shell **mshell, char *input)
 	if (!(*mshell)->commands)
 		return (free((*mshell)->p_input), ft_error_exit(mshell, "get command", 0));
 	(*mshell)->commands->args = ft_ndtoarr((*mshell)->tkn);
-	if ((*mshell)->commands->args)
+	if (!(*mshell)->commands->args)
 		return (ft_error("get cmd args"));
 		//^ check_input ^ before split into struct
 }
