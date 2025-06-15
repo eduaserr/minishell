@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:46:19 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 05:35:32 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		get_quote(char *str)
 			return ('\"');
 		i++;
 	}
-	return (-1);
+	return (0);
 }
 
 /*Start -> posición 1º comilla
@@ -75,6 +75,24 @@ char	*rm_empty_quotes(char *str, int start, int end)
 	free(s1);
 	free(s2);
 	return (str);
+}
+
+char	*rm_cmdquotes(char *str, int start, int end)
+{
+	char	*tmp;
+	char	*s1;
+	char	*s2;
+
+	s1 = ft_substr(str, 0, start);
+	if (!s1)
+		return (ft_error("sub 1"), NULL);
+	s2 = ft_substr(str, end + 1, ft_strlen(str));
+	if (!s2)
+		return (free(s1), ft_error("sub 2"), NULL);
+	tmp = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (tmp);
 }
 
 char	*rm_quotes(char *input, int i)

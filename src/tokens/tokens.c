@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:39:15 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 02:14:09 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 03:26:35 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static t_token	*get_tkn_word(t_token *new, char *str, int *i)
 		else
 			j++;
 	}
-		
 	word = ft_substr(str, start, j - start);
 	if (!word)
 		return (NULL);

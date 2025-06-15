@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/13 19:30:55 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 05:33:14 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ typedef struct s_shell
 //////////////////////
 //	cmd				//
 //////////////////////
-t_command	*get_command(t_command *cmd, char *input);
+t_command	*get_command(t_shell *mshell, t_command *cmd, char *input);
 
 /* **************************************** */
 /*					INIT					*/
@@ -180,6 +180,7 @@ int		get_quote(char *str);
 
 char	*get_in_quotes(char *str, int start, int end);
 
+char	*rm_cmdquotes(char *str, int start, int end);
 /**
  * @brief This function processes the input string, removes the empty quotes (single or double),
  * and returns a newly allocated string without them.
