@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:39:15 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:49:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 02:14:09 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
+/*
 static char	*get_word(char *str, int i)
 {
 	char	*word;
@@ -32,8 +32,8 @@ static char	*get_word(char *str, int i)
 		word[j++] = str[start++];
 	word[j] = '\0';
 	return (word);
-}
-
+}*/
+/*
 static t_token	*get_tkn_word(t_token *new, char *str, int *i)
 {
 	char	*word;
@@ -43,27 +43,52 @@ static t_token	*get_tkn_word(t_token *new, char *str, int *i)
 	word = NULL;
 	start = *i;
 	j = *i;
-	if (!skip_quoted(str, &j))
+	// hacer get word incluido si hay quotes de po medio
+	while (str[j] && !ft_isspace(str[j]))
 	{
-		ft_printf("ENTRA\n");
-		word = get_word(str, j);
-		ft_printf("valor de i al salir getword %d\n", *i);
-		ft_printf("SALE\n");
+		if (skip_quoted(str, &j))
+			break ;
+		j++;
 	}
-	else
-		word = ft_substr(str, start, j - start);
+	word = ft_substr(str, start, j - start);
 	if (!word)
 			return (NULL);
 	new = get_token(new, WORD, word, i);
 	word = ft_free_str(&word);
 	return (new);
+}*/
+
+static t_token	*get_tkn_word(t_token *new, char *str, int *i)
+{
+	char	*word;
+	int		start;
+	int		j;
+
+	start = *i;
+	j = *i;
+		
+	while (str[j] && !ft_isspace(str[j]) && !ft_isredir(str[j]))
+	{
+		if (str[j] == '\'' || str[j] == '\"')
+		{
+			if (!skip_quoted(str, &j))
+				break;
+		}
+		else
+			j++;
+	}
+		
+	word = ft_substr(str, start, j - start);
+	if (!word)
+		return (NULL);
+	new = get_token(new, WORD, word, i);
+	ft_free_str(&word);
+	return (new);
 }
 
 static t_token	*parse_tkn(t_token *new, char *input, int *i)
 {
-	char *tmp;
 
-	tmp = NULL;
 	if (input[*i] == '<' && input[*i + 1] == '<')
 		new = get_token(new, HEREDOC, "<<", i);
 	else if (input[*i] == '>' && input[*i + 1] == '>')
