@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 22:06:56 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:26:31 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int		get_quote(char *str)
 	return (0);
 }
 
-/*Start -> posición 1º comilla
-End -> posición 2º comilla*/
+//no se usa
 char	*get_in_quotes(char *str, int start, int end)
 {
 	char	*tmp;
@@ -51,12 +50,6 @@ char	*get_in_quotes(char *str, int start, int end)
 	tmp[i] = '\0';
 	return (tmp);
 }
-
-/* Esta función actúa cuando las comiilas estan vacias "". Recoge lo anterior y lo posterior
-de las comillas del input y las joinea. --> hola""adios --> holaadios || ""
-si no hay input anterior ni posterior? Devuelve un input vacio a la funcion parse y esta lo
-vuelve a procesar check_quotes() esta vez sin comillas.
-*/
 
 char	*rm_empty_quotes(char *str, int start, int end)
 {
@@ -120,8 +113,8 @@ char *rm_quotes2(char *str)
 		if (skip_quoted(str, &i))
 		{
 			tmp = rm_quotes(str, j, i - 1);
-                if (!tmp)
-                    return (NULL);
+				if (!tmp)
+					return (NULL);
 			ft_free_str(&str);
 			str = tmp;
 			i = i - 2;

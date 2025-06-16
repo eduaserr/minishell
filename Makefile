@@ -6,7 +6,7 @@
 #    By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 15:47:17 by eduaserr          #+#    #+#              #
-#    Updated: 2025/06/12 22:14:40 by eduaserr         ###   ########.fr        #
+#    Updated: 2025/06/16 20:31:31 by eduaserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,13 +31,13 @@ UTLS	= src/utils
 
 SRC		= main.c
 
-SRCS	= $(CMD)/cmd.c\
+SRCS	= $(CMD)/cmd.c $(CMD)/get_cmd.c\
 		$(INIT)/init_cmd.c $(INIT)/init_env.c $(INIT)/init_tkn.c $(INIT)/init.c\
 		$(PRS)/parser.c $(PRS)/promp.c\
 		$(QUOTES)/quotes_expand.c $(QUOTES)/quotes_check.c $(QUOTES)/quotes_utils.c\
 		$(SIG)/sig_init.c $(SIG)/signal2.c\
 		$(TKN)/tokens.c\
-		$(UTLS)/utils_error.c $(UTLS)/utils_free.c $(UTLS)/utils_print.c $(UTLS)/utils_split.c $(UTLS)/utils.c
+		$(UTLS)/utils_error.c $(UTLS)/utils_free.c $(UTLS)/utils_node.c $(UTLS)/utils_print.c $(UTLS)/utils_split.c $(UTLS)/utils.c
 
 ### OBJS ###
 OBJS	= $(SRC:.c=.o) $(SRCS:.c=.o)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 18:35:08 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 15:00:26 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:29:03 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	swp_value(char **input, char *value, int i, int end)
+static void	swp_value(char **input, char *value, int i, int end)
 {
 	char	*s1;
 	char	*s2;
@@ -30,18 +30,6 @@ void	swp_value(char **input, char *value, int i, int end)
 	free(s1);
 	*input = ft_strjoin_gnl(*input, s2);
 	free(s2);
-}
-
-char	*is_var(char *str, t_env *env)
-{
-	char	*value;
-
-	if (!str)
-		return (NULL);
-	value = ft_getenv(env, str);
-	if (!value)
-		return (ft_error("no env key match"), NULL);
-	return (value);// devuelve puntero a estructura. //strdup() ?
 }
 
 // if $USER se deberia comprobar en todo el input, no solo en el strign entre comillas. ?
@@ -65,11 +53,11 @@ char	*expand_var(t_shell **mshell, char **input, int i)
 		return (NULL);
 	ft_printf("TMP\n");
 	ft_printlines(tmp);
-	/*tmp "USER" || "hola USER"
+	/* tmp "USER" || "hola USER"
 	antes de usar tmp, comprobar que :
 	- USER no contenga caracteres alfanumericos detrás (numero y letras).
-	ej.: "hola USER" || "hola USER, bienvenido"
-	*/
+	ej.: "hola USER" || "hola USER, bienvenido" */
+
 
 	value = is_var(tmp, (*mshell)->lstenv); // devuelve NULL si no hay coincidencia despues del dollar $
 	ft_printf("value is -> %s\n", value);

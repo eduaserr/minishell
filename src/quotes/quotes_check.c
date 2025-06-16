@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 22:06:52 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:56:58 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-/*
-	posible problema = "'$USER"' || '"$USER'";
-*/
-
-/*la función ft_check_quotes se llama dentro de un while , mientras el input exista.
-Por cada iteración (por cada carácter del input), comprobamos si la posición es una comilla.
-Si no es comilla devuelve NO_QUOTES;  si hay comilla, comprobamos en el resto del input
-la siguiente coincidencia con la comilla registrada. Si el input se acaba antes de encontrarla
-retornamos UNCLOSED, y si el siguiente caracter de la comilla es la coincidencia,
-significa que las comillas están vacias.*/
-
-//esta funcion comprueba que la primera ocurrencia de comillas tenga su respectivo cierre,
-//sin importar qué contenga en su interior, incluidas comillas de distinto tipo.
-// ej.: echo "hola'".	echo "a'b""c"
-//		hola'			a'bc
 
 static int	quotes_status(char *input, int *i)
 {

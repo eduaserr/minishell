@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 03:50:03 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:03:06 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,6 @@ static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int s
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
-
-/*funcion para meter 1 comando en arg por cada vez que hay pipe o nulo.
-mete lo anterior del input hasta que acaba el bucle
-
-primero guardar y luego comprobar?*/
 
 t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
 {

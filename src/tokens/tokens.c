@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:39:15 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 03:11:33 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:11:03 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-/*
-static char	*get_word(char *str, int i)
+
+char	*get_word(char *str, int i)
 {
 	char	*word;
 	int		j;
@@ -32,33 +32,10 @@ static char	*get_word(char *str, int i)
 		word[j++] = str[start++];
 	word[j] = '\0';
 	return (word);
-}*/
-/*
-static t_token	*get_tkn_word(t_token *new, char *str, int *i)
-{
-	char	*word;
-	int		start;
-	int		j;
+}
 
-	word = NULL;
-	start = *i;
-	j = *i;
-	// hacer get word incluido si hay quotes de po medio
-	while (str[j] && !ft_isspace(str[j]))
-	{
-		if (skip_quoted(str, &j))
-			break ;
-		j++;
-	}
-	word = ft_substr(str, start, j - start);
-	if (!word)
-			return (NULL);
-	new = get_token(new, WORD, word, i);
-	word = ft_free_str(&word);
-	return (new);
-}*/
 
-void	set_quote(char *str, int *type, int i)
+static void	set_typeq(char *str, int *type, int i)
 {
 	if (str[i] == '\"')
 		*type = DOUBLE;
@@ -74,7 +51,6 @@ static t_token	*get_tkn_word(t_token *new, char *str, int *i)
 
 	start = *i;
 	j = *i;
-		
 	while (str[j] && !ft_isspace(str[j]) && !ft_isredir(str[j]))
 	{
 		if (str[j] == '\'' || str[j] == '\"')
@@ -89,7 +65,7 @@ static t_token	*get_tkn_word(t_token *new, char *str, int *i)
 	if (!word)
 		return (NULL);
 	new = get_token(new, WORD, word, i);
-	set_quote(str, &new->type, start);
+	set_typeq(str, &new->type, start);
 	ft_free_str(&word);
 	return (new);
 }

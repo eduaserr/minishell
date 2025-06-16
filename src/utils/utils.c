@@ -6,18 +6,18 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:07:10 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:30:49 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_isredir(int a)
+int		ft_isredir(int a)
 {
 	return (a == '<' || a == '>' || a == '|');
 }
 
-int	skip_quoted(char *str, int *i)
+int		skip_quoted(char *str, int *i)
 {
 	int	q;
 
@@ -33,20 +33,6 @@ int	skip_quoted(char *str, int *i)
 	}
 	else
 		return (0);		//No habia comillas
-}
-
-//Creates strdup. You must indicate the key and it returns the corresponding value"
-char	*ft_getenv(t_env *env, char *var)
-{
-	while (env)
-	{
-		if (ft_strncmp(env->key, var, 4) == 0)
-			break ;
-		env = env->next;
-	}
-	if (!env)
-		return (NULL);
-	return (ft_strdup(env->value));
 }
 
 char	**ft_init_array(char **array)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 03:12:34 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:30:28 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,13 @@ typedef struct s_shell
 //	cmd				//
 //////////////////////
 t_command	*get_command(t_shell *mshell, t_command *cmd, char *input);
+
+//////////////////////
+//	cmd				//
+//////////////////////
+void	get_args(t_token *tkn, t_command *cmd);
+
+void	dup_cmd(t_command *cmd);
 
 /* **************************************** */
 /*					INIT					*/
@@ -245,6 +252,20 @@ void	ft_free_cmd(t_command **cmd);
 void	ft_free_mshell(t_shell **mshell);
 
 //////////////////////
+//	utils_free		//
+//////////////////////
+/**
+ * @brief You must indicate the key and it returns the corresponding value.
+ * 
+ * @param env content data.
+ * @param var variable for being search.
+ * @return (char *) A new dup string. The caller is responsible for freeing it.
+ */
+char	*ft_getenv(t_env *env, char *var);
+
+char	*is_var(char *str, t_env *env);
+
+//////////////////////
 //	utils_print		//
 //////////////////////
 void	ft_printenv(t_env *lstenv);
@@ -265,15 +286,6 @@ char	**ft_split_input(char *str);
 int		ft_isredir(int a);
 
 int		skip_quoted(char *str, int *i);
-
-/**
- * @brief You must indicate the key and it returns the corresponding value.
- * 
- * @param env content data.
- * @param var variable for being search.
- * @return (char *) A new dup string. The caller is responsible for freeing it.
- */
-char	*ft_getenv(t_env *env, char *var);
 
 char	**ft_init_array(char **array);
 

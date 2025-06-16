@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 21:26:09 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:41:23 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	update_shell(t_shell **mshell)
 	ft_free_mshell(mshell);
 }
 
-int	main(int argc, char **argv, char **envp)
+int		main(int argc, char **argv, char **envp)
 {
 	t_shell	*mshell;
 	char	*input;
