@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 02:50:25 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 03:31:34 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,20 +258,18 @@ void	parse_input(t_shell **mshell, char *input)
 	//parse_tokens
 	(*mshell)->tkn = tokenizer((*mshell)->tkn, (*mshell)->p_input);
 	if (!(*mshell)->tkn)
-		return (free((*mshell)->p_input), ft_error("token"));
+		return (ft_error("token"));
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
-		return (free((*mshell)->p_input), ft_error_exit(mshell, "syntax error near unexpected token `|'", 0));
+		return (ft_error("syntax error near unexpected token `|'"));
 	(*mshell)->commands = get_command(*mshell, (*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
-		return (free((*mshell)->p_input), ft_error_exit(mshell, "get command", 0));
+		return (ft_error("get cmd"));
 	get_args((*mshell)->tkn, (*mshell)->commands);
 	if (!(*mshell)->commands->args)
 		return (ft_error("get cmd args"));
 	aux((*mshell)->commands);
-	// rm_quotes (ya inplementado en ndtoarr())
-	// guardar tipo de comilla
 	// parse_redirecciones
-	// si es "" checkear por expansión
+	// si es tkn->type DOUBLE ("") checkear por expansión
 	// si hay $ checkear siguiente posicion para expandir
 	// si es variable del sistema , sustituir
 		//^ check_input ^ before split into struct
