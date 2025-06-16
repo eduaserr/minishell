@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:39:15 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 03:26:35 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 03:11:33 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ static t_token	*get_tkn_word(t_token *new, char *str, int *i)
 	return (new);
 }*/
 
+void	set_quote(char *str, int *type, int i)
+{
+	if (str[i] == '\"')
+		*type = DOUBLE;
+	else if (str[i] == '\'')
+		*type = SIMPLE;
+}
+
 static t_token	*get_tkn_word(t_token *new, char *str, int *i)
 {
 	char	*word;
@@ -81,6 +89,7 @@ static t_token	*get_tkn_word(t_token *new, char *str, int *i)
 	if (!word)
 		return (NULL);
 	new = get_token(new, WORD, word, i);
+	set_quote(str, &new->type, start);
 	ft_free_str(&word);
 	return (new);
 }

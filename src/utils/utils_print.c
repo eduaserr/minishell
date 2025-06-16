@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 20:56:18 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 20:56:53 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:20:35 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_printtkn(t_token *tkn)
 	int	i;
 
 	i = 0;
+	ft_printf("PRINT TOKENS\n");
 	while (tkn)
 	{
 		ft_printf("node %d\ntoken->value - %s\n", i++, tkn->value);
@@ -30,6 +31,7 @@ void	ft_printcmd(t_command *cmd)
 	int	i;
 
 	i = 0;
+	ft_printf("PRINT COMMANDS\n");
 	while (cmd)
 	{
 		ft_printf("node %d\ncommand - %s\n", i++, cmd->cmd);

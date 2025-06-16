@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 21:16:21 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:06:56 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,32 @@ char	*rm_quotes(char *input, int i, int end)
 			tmp[j++] = input[start++];
 	}
 	tmp[j] = '\0';
+	return (tmp);
+}
+
+char *rm_quotes2(char *str)
+{
+	char	*tmp;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	tmp = NULL;
+	while (str[i])
+	{
+		j = i;
+		if (skip_quoted(str, &i))
+		{
+			tmp = rm_quotes(str, j, i - 1);
+                if (!tmp)
+                    return (NULL);
+			ft_free_str(&str);
+			str = tmp;
+			i = i - 2;
+		}
+		else
+			i++;
+	}
 	return (tmp);
 }

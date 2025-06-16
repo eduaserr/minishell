@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 21:21:14 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 03:12:34 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ extern volatile sig_atomic_t	g_signal_received;
 typedef enum e_token_type
 {
 	WORD,
-//	DOUBLE,
-//	SIMPLE,
+	SIMPLE,
+	DOUBLE,
 	PIPE,			// cuenta '|' como redirección?
 	REDIR_IN,		// <
 	REDIR_OUT,		// >
@@ -168,6 +168,17 @@ char	*promp_input(t_shell *mshell);
 //////////////////////
 char	*check_quotes(char *input);
 
+char 	*rm_quotes2(char *str);
+
+/**
+ * @brief This function processes the input string, and copy all character except both chars indicated
+ * by index in the parameter from the function.
+ * @param input Pointer to the string to process.
+ * @param i Index of the first quote in the string.
+ * @param j Index of the first quote in the string.
+ * @return (char *) A new string without pair quotes. The caller is responsible for freeing it.
+ */
+char	*rm_quotes(char *input, int i, int j);
 //////////////////////
 //	quotes_expand	//
 //////////////////////
@@ -190,16 +201,6 @@ char	*get_in_quotes(char *str, int start, int end);
  * @return (char *) A new string without quotes. The caller is responsible for freeing it.
  */
 char	*rm_empty_quotes(char *str, int start, int end);
-
-/**
- * @brief This function processes the input string, and copy all character except both chars indicated
- * by index in the parameter from the function.
- * @param input Pointer to the string to process.
- * @param i Index of the first quote in the string.
- * @param j Index of the first quote in the string.
- * @return (char *) A new string without pair quotes. The caller is responsible for freeing it.
- */
-char	*rm_quotes(char *input, int i, int j);
 
 /* **************************************** */
 /*					SIGNALS					*/
