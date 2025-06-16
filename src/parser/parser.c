@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 20:24:07 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:37:56 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,17 @@ static char	*preparate_input(char *input)
 	return (input);
 }
 
+void	parse_commands(t_shell **mshell)
+{
+	(*mshell)->commands = get_command(*mshell, (*mshell)->commands, (*mshell)->p_input);
+	if (!(*mshell)->commands)
+		return (ft_error("get cmd"));
+	get_args((*mshell)->tkn, (*mshell)->commands);
+	if (!(*mshell)->commands->args)
+		return (ft_error("get cmd args"));
+	dup_cmd((*mshell)->commands);
+}
+
 void	parse_input(t_shell **mshell, char *input)
 {
 	(*mshell)->p_input = preparate_input(input);
@@ -63,14 +74,7 @@ void	parse_input(t_shell **mshell, char *input)
 		return (ft_error("token"));
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
 		return (ft_error("syntax error near unexpected token `|'"));
-	//void parse_commands()
-	(*mshell)->commands = get_command(*mshell, (*mshell)->commands, (*mshell)->p_input);
-	if (!(*mshell)->commands)
-		return (ft_error("get cmd"));
-	get_args((*mshell)->tkn, (*mshell)->commands);
-	if (!(*mshell)->commands->args)
-		return (ft_error("get cmd args"));
-	dup_cmd((*mshell)->commands);
+	parse_commands(mshell);
 	// parse_redirecciones
 	// si es tkn->type DOUBLE ("") checkear por expansión
 	// si hay $ checkear siguiente posicion para expandir
