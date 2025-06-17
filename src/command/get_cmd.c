@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:47:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 18:02:16 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 21:08:14 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,31 @@ static char	*process_str(t_shell *mshell, char *str)
 	int		i;
 	char	*pid;
 	char	*err;
+	int		q;
 
 	i = 0;
+	int in_single = 0;  // ✅ Inicializar correctamente
+	int in_db = 0;  // ✅ Manejar ambos tipos de comillas
+		
 	if (ft_strchr(str, '$'))
 	{
 		while (str[i])
 		{
-			if (str[i] == '$' && str[i + 1] == '$')
+			// ✅ Actualizar estado de comillas ANTES de procesar expansión
+			if (str[i] == '\'' && !in_db)
+				in_single = !in_single;  // Toggle
+			else if (str[i] == '"' && !in_single)
+				in_db = !in_db;   // Toggle
+			
+			ft_printf("	estado comillas simples -> %i\n", in_single);
+			ft_printf("	estado comillas dobles -> %i\n", in_db);
+			
+			if (str[i] == '\'' && q != 2)
+				q = 1;
+			else if (str[i] != '\'' && q == 0)
+				q = 2;
+			ft_printf("	estado de comillas -> %i\n", q);
+			if (str[i] == '$' && str[i + 1] == '$')// && !in_single_quotes)
 			{
 				pid = ft_itoa(getpid());
 				ft_printf("input -> %s\n", str);
@@ -106,11 +124,11 @@ static char	*process_str(t_shell *mshell, char *str)
 				ft_printf("	i - end -> %i\n", i + 1);
 				swp_value(&str, pid, i, i + 1);
 				ft_printf("copied str -> %s\n", str);
-				i += ft_strlen(pid);
+				i += ft_strlen(pid) - 2;
 				ft_printf("	i - iter -> %i\n", i);
-				free(pid);
+				ft_free_str(&pid);
 			}
-			else if (str[i] == '$' && str[i + 1] == '?')
+			else if (str[i] == '$' && str[i + 1] == '?')// && !in_single_quotes)
 			{
 				err = ft_itoa(mshell->last_exit_status);
 				ft_printf("input -> %s\n", str);
@@ -119,9 +137,9 @@ static char	*process_str(t_shell *mshell, char *str)
 				ft_printf("	i - end -> %i\n", i + 1);
 				swp_value(&str, err, i, i + 1);
 				ft_printf("copied str -> %s\n", str);
-				i += ft_strlen(err);
+				i += ft_strlen(err) - 2;
 				ft_printf("	i - iter -> %i\n", i);
-				free(err);
+				ft_free_str(&err);
 			}
 			ft_printf("	i - final -> %i\n", i);
 			i++;
