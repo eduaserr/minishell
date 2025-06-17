@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:47:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 03:55:17 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:56:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int	arrlen(char **arr)
 	return (i);
 }
 
+//replace dollar
 void	swp_value(char **input, char *value, int i, int end)
 {
 	char	*s1;
@@ -84,7 +85,7 @@ void	swp_value(char **input, char *value, int i, int end)
 	ft_printf("pos input -> %s\n", *input);
 }
 
-static char	*process_str(t_shell *mshell, char *str, int type)
+static char	*process_str(t_shell *mshell, char *str)
 {
 	char	*result;
 	int		i;
@@ -92,9 +93,8 @@ static char	*process_str(t_shell *mshell, char *str, int type)
 	char	*err;
 
 	i = 0;
-	if (ft_strchr(str, '$') && mshell->tkn->type != SIMPLE)
+	if (ft_strchr(str, '$'))
 	{
-		ft_printf("- type -> %i\n", type);
 		while (str[i])
 		{
 			if (str[i] == '$' && str[i + 1] == '$')
@@ -151,7 +151,7 @@ static char	**duparr(t_shell *mshell, char **arr)
 	{
 		str = ft_strdup(arr[i]);
 		
-		tmp[i] = process_str(mshell, str, tkn->type);
+		tmp[i] = process_str(mshell, str);
 		if (!tmp[i])
 			return (ft_freematrix(&tmp), NULL);
 		i++;
