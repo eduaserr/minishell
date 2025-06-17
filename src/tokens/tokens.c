@@ -6,13 +6,13 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:39:15 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:49:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:11:03 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char	*get_word(char *str, int i)
+char	*get_word(char *str, int i)
 {
 	char	*word;
 	int		j;
@@ -34,36 +34,45 @@ static char	*get_word(char *str, int i)
 	return (word);
 }
 
+
+static void	set_typeq(char *str, int *type, int i)
+{
+	if (str[i] == '\"')
+		*type = DOUBLE;
+	else if (str[i] == '\'')
+		*type = SIMPLE;
+}
+
 static t_token	*get_tkn_word(t_token *new, char *str, int *i)
 {
 	char	*word;
 	int		start;
 	int		j;
 
-	word = NULL;
 	start = *i;
 	j = *i;
-	if (!skip_quoted(str, &j))
+	while (str[j] && !ft_isspace(str[j]) && !ft_isredir(str[j]))
 	{
-		ft_printf("ENTRA\n");
-		word = get_word(str, j);
-		ft_printf("valor de i al salir getword %d\n", *i);
-		ft_printf("SALE\n");
+		if (str[j] == '\'' || str[j] == '\"')
+		{
+			if (!skip_quoted(str, &j))
+				break;
+		}
+		else
+			j++;
 	}
-	else
-		word = ft_substr(str, start, j - start);
+	word = ft_substr(str, start, j - start);
 	if (!word)
-			return (NULL);
+		return (NULL);
 	new = get_token(new, WORD, word, i);
-	word = ft_free_str(&word);
+	set_typeq(str, &new->type, start);
+	ft_free_str(&word);
 	return (new);
 }
 
 static t_token	*parse_tkn(t_token *new, char *input, int *i)
 {
-	char *tmp;
 
-	tmp = NULL;
 	if (input[*i] == '<' && input[*i + 1] == '<')
 		new = get_token(new, HEREDOC, "<<", i);
 	else if (input[*i] == '>' && input[*i + 1] == '>')

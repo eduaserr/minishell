@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:46:19 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:54:20 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ int		get_quote(char *str)
 			return ('\"');
 		i++;
 	}
-	return (-1);
+	return (0);
 }
 
-/*Start -> posición 1º comilla
-End -> posición 2º comilla*/
+//no se usa
 char	*get_in_quotes(char *str, int start, int end)
 {
 	char	*tmp;
@@ -52,12 +51,6 @@ char	*get_in_quotes(char *str, int start, int end)
 	return (tmp);
 }
 
-/* Esta función actúa cuando las comiilas estan vacias "". Recoge lo anterior y lo posterior
-de las comillas del input y las joinea. --> hola""adios --> holaadios || ""
-si no hay input anterior ni posterior? Devuelve un input vacio a la funcion parse y esta lo
-vuelve a procesar check_quotes() esta vez sin comillas.
-*/
-
 char	*rm_empty_quotes(char *str, int start, int end)
 {
 	char	*s1;
@@ -77,30 +70,51 @@ char	*rm_empty_quotes(char *str, int start, int end)
 	return (str);
 }
 
-char	*rm_quotes(char *input, int i)
+char	*rm_quotes(char *input, int i, int end)
 {
-	char	c;
 	char	*tmp;
 	int		j;
-	int		q;
+	int		start;
 
-	q = 0;
-	c = input[i];
-	i = 0;
 	j = 0;
+	start = 0;
 	tmp = (char *)malloc(sizeof(char) * (ft_strlen(input) - 1));
 	if (!tmp)
 		return (NULL);
-	while (input[i])
+	while (input[start])
 	{
-		if (input[i] == c && q < 2)
-		{
-			q++;
-			i++;
-		}
+		if (start == i || start == end)
+			start++;
 		else
-			tmp[j++] = input[i++];
+			tmp[j++] = input[start++];
 	}
 	tmp[j] = '\0';
+	return (tmp);
+}
+
+char *rm_quotes2(char *str)
+{
+	char	*tmp;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	tmp = NULL;
+	while (str[i])
+	{
+		j = i;
+		if (skip_quoted(str, &i))
+		{
+			tmp = rm_quotes(str, j, i - 1);
+				if (!tmp)
+					return (NULL);
+			ft_free_str(&str);
+			str = tmp;
+			i = i - 2;
+		}
+		else
+			i++;
+	}
 	return (tmp);
 }

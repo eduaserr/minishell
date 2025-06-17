@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:40:57 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/22 17:40:55 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:27:08 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -492,6 +492,16 @@ char	**ft_arrdup(char **arr);
  * @param matrix 2D matrix array.
  */
 void	ft_freematrix(char ***matrix);
+
+/**
+ * @brief Extracts a complete word (without spaces) from a specified
+ * position (i) in the string to the next space or end of string.
+ * Useful for parsing commands word by word.
+ * @param str full str containing text
+ * @param i index where the word start.
+ * @return (word) new malloc str separated by spaces.
+ */
+char	*get_word(char *str, int i);
 
 /* FT_PRINTF FOLDER */
 

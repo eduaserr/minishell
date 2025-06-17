@@ -6,12 +6,12 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 19:35:22 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 16:30:48 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/13 20:04:52 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
+/* initial_signals */
 volatile sig_atomic_t	g_signal_received;
 
 static void	handle_sigint(int sign)
@@ -34,5 +34,4 @@ void	signal_function(void)
 	g_signal_received = 0;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, handle_sigquit);
-	signal(SIGTERM, SIG_IGN);
 }

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:36:15 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:03:06 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ static char	*parse_cmd(char *input, int start, int pipe)
 	return (tmp);
 }
 
-static t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
+static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int start, int pipe)
 {
 	t_command	*new;
 
+	(void)mshell;
 	new = NULL;
 	new = create_cmd(new);
 	if (!new)
@@ -60,19 +61,12 @@ static t_command	*ft_nodecmd(t_command *cmd, char *input, int start, int pipe)
 	/* new->redirs = parse_redirs(new->cmd);
 	if (!new->redirs)
 		return (free(new->cmd), free(new), ft_free_cmd(&cmd), ft_error("parse redir"), NULL); */
-	new->args = ft_split_input(new->cmd);
-	if (!new->args)
-		return (ft_free_node(&new), ft_free_cmd(&cmd), ft_error("split input"), NULL);
+	//new->args = ft_split_input(new->cmd);
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
 
-/*funcion para meter 1 comando en arg por cada vez que hay pipe o nulo.
-mete lo anterior del input hasta que acaba el bucle
-
-primero guardar y luego comprobar?*/
-
-t_command	*get_command(t_command *cmd, char *input)
+t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
 {
 	int		is_pipe;
 	int		i;
@@ -85,7 +79,7 @@ t_command	*get_command(t_command *cmd, char *input)
 			continue ;
 		if (input[i] == '|')
 		{
-			cmd = ft_nodecmd(cmd, input, is_pipe, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
+			cmd = ft_nodecmd(mshell, cmd, input, is_pipe, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
 			if (!cmd)
 				return (ft_error("Parse command"), NULL);
 			is_pipe = i + 1;					// que hacer con la pipe
@@ -94,7 +88,7 @@ t_command	*get_command(t_command *cmd, char *input)
 	}
 	if (input[i] == '\0')
 	{
-		cmd = ft_nodecmd(cmd, input, is_pipe, i);
+		cmd = ft_nodecmd(mshell, cmd, input, is_pipe, i);
 			if (!cmd)
 				return (ft_error("Parse last command"), NULL);
 	}

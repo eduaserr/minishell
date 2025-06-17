@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 19:20:23 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:53:09 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@
 # include <signal.h>
 # include <stdio.h>
 # include <stdbool.h>
+# include <limits.h>
 
 extern volatile sig_atomic_t	g_signal_received;
 
 typedef enum e_token_type
 {
 	WORD,
-//	DOUBLE,
-//	SIMPLE,
+	SIMPLE,
+	DOUBLE,
 	PIPE,			// cuenta '|' como redirección?
 	REDIR_IN,		// <
 	REDIR_OUT,		// >
@@ -110,13 +111,18 @@ typedef struct s_shell
 /*					BUILTINS				*/
 /* **************************************** */
 bool	execute_parent_builtin(char **cmd_wargs, t_shell *shell);
+
 void	execute_child_builtins(char **cmd_wargs, t_shell *shell);
-int	builtin_echo(t_command *cmd);
-int	builtin_pwd(void);
+
+int		builtin_echo(t_command *cmd);
+
+int		builtin_pwd(void);
+
 void	builtin_env(t_shell *shell, char **envp);
 
-int	builtin_export(t_shell *shell, char **cmd);
-int	builtin_unset(t_shell *shell, char **cmd);
+int		builtin_export(t_shell *shell, char **cmd);
+
+int		builtin_unset(t_shell *shell, char **cmd);
 
 /* **************************************** */
 /*					COMMAND					*/
@@ -124,7 +130,14 @@ int	builtin_unset(t_shell *shell, char **cmd);
 //////////////////////
 //	cmd				//
 //////////////////////
-t_command	*get_command(t_command *cmd, char *input);
+t_command	*get_command(t_shell *mshell, t_command *cmd, char *input);
+
+//////////////////////
+//	cmd				//
+//////////////////////
+void	get_args(t_token *tkn, t_command *cmd);
+
+void	dup_cmd(t_shell *mshell, t_command *cmd);
 
 /* **************************************** */
 /*					INIT					*/
@@ -181,6 +194,17 @@ char	*promp_input(t_shell *mshell);
 //////////////////////
 char	*check_quotes(char *input);
 
+char 	*rm_quotes2(char *str);
+
+/**
+ * @brief This function processes the input string, and copy all character except both chars indicated
+ * by index in the parameter from the function.
+ * @param input Pointer to the string to process.
+ * @param i Index of the first quote in the string.
+ * @param j Index of the first quote in the string.
+ * @return (char *) A new string without pair quotes. The caller is responsible for freeing it.
+ */
+char	*rm_quotes(char *input, int i, int j);
 //////////////////////
 //	quotes_expand	//
 //////////////////////
@@ -203,17 +227,6 @@ char	*get_in_quotes(char *str, int start, int end);
  * @return (char *) A new string without quotes. The caller is responsible for freeing it.
  */
 char	*rm_empty_quotes(char *str, int start, int end);
-
-/**
- * @brief This function processes the input string, removes the quotes (single or double),
- * and returns a newly allocated string without the quotes. The original input
- * string is freed during the process.
- * 
- * @param input Pointer to the string to process.
- * @param i Index of the first quote in the string.
- * @return (char *) A new string without quotes. The caller is responsible for freeing it.
- */
-char	*rm_quotes(char *input, int i);
 
 /* **************************************** */
 /*					SIGNALS					*/
@@ -258,6 +271,20 @@ void	ft_free_cmd(t_command **cmd);
 void	ft_free_mshell(t_shell **mshell);
 
 //////////////////////
+//	utils_free		//
+//////////////////////
+/**
+ * @brief You must indicate the key and it returns the corresponding value.
+ * 
+ * @param env content data.
+ * @param var variable for being search.
+ * @return (char *) A new dup string. The caller is responsible for freeing it.
+ */
+char	*ft_getenv(t_env *env, char *var);
+
+char	*is_var(char *str, t_env *env);
+
+//////////////////////
 //	utils_print		//
 //////////////////////
 void	ft_printenv(t_env *lstenv);
@@ -278,15 +305,6 @@ char	**ft_split_input(char *str);
 int		ft_isredir(int a);
 
 int		skip_quoted(char *str, int *i);
-
-/**
- * @brief You must indicate the key and it returns the corresponding value.
- * 
- * @param env content data.
- * @param var variable for being search.
- * @return (char *) A new dup string. The caller is responsible for freeing it.
- */
-char	*ft_getenv(t_env *env, char *var);
 
 char	**ft_init_array(char **array);
 
