@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:56:38 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:20:23 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <stdio.h>
+# include <stdbool.h>
 
 extern volatile sig_atomic_t	g_signal_received;
 
@@ -104,6 +105,18 @@ typedef struct s_shell
 	int					exit_status;		//estado de la proxima salida del programa
 	int					running;			//estado actual del programa
 }						t_shell;
+
+/* **************************************** */
+/*					BUILTINS				*/
+/* **************************************** */
+bool	execute_parent_builtin(char **cmd_wargs, t_shell *shell);
+void	execute_child_builtins(char **cmd_wargs, t_shell *shell);
+int	builtin_echo(t_command *cmd);
+int	builtin_pwd(void);
+void	builtin_env(t_shell *shell, char **envp);
+
+int	builtin_export(t_shell *shell, char **cmd);
+int	builtin_unset(t_shell *shell, char **cmd);
 
 /* **************************************** */
 /*					COMMAND					*/
