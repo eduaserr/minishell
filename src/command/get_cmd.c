@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:47:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 02:59:43 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 03:55:17 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	swp_value(char **input, char *value, int i, int end)
 	ft_printf("pos input -> %s\n", *input);
 }
 
-static char	*process_str(t_shell *mshell, char *str)
+static char	*process_str(t_shell *mshell, char *str, int type)
 {
 	char	*result;
 	int		i;
@@ -92,9 +92,10 @@ static char	*process_str(t_shell *mshell, char *str)
 	char	*err;
 
 	i = 0;
-	if (mshell->tkn && ft_strchr(str, '$') && mshell->tkn->type != SIMPLE)
+	if (ft_strchr(str, '$') && mshell->tkn->type != SIMPLE)
 	{
-		while (str[i] && mshell->tkn)
+		ft_printf("- type -> %i\n", type);
+		while (str[i])
 		{
 			if (str[i] == '$' && str[i + 1] == '$')
 			{
@@ -124,7 +125,6 @@ static char	*process_str(t_shell *mshell, char *str)
 			}
 			ft_printf("	i - final -> %i\n", i);
 			i++;
-			mshell->tkn = mshell->tkn->next;
 		}
 		result = str;
 	}
@@ -137,6 +137,7 @@ static char	*process_str(t_shell *mshell, char *str)
 
 static char	**duparr(t_shell *mshell, char **arr)
 {
+	t_token	*tkn;
 	char	**tmp;
 	char	*str;
 	int		i;
@@ -145,13 +146,16 @@ static char	**duparr(t_shell *mshell, char **arr)
 	if (!tmp)
 		return (NULL);
 	i = 0;
-	while (arr[i])
+	tkn = mshell->tkn;
+	while (arr[i] && tkn)
 	{
 		str = ft_strdup(arr[i]);
-		tmp[i] = process_str(mshell, str);
+		
+		tmp[i] = process_str(mshell, str, tkn->type);
 		if (!tmp[i])
 			return (ft_freematrix(&tmp), NULL);
 		i++;
+		tkn = tkn->next;
 	}
 	tmp[i] = NULL;
 	return (tmp);
