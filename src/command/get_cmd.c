@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:47:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 15:56:57 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:02:16 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ static char	*process_str(t_shell *mshell, char *str)
 
 static char	**duparr(t_shell *mshell, char **arr)
 {
-	t_token	*tkn;
 	char	**tmp;
 	char	*str;
 	int		i;
@@ -146,8 +145,7 @@ static char	**duparr(t_shell *mshell, char **arr)
 	if (!tmp)
 		return (NULL);
 	i = 0;
-	tkn = mshell->tkn;
-	while (arr[i] && tkn)
+	while (arr[i])
 	{
 		str = ft_strdup(arr[i]);
 		
@@ -155,7 +153,6 @@ static char	**duparr(t_shell *mshell, char **arr)
 		if (!tmp[i])
 			return (ft_freematrix(&tmp), NULL);
 		i++;
-		tkn = tkn->next;
 	}
 	tmp[i] = NULL;
 	return (tmp);

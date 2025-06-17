@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 20:26:31 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:54:20 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,10 @@ char	*rm_empty_quotes(char *str, int start, int end)
 
 char	*rm_quotes(char *input, int i, int end)
 {
-	char	c;
 	char	*tmp;
 	int		j;
-	int		q;
 	int		start;
 
-	(void)c;
-	(void)q;
-	q = 0;
-	c = input[i];
 	j = 0;
 	start = 0;
 	tmp = (char *)malloc(sizeof(char) * (ft_strlen(input) - 1));

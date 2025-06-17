@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 01:26:59 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:39:42 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,18 @@ void	parse_commands(t_shell **mshell)
 	(*mshell)->commands = get_command(*mshell, (*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
 		return (ft_error("get cmd"));
+	ft_printf("original comands\n");
+	ft_printcmd((*mshell)->commands);
+	//
 	get_args((*mshell)->tkn, (*mshell)->commands);
 	if (!(*mshell)->commands->args)
 		return (ft_error("get cmd args"));
+	ft_printf("created array original comands\n");
+	ft_printcmd((*mshell)->commands);
+	//
 	dup_cmd((*mshell), (*mshell)->commands);
+	ft_printf("post processed original comands\n");
+	ft_printcmd((*mshell)->commands);
 }
 
 void	parse_input(t_shell **mshell, char *input)
