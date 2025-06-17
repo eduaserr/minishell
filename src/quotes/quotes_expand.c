@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 18:35:08 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 20:29:03 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 00:12:05 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
+/*
 static void	swp_value(char **input, char *value, int i, int end)
 {
 	char	*s1;
@@ -30,11 +30,30 @@ static void	swp_value(char **input, char *value, int i, int end)
 	free(s1);
 	*input = ft_strjoin_gnl(*input, s2);
 	free(s2);
-}
+}*/
 
 // if $USER se deberia comprobar en todo el input, no solo en el strign entre comillas. ?
-char	*expand_var(t_shell **mshell, char **input, int i)
+/*char	*expand_var(t_shell **mshell, char **input, char **args)
 {
+	t_command	*node;
+	int	i;
+
+	node = (*mshell)->commands;
+	i = 0;
+	while (node && args)
+	{
+		while (args[i])
+		{
+			if (args[0] == '$' && (*mshell)->tkn->type != SIMPLE)
+			{
+				if (args[1] == '$')
+				if (ft_isalpha(args[1]) || args[1] == '_')
+				
+			}
+		}
+	}
+
+
 	char	*tmp;
 	char	*value;
 	int		end;
@@ -53,10 +72,10 @@ char	*expand_var(t_shell **mshell, char **input, int i)
 		return (NULL);
 	ft_printf("TMP\n");
 	ft_printlines(tmp);
-	/* tmp "USER" || "hola USER"
+	tmp "USER" || "hola USER"
 	antes de usar tmp, comprobar que :
 	- USER no contenga caracteres alfanumericos detrás (numero y letras).
-	ej.: "hola USER" || "hola USER, bienvenido" */
+	ej.: "hola USER" || "hola USER, bienvenido"
 
 
 	value = is_var(tmp, (*mshell)->lstenv); // devuelve NULL si no hay coincidencia despues del dollar $
@@ -77,3 +96,4 @@ char	*expand_var(t_shell **mshell, char **input, int i)
 	ft_printf("posjoin input -> %s\n", *input);
 	return (*input);
 }
+*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 20:30:28 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 01:26:33 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ t_command	*get_command(t_shell *mshell, t_command *cmd, char *input);
 //////////////////////
 void	get_args(t_token *tkn, t_command *cmd);
 
-void	dup_cmd(t_command *cmd);
+void	dup_cmd(t_shell *mshell, t_command *cmd);
 
 /* **************************************** */
 /*					INIT					*/

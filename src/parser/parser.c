@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 20:37:56 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 01:26:59 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	parse_commands(t_shell **mshell)
 	get_args((*mshell)->tkn, (*mshell)->commands);
 	if (!(*mshell)->commands->args)
 		return (ft_error("get cmd args"));
-	dup_cmd((*mshell)->commands);
+	dup_cmd((*mshell), (*mshell)->commands);
 }
 
 void	parse_input(t_shell **mshell, char *input)

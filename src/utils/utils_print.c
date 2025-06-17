@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 20:56:18 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/15 22:20:35 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/17 01:31:33 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	ft_printtkn(t_token *tkn)
 	int	i;
 
 	i = 0;
-	ft_printf("PRINT TOKENS\n");
+	ft_printf("\n\nPRINT TOKENS\n\n");
 	while (tkn)
 	{
-		ft_printf("node %d\ntoken->value - %s\n", i++, tkn->value);
-		ft_printf("int type - %i\n", tkn->type);
+		ft_printf("node %d\n	token->value - %s\n", i++, tkn->value);
+		ft_printf("	int type - %i\n", tkn->type);
 		tkn = tkn->next;
 	}
 }
@@ -31,7 +31,7 @@ void	ft_printcmd(t_command *cmd)
 	int	i;
 
 	i = 0;
-	ft_printf("PRINT COMMANDS\n");
+	ft_printf("\n\nPRINT COMMANDS\n\n");
 	while (cmd)
 	{
 		ft_printf("node %d\ncommand - %s\n", i++, cmd->cmd);
