@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+         #
+#    By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 15:47:17 by eduaserr          #+#    #+#              #
-#    Updated: 2025/06/16 20:31:31 by eduaserr         ###   ########.fr        #
+#    Updated: 2025/06/19 00:18:07 by eduaserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ SRCS	= $(CMD)/cmd.c $(CMD)/get_cmd.c\
 		$(QUOTES)/quotes_expand.c $(QUOTES)/quotes_check.c $(QUOTES)/quotes_utils.c\
 		$(SIG)/sig_init.c $(SIG)/signal2.c\
 		$(TKN)/tokens.c\
-		$(UTLS)/utils_error.c $(UTLS)/utils_free.c $(UTLS)/utils_node.c $(UTLS)/utils_print.c $(UTLS)/utils_split.c $(UTLS)/utils.c
+		$(UTLS)/utils_error.c $(UTLS)/utils_expand.c $(UTLS)/utils_free.c $(UTLS)/utils_node.c\
+		$(UTLS)/utils_print.c $(UTLS)/utils_split.c $(UTLS)/utils.c
 
 ### OBJS ###
 OBJS	= $(SRC:.c=.o) $(SRCS:.c=.o)

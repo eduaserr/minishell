@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/18 19:42:54 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 00:10:58 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,10 @@ typedef struct s_shell
 t_command	*get_command(t_shell *mshell, t_command *cmd, char *input);
 
 //////////////////////
-//	cmd				//
+//	get_cmd			//
 //////////////////////
+int		pipelen(t_token *tkn);
+
 void	get_args(t_token *tkn, t_command *cmd);
 
 void	dup_cmd(t_shell *mshell, t_command *cmd);
@@ -191,7 +193,10 @@ char	*rm_quotes(char *input, int i, int j);
 //////////////////////
 //	quotes_expand	//
 //////////////////////
-char	*expand_var(t_shell **mshell, char **input, int i);
+void	dollar_case(t_env *env, int e_status, char **str);
+
+void	swp_value(char **input, char *value, int i, int end);
+
 
 //////////////////////
 //	quotes_utils	//
@@ -245,6 +250,12 @@ void	ft_error(char *str);
 void	ft_error_exit(t_shell **mshell, char *message, int code);
 
 char	*get_word_msh(char *str, int i);
+
+//////////////////////
+//	utils_expand	//
+//////////////////////
+int		dollar_expand(char **str, t_env *env, int i);
+
 //////////////////////
 //	utils_free		//
 //////////////////////
@@ -255,7 +266,7 @@ void	ft_free_cmd(t_command **cmd);
 void	ft_free_mshell(t_shell **mshell);
 
 //////////////////////
-//	utils_free		//
+//	utils_node		//
 //////////////////////
 /**
  * @brief You must indicate the key and it returns the corresponding value.

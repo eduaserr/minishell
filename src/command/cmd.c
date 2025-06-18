@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 20:03:06 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 00:16:49 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_free_node(t_command **new)
+/*static void	ft_free_node(t_command **new)
 {
 	if (!*new)
 		return ;
@@ -22,7 +22,7 @@ void	ft_free_node(t_command **new)
 		ft_free_str(&(*new)->cmd);
 	free(*new);
 	*new = NULL;
-}
+}*/
 
 static char	*parse_cmd(char *input, int start, int pipe)
 {
@@ -61,7 +61,6 @@ static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int s
 	/* new->redirs = parse_redirs(new->cmd);
 	if (!new->redirs)
 		return (free(new->cmd), free(new), ft_free_cmd(&cmd), ft_error("parse redir"), NULL); */
-	//new->args = ft_split_input(new->cmd);
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
@@ -93,4 +92,31 @@ t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
 				return (ft_error("Parse last command"), NULL);
 	}
 	return (cmd);
+}
+
+void	get_args(t_token *tkn, t_command *cmd)
+{
+	int			i;
+	int			len;
+
+	while (cmd)
+	{
+		i = 0;
+		len = pipelen(tkn);
+		cmd->args = (char **)malloc(sizeof(char *) * (len + 1));
+		if (!cmd->args)
+			return (ft_error("malloc cmd->args"));
+		while (tkn && tkn->value[0] != '|' && i < len)
+		{
+			cmd->args[i] = ft_strdup(tkn->value);
+			if (!cmd->args[i])
+				return (ft_freematrix(&cmd->args), ft_error("strdup"));
+			i++;
+			tkn = tkn->next;
+		}
+		cmd->args[i] = NULL;
+		if (tkn && tkn->value[0] == '|')
+			tkn = tkn->next;
+		cmd = cmd->next;
+	}
 }
