@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:47:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 21:08:14 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/18 02:40:03 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int	arrlen(char **arr)
 	return (i);
 }
 
-//replace dollar
 void	swp_value(char **input, char *value, int i, int end)
 {
 	char	*s1;
@@ -70,80 +69,62 @@ void	swp_value(char **input, char *value, int i, int end)
 
 	s1 = NULL;
 	s2 = NULL;
-	ft_printf("SWP___VALUE\n	%s\n", *input);
-	ft_printf("value -> %s\n", value);
 	s1 = ft_substr(*input, 0, i);
-	ft_printf("		s1 -> %s\n", s1);
 	s2 = ft_substr(*input, end + 1, ft_strlen(*input));
-	ft_printf("		s2 -> %s\n", s2);
 	ft_free_str(input);
 	*input = ft_strjoin(s1, value);
-	ft_printf("pre input -> %s\n", *input);
 	free(s1);
 	*input = ft_strjoin_gnl(*input, s2);
 	free(s2);
-	ft_printf("pos input -> %s\n", *input);
+}
+
+void	toggle_quotes(char *str, int i, int *single, int *in_db)
+{
+	if (str[i] == '\'' && !*in_db)
+		*single = !*single;
+	else if (str[i] == '"' && !*single)
+		*in_db = !*in_db;
+}
+
+void	dollar_case(int e_status, char **str)
+{
+	char	*pid;
+	char	*err;
+	int		in_db;
+	int		in_single;
+	int		i;
+
+	i = 0;
+	in_db = 0;
+	in_single = 0;
+	while ((*str)[i])
+	{
+		toggle_quotes(*str, i, &in_single, &in_db);
+		if ((*str)[i] == '$' && (*str)[i + 1] == '$' && !in_single)
+		{
+			pid = ft_itoa(getpid());
+			swp_value(str, pid, i, i + 1);
+			i += ft_strlen(pid) - 2;
+			ft_free_str(&pid);
+		}
+		else if ((*str)[i] == '$' && (*str)[i + 1] == '?' && !in_single)
+		{
+			err = ft_itoa(e_status);
+			swp_value(str, err, i, i + 1);
+			i += ft_strlen(err) - 2;
+			ft_free_str(&err);
+		}
+		i++;
+	}
 }
 
 static char	*process_str(t_shell *mshell, char *str)
 {
 	char	*result;
-	int		i;
-	char	*pid;
-	char	*err;
-	int		q;
 
-	i = 0;
-	int in_single = 0;  // ✅ Inicializar correctamente
-	int in_db = 0;  // ✅ Manejar ambos tipos de comillas
-		
 	if (ft_strchr(str, '$'))
 	{
-		while (str[i])
-		{
-			// ✅ Actualizar estado de comillas ANTES de procesar expansión
-			if (str[i] == '\'' && !in_db)
-				in_single = !in_single;  // Toggle
-			else if (str[i] == '"' && !in_single)
-				in_db = !in_db;   // Toggle
-			
-			ft_printf("	estado comillas simples -> %i\n", in_single);
-			ft_printf("	estado comillas dobles -> %i\n", in_db);
-			
-			if (str[i] == '\'' && q != 2)
-				q = 1;
-			else if (str[i] != '\'' && q == 0)
-				q = 2;
-			ft_printf("	estado de comillas -> %i\n", q);
-			if (str[i] == '$' && str[i + 1] == '$')// && !in_single_quotes)
-			{
-				pid = ft_itoa(getpid());
-				ft_printf("input -> %s\n", str);
-				ft_printf("copy pid -> %s\n", pid);
-				ft_printf("	i - start -> %i\n", i);
-				ft_printf("	i - end -> %i\n", i + 1);
-				swp_value(&str, pid, i, i + 1);
-				ft_printf("copied str -> %s\n", str);
-				i += ft_strlen(pid) - 2;
-				ft_printf("	i - iter -> %i\n", i);
-				ft_free_str(&pid);
-			}
-			else if (str[i] == '$' && str[i + 1] == '?')// && !in_single_quotes)
-			{
-				err = ft_itoa(mshell->last_exit_status);
-				ft_printf("input -> %s\n", str);
-				ft_printf("copy err -> %s\n", err);
-				ft_printf("	i - start -> %i\n", i);
-				ft_printf("	i - end -> %i\n", i + 1);
-				swp_value(&str, err, i, i + 1);
-				ft_printf("copied str -> %s\n", str);
-				i += ft_strlen(err) - 2;
-				ft_printf("	i - iter -> %i\n", i);
-				ft_free_str(&err);
-			}
-			ft_printf("	i - final -> %i\n", i);
-			i++;
-		}
+		dollar_case(mshell->last_exit_status, &str);
 		result = str;
 	}
 	if (get_quote(str) != 0)
