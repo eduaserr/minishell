@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:47:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/18 02:40:03 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:44:21 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,32 @@ void	toggle_quotes(char *str, int i, int *single, int *in_db)
 		*in_db = !*in_db;
 }
 
-void	dollar_case(int e_status, char **str)
+
+static int	get_var_end(char *str, int start)
+{
+	int i = start;
+
+	if (str[i] != '$')
+		return (start);
+	i++;
+	if (!ft_isalpha(str[i]) && str[i] != '_')
+		return (start);
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+		i++;
+	return (i - 1);
+}
+
+
+void	dollar_case(t_env *env, int e_status, char **str)
 {
 	char	*pid;
 	char	*err;
+	char	*value;
+	char	*word;
 	int		in_db;
 	int		in_single;
 	int		i;
+	int		end;
 
 	i = 0;
 	in_db = 0;
@@ -114,17 +133,79 @@ void	dollar_case(int e_status, char **str)
 			i += ft_strlen(err) - 2;
 			ft_free_str(&err);
 		}
+		else if ((*str)[i] == '$' && !in_single &&
+			((*str)[i + 1] == '\'' || (*str)[i + 1] == '"'))
+		{
+			swp_value(str, "", i, i);
+			i--;
+		}
+		else if ((*str)[i] == '$' && !in_single)
+		{
+			end = get_var_end(*str, i);
+			// ✅ Verificar si es variable válida
+			if (end > i)  // Si end > i, encontramos una variable válida
+			{
+				word = get_word(*str, i);  // Extraer nombre de variable
+				if (word)
+				{
+					ft_printf("word is -> %s\n", word);
+					value = ft_getenv(env, word);
+					if (!value)
+						value = ft_strdup("");  // Variable no existe → string vacío
+
+					swp_value(str, value, i, end);
+					i += ft_strlen(value) - 1;
+
+					ft_free_str(&word);
+					ft_free_str(&value);
+				}
+			}
+
+			/*end = 0;
+			if (!ft_isalpha(str[i]) && str[i] != '_')
+			{
+				end = i;  // Variable inválida
+			}
+			while ((*str)[end] && (ft_isalnum((*str)[end]) || (*str)[end] == '_'))
+				end++;
+			end = end - 1;
+			word = get_word_msh(*str, i);		//get_word_mshell gt_var
+			if (word)
+			{
+				ft_printf("word is -> %s\n", word);
+				if (!is_var(word, env))
+					value = ft_strdup("");
+				else
+					value = ft_getenv(env, word);
+				ft_free_str(&word);
+				swp_value(str, value, i, end);
+				i += ft_strlen(value) - 1;
+				ft_free_str(&value);
+			}*/
+		}
 		i++;
 	}
 }
+//delimitadores
+//Válidos: a-z, A-Z, 0-9, _
+// Números (NO primer carácter)
+//Inválidos: espacios, !, @, #, $, %, ^, &, *, (, ), -, +, =, [, ], {, }, |, \, :, ;, ", ', <, >, ,, ., ?, /
 
+/*
+saltar el $
+verificar primer caracter (letra o _)
+continuar mientras ft_isalnum o _
+parar en delimitador
+retornmar ultima posición válida
+if (end == start), variable inválida
+*/
 static char	*process_str(t_shell *mshell, char *str)
 {
 	char	*result;
 
 	if (ft_strchr(str, '$'))
 	{
-		dollar_case(mshell->last_exit_status, &str);
+		dollar_case(mshell->lstenv, mshell->last_exit_status, &str);
 		result = str;
 	}
 	if (get_quote(str) != 0)

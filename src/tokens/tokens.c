@@ -6,34 +6,11 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:39:15 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 19:11:03 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:13:49 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-char	*get_word(char *str, int i)
-{
-	char	*word;
-	int		j;
-	int		start;
-
-	if (!str)
-		return (NULL);
-	j = 0;
-	start = i;
-	while (str[i] && !ft_isspace(str[i]) && !ft_isredir(str[i++]))
-		j++;
-	word = (char *)malloc(sizeof(char) * j + 1);
-	if (!word)
-		return (NULL);
-	j = 0;
-	while (start < i)
-		word[j++] = str[start++];
-	word[j] = '\0';
-	return (word);
-}
-
 
 static void	set_typeq(char *str, int *type, int i)
 {
@@ -110,26 +87,3 @@ t_token	*tokenizer(t_token *token_list, char *input)
 	}
 	return (token_list);
 }
-
-/* 	ls -la
-	command [0] - ls -la
-	args[0][0] == "ls"
-	token
-		type = WORD
-		value "ls"
-	REDIR
-	type = NULL
-	value = NULL
-	
-
-
-		ls -l -a > txt.txt
-	command [0] - ls -la > txt.txt
-	args[0][0] == "ls"
-	args[0][1] == "-la"
-	token
-		type = WORD
-		value "ls"
-	REDIR
-	type = REDIR_OUT
-	value = ">" */

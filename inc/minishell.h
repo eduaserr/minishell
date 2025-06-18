@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 19:46:23 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:42:54 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,7 @@ void	ft_error(char *str);
 
 void	ft_error_exit(t_shell **mshell, char *message, int code);
 
+char	*get_word_msh(char *str, int i);
 //////////////////////
 //	utils_free		//
 //////////////////////
