@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:28:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/13 14:40:13 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 03:47:21 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,24 @@ void	ft_free_tkn(t_token **tkn)
 	*tkn = NULL;
 }
 
+static void	ft_free_rd(t_redir **rd)
+{
+	t_redir	*swp;
+
+	swp = NULL;
+	if (!rd)
+		return ;
+	while (*rd)
+	{
+		swp = (*rd)->next;
+		if ((*rd)->file)
+			ft_free_str(&(*rd)->file);
+		free(*rd);
+		*rd = swp;
+	}
+	*rd = NULL;
+}
+
 void	ft_free_cmd(t_command **cmd)
 {
 	t_command	*swp;
@@ -63,8 +81,8 @@ void	ft_free_cmd(t_command **cmd)
 			free((*cmd)->cmd);
 		if ((*cmd)->args)
 			ft_freematrix(&(*cmd)->args);
-		//if ((*cmd)->redirs)
-			//ft_free_redirs();
+		if ((*cmd)->rd)
+			ft_free_rd(&(*cmd)->rd);
 		free(*cmd);
 		*cmd = swp;
 	}

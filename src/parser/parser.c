@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 17:39:42 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 01:10:54 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,6 @@ void	parse_input(t_shell **mshell, char *input)
 		return (ft_error("syntax error near unexpected token `|'"));
 	parse_commands(mshell);
 	// parse_redirecciones
-	// si es tkn->type DOUBLE ("") checkear por expansión
-	// si hay $ checkear siguiente posicion para expandir
-	// si es variable del sistema , sustituir
 		//^ check_input ^ before split into struct
 }
 

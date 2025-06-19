@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 00:10:58 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 02:51:00 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_command
 {
 	char				*cmd;				//comando a procesar
 	char				**args;				//argumentos de un mismo cmd por separado
-	t_redir				*redirs;			//redirs en el input
+	t_redir				*rd;			//redirs en el input
 	struct s_command	*next;
 }						t_command;
 
@@ -152,6 +152,12 @@ void	addlast_node(t_env **lstenv, t_env *node);
 t_token	*get_token(t_token *new, t_token_type tkn, char *value, int *i);
 
 void	addlast_tknnode(t_token **token_list, t_token *node);
+
+
+void	parse_redirs(t_command **cmd, t_token *tkn);
+
+t_redir	*redir_node(t_token *tkn, t_redir *lstrd);
+
 
 //////////////////////
 //	init			//

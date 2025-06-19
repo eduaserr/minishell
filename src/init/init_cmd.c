@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:25:52 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 20:25:33 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 02:45:54 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_command	*create_cmd(t_command *new)
 		return (NULL);
 	new->cmd = NULL;
 	new->args = NULL;
-	new->redirs = NULL;
+	new->rd = NULL;
 	new->next = NULL;
 	return (new);
 }

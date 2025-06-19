@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 00:16:49 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 03:05:54 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int s
 	//Por qué free_cmd aqui? porque el return NULL hace que yo no pueda liberar
 	//el cmd fuera de esta función ya que return NULL asigna NULL a la lista (cmd = NULL)
 	//y pierdo las referencias antes de poder liberar desde fuera (process_input)
-	/* new->redirs = parse_redirs(new->cmd);
-	if (!new->redirs)
-		return (free(new->cmd), free(new), ft_free_cmd(&cmd), ft_error("parse redir"), NULL); */
+	//parse_redirs(&new, mshell->tkn);
+	new->rd = redir_node(mshell->tkn, new->rd);
+	if (!new->rd)
+		return (free(new->cmd), free(new), ft_free_cmd(&cmd), ft_error("parse redir"), NULL);
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
