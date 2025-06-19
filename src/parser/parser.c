@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 01:10:54 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:46:32 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,13 @@ void	parse_commands(t_shell **mshell)
 	(*mshell)->commands = get_command(*mshell, (*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
 		return (ft_error("get cmd"));
-	ft_printf("original comands\n");
-	ft_printcmd((*mshell)->commands);
 	//
-	get_args((*mshell)->tkn, (*mshell)->commands);
+	get_args((*mshell)->commands->tkn, (*mshell)->commands);
 	if (!(*mshell)->commands->args)
 		return (ft_error("get cmd args"));
-	ft_printf("created array original comands\n");
 	ft_printcmd((*mshell)->commands);
 	//
 	dup_cmd((*mshell), (*mshell)->commands);
-	ft_printf("post processed original comands\n");
-	ft_printcmd((*mshell)->commands);
 }
 
 void	parse_input(t_shell **mshell, char *input)
@@ -77,17 +72,12 @@ void	parse_input(t_shell **mshell, char *input)
 	if (!(*mshell)->p_input)
 		return ;
 	//parse_tokens
-	(*mshell)->tkn = tokenizer((*mshell)->tkn, (*mshell)->p_input);
-	if (!(*mshell)->tkn)
-		return (ft_error("token"));
+	//(*mshell)->tkn = tokenizer((*mshell)->tkn, (*mshell)->p_input);
+	//if (!(*mshell)->tkn)
+	//	return (ft_error("token"));
 	if (handle_pipes_err((*mshell)->p_input, 0)) // handle_reddir
 		return (ft_error("syntax error near unexpected token `|'"));
 	parse_commands(mshell);
 	// parse_redirecciones
 		//^ check_input ^ before split into struct
 }
-
-
-/*Necesitas implementar la expansión antes de eliminar las comillas.
-Actualmente tienes expand_var en quotes_expand.c pero no se está usando.
-*/

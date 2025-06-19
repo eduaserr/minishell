@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:47:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 00:10:45 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:53:34 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static char	**duparr(t_shell *mshell, char **arr)
 	while (arr[i])
 	{
 		str = ft_strdup(arr[i]);
-		
 		tmp[i] = process_str(mshell, str);
 		if (!tmp[i])
 			return (ft_freematrix(&tmp), NULL);

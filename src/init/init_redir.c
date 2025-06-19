@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 01:27:48 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 03:36:52 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:31:09 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,16 @@ t_redir	*redir_node(t_token *tkn, t_redir *lstrd)
 	t_redir	*new;
 
 	int	i = 0;
-	while (tkn && tkn->type != PIPE)
+	while (tkn && tkn->type != PIPE && tkn->type != WORD
+		&& tkn->type != DOUBLE && tkn->type != SIMPLE)
 	{
 		ft_printf("entra if\n");
 		new = create_redir();
 		if (!new)
 			return (ft_error("create rd"), NULL);
 		new->type = tkn->type;
+		tkn = tkn->next;
+		new->file = ft_strdup(tkn->value);
 		ft_printf("nodo [%i]\nvalue -> %s\n", i++, tkn->value);
 		addlast_redir(&lstrd, new);
 		ft_printf("AÑADE NODO\n");

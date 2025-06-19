@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 03:52:24 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:44:23 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 	mshell->exit_status = 0;
 	mshell->last_exit_status = 0;
 	mshell->commands = NULL;
-	mshell->tkn = NULL;
 	mshell->p_input = NULL;
 	mshell->user_input = NULL;
 	if (!envp || !*envp)

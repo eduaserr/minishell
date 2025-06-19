@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:28:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 03:47:21 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:45:18 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	ft_free_cmd(t_command **cmd)
 			free((*cmd)->cmd);
 		if ((*cmd)->args)
 			ft_freematrix(&(*cmd)->args);
+		if ((*cmd)->tkn)
+			ft_free_tkn(&(*cmd)->tkn);
 		if ((*cmd)->rd)
 			ft_free_rd(&(*cmd)->rd);
 		free(*cmd);
@@ -93,8 +95,6 @@ void	ft_free_mshell(t_shell **mshell) // free_all
 {
 	if (!mshell || !*mshell)
 		return ;
-	if ((*mshell)->tkn)
-		ft_free_tkn(&(*mshell)->tkn);
 	if ((*mshell)->commands)
 		ft_free_cmd(&(*mshell)->commands);
 	if ((*mshell)->lstenv && (!(*mshell)->running))

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:39:15 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/18 18:13:49 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:48:28 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,18 @@ static t_token	*parse_tkn(t_token *new, char *input, int *i)
 	return (new);
 }
 
-t_token	*tokenizer(t_token *token_list, char *input)
+t_token	*tokenizer(t_token *token_list, char *input, int start, int pipe)
 {
 	t_token	*new;
-	int	i;
 
 	new = NULL;
-	i = 0;
-	while (input[i])
+	while (input[start] && start < pipe)
 	{
-		while (input[i] && ft_isspace(input[i]))
-			i++;
-		if (!input[i])
+		while (input[start] && ft_isspace(input[start]))
+			start++;
+		if (!input[start])
 			return (token_list);
-		new = parse_tkn(new, input, &i);
+		new = parse_tkn(new, input, &start);
 		if (!new)
 			return (ft_free_tkn(&token_list), ft_error("parse token"), NULL);
 		addlast_tknnode(&token_list, new);

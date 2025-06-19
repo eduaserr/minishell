@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 02:51:00 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:40:02 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ typedef struct s_command
 {
 	char				*cmd;				//comando a procesar
 	char				**args;				//argumentos de un mismo cmd por separado
-	t_redir				*rd;			//redirs en el input
+	t_redir				*rd;				//redirs en el input
+	t_token				*tkn;				//args separados, y divididos por tokens
 	struct s_command	*next;
 }						t_command;
 
@@ -100,7 +101,6 @@ typedef struct s_shell
 	char				*user_input;		//input orriginal del usuario
 	char				**env;				//doble array de envp del sistema
 	t_env				*lstenv;			//lista de las env
-	t_token				*tkn;				//args separados, y divididos por tokens
 	t_command			*commands;			//lista de comandos y args
 	int					last_exit_status;	//anterior codigo de error
 	int					exit_status;		//estado de la proxima salida del programa
@@ -241,7 +241,7 @@ void	setup_heredoc_signals(void);
 //////////////////////
 //	tokens			//
 //////////////////////
-t_token	*tokenizer(t_token *token_list, char *input);
+t_token	*tokenizer(t_token *token_list, char *input, int start, int pipe);
 
 /* **************************************** */
 /*					UTILS					*/

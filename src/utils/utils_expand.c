@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 23:59:03 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 00:55:10 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:49:21 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int		dollar_expand(char **str, t_env *env, int i)
 		word = get_word_msh(*str, i + 1);
 		if (word)
 		{
-			ft_printf("word is -> %s\n", word);
 			value = ft_getenv(env, word);
 			if (!value)
 				value = ft_strdup("");
