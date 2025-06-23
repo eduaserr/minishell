@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+         #
+#    By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 15:47:17 by eduaserr          #+#    #+#              #
-#    Updated: 2025/06/19 02:53:56 by eduaserr         ###   ########.fr        #
+#    Updated: 2025/06/23 14:47:07 by aamoros-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ RDIR	= src/redirs
 SIG		= src/signals
 TKN		= src/tokens
 UTLS	= src/utils
+EXEC	= src/executor
+BINS	= src/builtins
 
 SRC		= main.c
 
@@ -40,8 +42,11 @@ SRCS	= $(CMD)/cmd.c $(CMD)/get_cmd.c\
 		$(SIG)/sig_init.c $(SIG)/signal2.c\
 		$(TKN)/tokens.c\
 		$(UTLS)/utils_error.c $(UTLS)/utils_expand.c $(UTLS)/utils_free.c $(UTLS)/utils_node.c\
-		$(UTLS)/utils_print.c $(UTLS)/utils_split.c $(UTLS)/utils.c
-
+		$(UTLS)/utils_print.c $(UTLS)/utils_split.c $(UTLS)/utils.c\
+		$(EXEC)/execute.c $(EXEC)/exec_utils.c $(EXEC)/redir.c $(EXEC)/pipes.c\
+		$(BINS)/cd.c $(BINS)/echo.c $(BINS)/env.c $(BINS)/env_utils.c $(BINS)/exit.c\
+		$(BINS)/pwd.c $(BINS)/builtin.c
+		
 ### OBJS ###
 OBJS	= $(SRC:.c=.o) $(SRCS:.c=.o)
 

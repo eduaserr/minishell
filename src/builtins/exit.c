@@ -6,7 +6,7 @@
 /*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 16:34:00 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/17 16:34:08 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:59:21 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,32 @@ static int	is_numeric_string(char *str)
 		i++;
 	}
 	return (1);
+}
+
+static long	ft_atol(const char *str)
+{
+	long	i;
+	long	negative;
+	long	num;
+
+	i = 0;
+	negative = 0;
+	num = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+		{
+			negative++;
+		}
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+		num = (num * 10) + (str[i++] - 48);
+	if (negative)
+		num *= -1;
+	return (num);
 }
 
 int	builtin_exit(char **args)

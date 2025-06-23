@@ -6,7 +6,7 @@
 /*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:15:57 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/17 19:00:13 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:56:45 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	builtin_export(t_shell *shell, char **cmd)
 
 	if (!cmd[1])
 	{
-		ft_print_exported_vars(shell->env);
+		print_exported_vars(shell->env);
 		return (0);
 	}
 	i = 1;
@@ -76,5 +76,5 @@ void	builtin_env(t_shell *shell, char **envp)
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
-	ft_error_exit(shell, NULL, EXIT_SUCCESS);
+	ft_error_exit(&shell, NULL, EXIT_SUCCESS);
 }

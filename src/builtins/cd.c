@@ -6,7 +6,7 @@
 /*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:24:48 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/17 19:20:02 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/23 16:16:03 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,18 @@ static int	cd_to_home(t_shell *shell)
 	free(path_to_home);
 	free(oldpwd_val);
 	return (EXIT_SUCCESS);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+	{
+		i++;
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
 int	builtin_cd(t_shell *shell, char **cmd)

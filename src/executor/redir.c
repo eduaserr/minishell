@@ -6,7 +6,7 @@
 /*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:04:44 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/18 20:15:18 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:33:17 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	handle_file_input(t_shell *shell, char *file)
 
 	fd_in = open(file, O_RDONLY);
 	if (fd_in == -1)
-		ft_error_exit(shell, "infile open", EXIT_FAILURE);
+		ft_error_exit(&shell, "infile open", EXIT_FAILURE);
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
 }
@@ -47,7 +47,7 @@ static void	handle_heredoc_input(t_shell *shell, char *delimiter)
 	int	heredoc_fd[2];
 
 	if (pipe(heredoc_fd) < 0)
-		ft_error_exit(shell, "pipe", EXIT_FAILURE);
+		ft_error_exit(&shell, "pipe", EXIT_FAILURE);
 	execute_heredoc(delimiter, heredoc_fd);
 	dup2(heredoc_fd[0], STDIN_FILENO);
 	close(heredoc_fd[0]);
@@ -59,9 +59,9 @@ void	redirect_stdin(t_shell *shell, bool handle_heredoc)
 	t_redir		*redir;
 
 	command = shell->commands;
-	if (!command || !command->redirs)
+	if (!command || !command->rd)
 		return ;
-	redir = command->redirs;
+	redir = command->rd;
 	while (redir)
 	{
 		if (redir->type == REDIR_IN)
@@ -78,9 +78,9 @@ void	setup_redirection(t_shell *shell, bool handle_heredoc)
 	t_redir		*redir;
 
 	redirect_stdin(shell, handle_heredoc);
-	if (!shell->commands || !shell->commands->redirs)
+	if (!shell->commands || !shell->commands->rd)
 		return ;
-	redir = shell->commands->redirs;
+	redir = shell->commands->rd;
 	while (redir)
 	{
 		if (redir->type == REDIR_OUT || redir->type == APPEND)
@@ -90,7 +90,7 @@ void	setup_redirection(t_shell *shell, bool handle_heredoc)
 			else
 				fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 			if (fd_out == -1)
-				ft_error_exit(shell, "outfile open", EXIT_FAILURE);
+				ft_error_exit(&shell, "outfile open", EXIT_FAILURE);
 			dup2(fd_out, STDOUT_FILENO);
 			close(fd_out);
 			return ;

@@ -6,7 +6,7 @@
 /*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:32:08 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/17 18:03:51 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:57:53 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,18 @@ int	unset_env(char *env, char **envp)
 	return (0);
 }
 
-static void	*ft_realloc(void *ptr, size_t new, size_t old)
+static void	*ft_realloc(void *ptr, size_t last, size_t old)
 {
 	void	*new;
 
-	if (new == 0)
+	if (last == 0)
 	{
 		free(ptr);
 		return (NULL);
 	}
 	if (!ptr)
-		return (malloc(new));
-	new = malloc(new);
+		return (malloc(last));
+	new = malloc(last);
 	if (!new)
 	{
 		free(ptr);
