@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 01:27:48 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 03:36:52 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/24 20:56:48 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,38 @@ void	addlast_redir(t_redir **lstrd, t_redir *node)
 	}
 }
 
-t_redir	*redir_node(t_token *tkn, t_redir *lstrd)
+t_redir	*redir_node(t_token *tkn, t_redir *lstrd, int cmd_index)
 {
 	t_redir	*new;
 
 	int	i = 0;
+	int	count = 0;
+	while (tkn && count < cmd_index)
+	{
+		if (tkn->type == PIPE)
+			count++;
+		tkn = tkn->next;
+	}
 	while (tkn && tkn->type != PIPE)
 	{
-		ft_printf("entra if\n");
-		new = create_redir();
-		if (!new)
-			return (ft_error("create rd"), NULL);
-		new->type = tkn->type;
-		ft_printf("nodo [%i]\nvalue -> %s\n", i++, tkn->value);
-		addlast_redir(&lstrd, new);
-		ft_printf("AÑADE NODO\n");
+		if (tkn->type == REDIR_IN || tkn->type == REDIR_OUT
+			|| tkn->type == APPEND || tkn->type == HEREDOC)
+		{
+			ft_printf("entra if\n");
+			
+			new = create_redir();
+			if (!new)
+				return (ft_error("create rd"), NULL);
+			new->type = tkn->type;
+			if (tkn->next)
+				tkn = tkn->next;
+			new->file = ft_strdup(tkn->value);
+			if (!new->file)
+				return (ft_error("create file"), NULL);
+			ft_printf("nodo [%i]\nvalue -> %s\n", i++, tkn->value);
+			addlast_redir(&lstrd, new);
+			ft_printf("AÑADE NODO\n");
+		}
 		tkn = tkn->next;
 	}
 	return (lstrd);

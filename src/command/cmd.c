@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 03:05:54 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/24 21:01:21 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*parse_cmd(char *input, int start, int pipe)
 	return (tmp);
 }
 
-static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int start, int pipe)
+static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int start, int pipe, int ix)
 {
 	t_command	*new;
 
@@ -59,9 +59,7 @@ static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int s
 	//el cmd fuera de esta función ya que return NULL asigna NULL a la lista (cmd = NULL)
 	//y pierdo las referencias antes de poder liberar desde fuera (process_input)
 	//parse_redirs(&new, mshell->tkn);
-	new->rd = redir_node(mshell->tkn, new->rd);
-	if (!new->rd)
-		return (free(new->cmd), free(new), ft_free_cmd(&cmd), ft_error("parse redir"), NULL);
+	new->rd = redir_node(mshell->tkn, new->rd, ix);
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
@@ -70,6 +68,7 @@ t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
 {
 	int		is_pipe;
 	int		i;
+	int		ix = 0;
 
 	is_pipe = 0;
 	i = 0;
@@ -79,16 +78,17 @@ t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
 			continue ;
 		if (input[i] == '|')
 		{
-			cmd = ft_nodecmd(mshell, cmd, input, is_pipe, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
+			cmd = ft_nodecmd(mshell, cmd, input, is_pipe, i, ix);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
 			if (!cmd)
 				return (ft_error("Parse command"), NULL);
 			is_pipe = i + 1;					// que hacer con la pipe
+			ix++;
 		}
 		i++;
 	}
 	if (input[i] == '\0')
 	{
-		cmd = ft_nodecmd(mshell, cmd, input, is_pipe, i);
+		cmd = ft_nodecmd(mshell, cmd, input, is_pipe, i, ix);
 			if (!cmd)
 				return (ft_error("Parse last command"), NULL);
 	}
@@ -107,7 +107,7 @@ void	get_args(t_token *tkn, t_command *cmd)
 		cmd->args = (char **)malloc(sizeof(char *) * (len + 1));
 		if (!cmd->args)
 			return (ft_error("malloc cmd->args"));
-		while (tkn && tkn->value[0] != '|' && i < len)
+		while (tkn && tkn->type != PIPE && i < len)
 		{
 			cmd->args[i] = ft_strdup(tkn->value);
 			if (!cmd->args[i])
@@ -116,7 +116,7 @@ void	get_args(t_token *tkn, t_command *cmd)
 			tkn = tkn->next;
 		}
 		cmd->args[i] = NULL;
-		if (tkn && tkn->value[0] == '|')
+		if (tkn && tkn->type == PIPE)
 			tkn = tkn->next;
 		cmd = cmd->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/23 16:16:16 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/24 20:58:22 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	addlast_tknnode(t_token **token_list, t_token *node);
 
 void	parse_redirs(t_command **cmd, t_token *tkn);
 
-t_redir	*redir_node(t_token *tkn, t_redir *lstrd);
+t_redir	*redir_node(t_token *tkn, t_redir *lstrd, int cmd_index);
 
 
 //////////////////////
