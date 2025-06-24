@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/24 20:58:22 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/24 22:56:43 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_shell
 	t_env				*lstenv;			//lista de las env
 	t_token				*tkn;				//args separados, y divididos por tokens
 	t_command			*commands;			//lista de comandos y args
+	int					cmd_count;
 	int					last_exit_status;	//anterior codigo de error
 	int					exit_status;		//estado de la proxima salida del programa
 	int					running;			//estado actual del programa

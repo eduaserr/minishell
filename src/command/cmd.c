@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/24 21:01:21 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/24 23:46:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*parse_cmd(char *input, int start, int pipe)
 	return (tmp);
 }
 
-static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int start, int pipe, int ix)
+static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int start, int pipe)
 {
 	t_command	*new;
 
@@ -59,7 +59,7 @@ static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int s
 	//el cmd fuera de esta función ya que return NULL asigna NULL a la lista (cmd = NULL)
 	//y pierdo las referencias antes de poder liberar desde fuera (process_input)
 	//parse_redirs(&new, mshell->tkn);
-	new->rd = redir_node(mshell->tkn, new->rd, ix);
+	new->rd = redir_node(mshell->tkn, new->rd, mshell->cmd_count);
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
@@ -68,7 +68,6 @@ t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
 {
 	int		is_pipe;
 	int		i;
-	int		ix = 0;
 
 	is_pipe = 0;
 	i = 0;
@@ -78,17 +77,17 @@ t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
 			continue ;
 		if (input[i] == '|')
 		{
-			cmd = ft_nodecmd(mshell, cmd, input, is_pipe, i, ix);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
+			cmd = ft_nodecmd(mshell, cmd, input, is_pipe, i);	// hay que guardar cada comando, y cada palabra por separado !!! split !!!!1
 			if (!cmd)
 				return (ft_error("Parse command"), NULL);
 			is_pipe = i + 1;					// que hacer con la pipe
-			ix++;
+			mshell->cmd_count++;
 		}
 		i++;
 	}
 	if (input[i] == '\0')
 	{
-		cmd = ft_nodecmd(mshell, cmd, input, is_pipe, i, ix);
+		cmd = ft_nodecmd(mshell, cmd, input, is_pipe, i);
 			if (!cmd)
 				return (ft_error("Parse last command"), NULL);
 	}
@@ -104,6 +103,7 @@ void	get_args(t_token *tkn, t_command *cmd)
 	{
 		i = 0;
 		len = pipelen(tkn);
+		ft_printf("pipelen -> HOW MANY ARGS  =  %d\n", len);
 		cmd->args = (char **)malloc(sizeof(char *) * (len + 1));
 		if (!cmd->args)
 			return (ft_error("malloc cmd->args"));
@@ -116,6 +116,8 @@ void	get_args(t_token *tkn, t_command *cmd)
 			tkn = tkn->next;
 		}
 		cmd->args[i] = NULL;
+		if (tkn->type == REDIR_IN || tkn->type == REDIR_OUT)
+			tkn = tkn->next->next;
 		if (tkn && tkn->type == PIPE)
 			tkn = tkn->next;
 		cmd = cmd->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:47:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 00:10:45 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/24 23:40:07 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 int	pipelen(t_token *tkn)
 {
 	int count;
+	t_token *tmp;
 
+	tmp = tkn;
 	count = 0;
-	while (tkn && tkn->value[0] != '|')
+	while (tmp && tmp->type != PIPE && tmp->type != REDIR_IN && tmp->type != REDIR_OUT)
 	{
 		count++;
-		tkn = tkn->next;
+		tmp = tmp->next;
 	}
 	return (count);
 }
