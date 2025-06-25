@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 20:56:18 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/24 15:40:24 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:08:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	ft_printrd(t_redir *rd, int ix)
 	}
 	else
 		ft_printf("NO REDIR %i\n", ix);
-
 }
 
 void	ft_printcmd(t_command *cmd)

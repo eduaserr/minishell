@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 18:35:08 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 00:05:58 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:59:51 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static void	toggle_quotes(char *str, int i, int *single, int *in_db)
 		*in_db = !*in_db;
 }
 
-static int		dollar_d(char **str, int i)
+static int	dollar_d(char **str, int i)
 {
 	char	*pid;
-	
+
 	pid = ft_itoa(getpid());
 	if (!pid)
 		pid = ft_strdup("");
@@ -33,7 +33,7 @@ static int		dollar_d(char **str, int i)
 	return (i);
 }
 
-static int		dollar_qu(char **str, int e_status, int i)
+static int	dollar_qu(char **str, int e_status, int i)
 {
 	char	*err;
 

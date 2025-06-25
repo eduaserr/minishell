@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:47:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/24 23:40:07 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:18:47 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 int	pipelen(t_token *tkn)
 {
-	int count;
-	t_token *tmp;
+	int	count;
 
-	tmp = tkn;
 	count = 0;
-	while (tmp && tmp->type != PIPE && tmp->type != REDIR_IN && tmp->type != REDIR_OUT)
+	while (tkn && tkn->type != PIPE)
 	{
-		count++;
-		tmp = tmp->next;
+		if ((tkn->type == REDIR_IN || tkn->type == REDIR_OUT || tkn->type == HEREDOC
+			|| tkn->type == APPEND) && tkn->next->type == WORD)
+			tkn = tkn->next;
+		else if (tkn->type == WORD || tkn->type == DOUBLE || tkn->type == SIMPLE)
+			count++;
+		tkn = tkn->next;
 	}
 	return (count);
 }
@@ -66,7 +68,6 @@ static char	**duparr(t_shell *mshell, char **arr)
 	while (arr[i])
 	{
 		str = ft_strdup(arr[i]);
-		
 		tmp[i] = process_str(mshell, str);
 		if (!tmp[i])
 			return (ft_freematrix(&tmp), NULL);

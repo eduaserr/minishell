@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:39:15 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/18 18:13:49 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:09:49 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_token	*get_tkn_word(t_token *new, char *str, int *i)
 		if (str[j] == '\'' || str[j] == '\"')
 		{
 			if (!skip_quoted(str, &j))
-				break;
+				break ;
 		}
 		else
 			j++;
@@ -49,7 +49,6 @@ static t_token	*get_tkn_word(t_token *new, char *str, int *i)
 
 static t_token	*parse_tkn(t_token *new, char *input, int *i)
 {
-
 	if (input[*i] == '<' && input[*i + 1] == '<')
 		new = get_token(new, HEREDOC, "<<", i);
 	else if (input[*i] == '>' && input[*i + 1] == '>')
@@ -70,7 +69,7 @@ static t_token	*parse_tkn(t_token *new, char *input, int *i)
 t_token	*tokenizer(t_token *token_list, char *input)
 {
 	t_token	*new;
-	int	i;
+	int		i;
 
 	new = NULL;
 	i = 0;

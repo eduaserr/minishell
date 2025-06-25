@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/23 14:41:55 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:04:07 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int		ft_isredir(int a)
+int	ft_isredir(int a)
 {
 	return (a == '<' || a == '>' || a == '|');
 }
 
-int		skip_quoted(char *str, int *i)
+int	skip_quoted(char *str, int *i)
 {
 	int	q;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 23:59:03 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/19 00:55:10 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:07:33 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ void	swp_value(char **input, char *value, int i, int end)
 
 static int	get_var_end(char *str, int start)
 {
-	int i = start;
+	int		i;
 
+	i = start;
 	if (str[i] != '$')
 		return (start);
 	i++;
@@ -42,7 +43,7 @@ static int	get_var_end(char *str, int start)
 	return (i - 1);
 }
 
-int		dollar_expand(char **str, t_env *env, int i)
+int	dollar_expand(char **str, t_env *env, int i)
 {
 	char	*value;
 	char	*word;
@@ -59,10 +60,8 @@ int		dollar_expand(char **str, t_env *env, int i)
 			value = ft_getenv(env, word);
 			if (!value)
 				value = ft_strdup("");
-
 			swp_value(str, value, i, end);
 			i += ft_strlen(value) - 1;
-
 			ft_free_str(&word);
 			ft_free_str(&value);
 		}
