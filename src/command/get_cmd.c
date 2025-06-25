@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:47:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 23:18:47 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:39:36 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@ int	pipelen(t_token *tkn)
 	while (tkn && tkn->type != PIPE)
 	{
 		if ((tkn->type == REDIR_IN || tkn->type == REDIR_OUT || tkn->type == HEREDOC
-			|| tkn->type == APPEND) && tkn->next->type == WORD)
+			|| tkn->type == APPEND) && (tkn->next->type == WORD || tkn->next->type == DOUBLE
+			|| tkn->next->type == SIMPLE))
 			tkn = tkn->next;
 		else if (tkn->type == WORD || tkn->type == DOUBLE || tkn->type == SIMPLE)
+		{
 			count++;
-		tkn = tkn->next;
+			tkn = tkn->next;
+		}
 	}
 	return (count);
 }
