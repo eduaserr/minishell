@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 01:27:48 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 22:53:33 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:29:03 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,14 @@ static void	set_tknhead(t_token **tkn, int cmd_index)
 	}
 }
 
-t_redir	*redir_node(t_token *tkn, t_redir *lstrd, int cmd_index)
+t_redir	*redir_node(t_shell *mshell, t_token *tkn, t_redir *lstrd, int cmd_index)
 {
+	char	*tmp;
 	t_redir	*new;
 	int		i;
 
 	i = 0;
+	tmp = NULL;
 	set_tknhead(&tkn, cmd_index);
 	while (tkn && tkn->type != PIPE)
 	{
@@ -78,7 +80,8 @@ t_redir	*redir_node(t_token *tkn, t_redir *lstrd, int cmd_index)
 			new->type = tkn->type;
 			if (tkn->next)
 				tkn = tkn->next;
-			new->file = ft_strdup(tkn->value);
+			tmp = ft_strdup(tkn->value);
+			new->file = process_str(mshell, tmp);
 			if (!new->file)
 				return (ft_error("create file"), NULL);
 			addlast_redir(&lstrd, new);

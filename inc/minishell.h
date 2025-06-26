@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/24 22:56:43 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:21:08 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ t_command	*get_command(t_shell *mshell, t_command *cmd, char *input);
 //////////////////////
 int		pipelen(t_token *tkn);
 
+char	*process_str(t_shell *mshell, char *str);
+
 void	get_args(t_token *tkn, t_command *cmd);
 
 void	dup_cmd(t_shell *mshell, t_command *cmd);
@@ -155,11 +157,9 @@ t_token	*get_token(t_token *new, t_token_type tkn, char *value, int *i);
 
 void	addlast_tknnode(t_token **token_list, t_token *node);
 
-
 void	parse_redirs(t_command **cmd, t_token *tkn);
 
-t_redir	*redir_node(t_token *tkn, t_redir *lstrd, int cmd_index);
-
+t_redir	*redir_node(t_shell *mshell, t_token *tkn, t_redir *lstrd, int cmd_index);
 
 //////////////////////
 //	init			//

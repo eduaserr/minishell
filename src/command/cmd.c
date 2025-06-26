@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 23:15:50 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/26 11:59:29 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int s
 	new->cmd = parse_cmd(input, start, pipe);
 	if (!new->cmd)
 		return (free(new), ft_free_cmd(&cmd), ft_error("trim input"), NULL);
-	new->rd = redir_node(mshell->tkn, new->rd, mshell->cmd_count);
+	new->rd = redir_node(mshell, mshell->tkn, new->rd, mshell->cmd_count);
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
