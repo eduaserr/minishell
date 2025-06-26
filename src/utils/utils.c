@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 21:18:07 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 23:04:07 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:55:58 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	skip_quoted(char *str, int *i)
 			(*i)++;
 		if (str[*i] == q)
 			(*i)++;
-		return (1);		//Comillas saltadas
+		return (1);
 	}
 	else
-		return (0);		//No habia comillas
+		return (0);
 }
 
 char	**ft_init_array(char **array)

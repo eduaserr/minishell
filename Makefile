@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+         #
+#    By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 15:47:17 by eduaserr          #+#    #+#              #
-#    Updated: 2025/06/23 14:47:07 by aamoros-         ###   ########.fr        #
+#    Updated: 2025/06/26 12:59:46 by eduaserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ SRCS	= $(CMD)/cmd.c $(CMD)/get_cmd.c\
 		$(SIG)/sig_init.c $(SIG)/signal2.c\
 		$(TKN)/tokens.c\
 		$(UTLS)/utils_error.c $(UTLS)/utils_expand.c $(UTLS)/utils_free.c $(UTLS)/utils_node.c\
-		$(UTLS)/utils_print.c $(UTLS)/utils_split.c $(UTLS)/utils.c\
+		$(UTLS)/utils_print.c $(UTLS)/utils.c\
 		$(EXEC)/execute.c $(EXEC)/exec_utils.c $(EXEC)/redir.c $(EXEC)/pipes.c\
 		$(BINS)/cd.c $(BINS)/echo.c $(BINS)/env.c $(BINS)/env_utils.c $(BINS)/exit.c\
 		$(BINS)/pwd.c $(BINS)/builtin.c

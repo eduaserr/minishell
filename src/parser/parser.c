@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 23:20:26 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:51:12 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,31 @@ static char	*preparate_input(char *input)
 	return (input);
 }
 
+int	validate_redir(t_command *cmd)
+{
+	t_redir	*rd;
+
+	while (cmd)
+	{
+		rd = cmd->rd;
+		while (rd)
+		{
+			if (!rd->file || rd->file[0] == '\0')
+				return (1);
+			rd = rd->next;
+		}
+		cmd = cmd->next;
+	}
+	return (0);
+}
+
 void	parse_commands(t_shell **mshell)
 {
 	(*mshell)->commands = get_command(*mshell, (*mshell)->commands, (*mshell)->p_input);
 	if (!(*mshell)->commands)
 		return (ft_error("get cmd"));
+	if (validate_redir((*mshell)->commands))
+		return (ft_error("ambiguous redirect"));
 	get_args((*mshell)->tkn, (*mshell)->commands);
 	if (!(*mshell)->commands->args)
 		return (ft_error("get cmd args"));

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 23:59:03 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 23:07:33 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:55:35 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	dollar_expand(char **str, t_env *env, int i)
 		word = get_word_msh(*str, i + 1);
 		if (word)
 		{
-			ft_printf("word is -> %s\n", word);
 			value = ft_getenv(env, word);
 			if (!value)
 				value = ft_strdup("");
