@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 20:56:18 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 17:40:13 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:08:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,25 @@ void	ft_printtkn(t_token *tkn)
 	}
 }
 
+static void	ft_printrd(t_redir *rd, int ix)
+{
+	int	i;
+
+	i = 0;
+	if (rd)
+	{
+		while (rd)
+		{
+			ft_printf("PRINT REDIR %i\n", ix);
+			ft_printf("node %d\ntype - %i\n", i++, rd->type);
+			ft_printf("file is -> %s\n", rd->file);
+			rd = rd->next;
+		}
+	}
+	else
+		ft_printf("NO REDIR %i\n", ix);
+}
+
 void	ft_printcmd(t_command *cmd)
 {
 	int	i;
@@ -34,9 +53,10 @@ void	ft_printcmd(t_command *cmd)
 	ft_printf("PRINT COMMANDS\n\n");
 	while (cmd)
 	{
-		ft_printf("node %d\ncommand - %s\n", i++, cmd->cmd);
+		ft_printf("node %d\ncommand - %s\n", i, cmd->cmd);
 		ft_printmatrix(cmd->args);
-		//ft_printredir();
+		ft_printrd(cmd->rd, i);
+		i++;
 		cmd = cmd->next;
 	}
 }

@@ -3,97 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 18:35:08 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 00:12:05 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:59:51 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-/*
-static void	swp_value(char **input, char *value, int i, int end)
+
+static void	toggle_quotes(char *str, int i, int *single, int *in_db)
 {
-	char	*s1;
-	char	*s2;
-
-	s1 = NULL;
-	s2 = NULL;
-	ft_printf("SWP___VALUE\n");
-	s1 = ft_substr(*input, 0, i);
-	ft_printf("		s1 -> %s\n", s1);
-	s2 = ft_substr(*input, end + 1, ft_strlen(*input));
-	ft_printf("		s2 -> %s\n", s2);
-	free(*input);
-	*input = NULL;
-	*input = ft_strjoin(s1, value);
-	free(s1);
-	*input = ft_strjoin_gnl(*input, s2);
-	free(s2);
-}*/
-
-// if $USER se deberia comprobar en todo el input, no solo en el strign entre comillas. ?
-/*char	*expand_var(t_shell **mshell, char **input, char **args)
-{
-	t_command	*node;
-	int	i;
-
-	node = (*mshell)->commands;
-	i = 0;
-	while (node && args)
-	{
-		while (args[i])
-		{
-			if (args[0] == '$' && (*mshell)->tkn->type != SIMPLE)
-			{
-				if (args[1] == '$')
-				if (ft_isalpha(args[1]) || args[1] == '_')
-				
-			}
-		}
-	}
-
-
-	char	*tmp;
-	char	*value;
-	int		end;
-
-	(void)value;
-	(void)tmp;
-	end = i + 1;
-	tmp = NULL;
-	value = NULL;
-	while ((*input)[end] && (*input)[end] != '\"') // end = posicion de la segunda doble comilla
-		end++;
-	
-	ft_printf("	indx expand %d\n", i);
-	tmp = get_in_quotes(*input, i, end); // recojo "$"
-	if (!tmp)
-		return (NULL);
-	ft_printf("TMP\n");
-	ft_printlines(tmp);
-	tmp "USER" || "hola USER"
-	antes de usar tmp, comprobar que :
-	- USER no contenga caracteres alfanumericos detrás (numero y letras).
-	ej.: "hola USER" || "hola USER, bienvenido"
-
-
-	value = is_var(tmp, (*mshell)->lstenv); // devuelve NULL si no hay coincidencia despues del dollar $
-	ft_printf("value is -> %s\n", value);
-	tmp = ft_free_str(&tmp);
-	if (!value)
-	{
-		tmp = rm_quotes(*input, i, 0);
-		if (tmp)
-		{
-			*input = ft_free_str(input);
-			*input = tmp;
-		}
-		return (*input);
-	}
-	swp_value(input, value, i, end);
-	value = ft_free_str(&value);
-	ft_printf("posjoin input -> %s\n", *input);
-	return (*input);
+	if (str[i] == '\'' && !*in_db)
+		*single = !*single;
+	else if (str[i] == '"' && !*single)
+		*in_db = !*in_db;
 }
-*/
+
+static int	dollar_d(char **str, int i)
+{
+	char	*pid;
+
+	pid = ft_itoa(getpid());
+	if (!pid)
+		pid = ft_strdup("");
+	swp_value(str, pid, i, i + 1);
+	i += ft_strlen(pid) - 2;
+	ft_free_str(&pid);
+	return (i);
+}
+
+static int	dollar_qu(char **str, int e_status, int i)
+{
+	char	*err;
+
+	err = ft_itoa(e_status);
+	if (!err)
+		ft_strdup("");
+	swp_value(str, err, i, i + 1);
+	i += ft_strlen(err) - 2;
+	ft_free_str(&err);
+	return (i);
+}
+
+void	dollar_case(t_env *env, int e_status, char **str)
+{
+	int		in_db;
+	int		in_single;
+	int		i;
+
+	i = 0;
+	in_db = 0;
+	in_single = 0;
+	while ((*str)[i])
+	{
+		toggle_quotes(*str, i, &in_single, &in_db);
+		if ((*str)[i] == '$' && (*str)[i + 1] == '$' && !in_single)
+			i = dollar_d(str, i);
+		else if ((*str)[i] == '$' && (*str)[i + 1] == '?' && !in_single)
+			i = dollar_qu(str, e_status, i);
+		else if ((*str)[i] == '$' && !in_single &&
+			((*str)[i + 1] == '\'' || (*str)[i + 1] == '"'))
+		{
+			swp_value(str, "", i, i);
+			i--;
+		}
+		else if ((*str)[i] == '$' && !in_single)
+			i = dollar_expand(str, env, i);
+		i++;
+	}
+}

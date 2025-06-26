@@ -6,13 +6,13 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/17 17:54:20 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:02:25 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int		get_quote(char *str)
+int	get_quote(char *str)
 {
 	int		i;
 
@@ -92,7 +92,7 @@ char	*rm_quotes(char *input, int i, int end)
 	return (tmp);
 }
 
-char *rm_quotes2(char *str)
+char	*rm_quotes2(char *str)
 {
 	char	*tmp;
 	int		i;
@@ -107,8 +107,8 @@ char *rm_quotes2(char *str)
 		if (skip_quoted(str, &i))
 		{
 			tmp = rm_quotes(str, j, i - 1);
-				if (!tmp)
-					return (NULL);
+			if (!tmp)
+				return (NULL);
 			ft_free_str(&str);
 			str = tmp;
 			i = i - 2;
@@ -116,5 +116,5 @@ char *rm_quotes2(char *str)
 		else
 			i++;
 	}
-	return (tmp);
+	return (str);
 }

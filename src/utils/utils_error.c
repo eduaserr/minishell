@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/13 20:26:27 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/25 23:03:28 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_error(char *str)
 	ft_printf("\x1b[31m%s\x1B[37m%s\n", "Error : ", str);
 }
 
-void ft_error_exit(t_shell **mshell, char *message, int code)
+void	ft_error_exit(t_shell **mshell, char *message, int code)
 {
 	ft_error(message);
 	(*mshell)->exit_status = code;

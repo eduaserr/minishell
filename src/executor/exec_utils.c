@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:09:25 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/18 20:04:39 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/26 16:16:25 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*get_cmd_paths(char *cmd, char **env)
 	if (!env[i])
 		return (NULL);
 	paths = ft_split(env[i] + 5, ':');
-	path = test_paths(paths, cmd);
+	path = find_cmd_path(paths, cmd);
 	ft_free_array((void **)paths);
 	return (path);
 }

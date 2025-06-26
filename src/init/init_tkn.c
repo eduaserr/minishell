@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:04:02 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:40:01 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:54:21 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_token	*get_lasttkn_node(t_token *node)
 
 void	addlast_tknnode(t_token **token_list, t_token *node)
 {
-		t_token	*last;
+	t_token	*last;
 
 	last = NULL;
 	if (!token_list || !node)

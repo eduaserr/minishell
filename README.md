@@ -78,6 +78,8 @@ Esta estructura modular facilita el mantenimiento y desarrollo del proyecto, sep
 <!--
 ---------
 
+parametros posicionales no aceptados
+
 CHECK ARGUMENTOS Y CHECK ENV
 - gestion de señales
 -INIT_MSHELL();
