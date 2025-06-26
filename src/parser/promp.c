@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:30:35 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:31:24 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:24:02 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*parse_pwd(t_shell *mshell, char *pwd)
 		pwd = ft_strjoin("~", tmp);
 		tmp = ft_free_str(&tmp);
 	}
-	home = ft_free_str(&home);
+	ft_free_str(&home);
 	return (pwd);
 }
 

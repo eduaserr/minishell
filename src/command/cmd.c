@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/26 11:59:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:29:02 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
 			cmd = ft_nodecmd(mshell, cmd, input, is_pipe, i);
 			if (!cmd)
 				return (ft_error("Parse command"), NULL);
-			is_pipe = i + 1;					// que hacer con la pipe
+			is_pipe = i + 1;
 			mshell->cmd_count++;
 		}
 		i++;
@@ -116,7 +116,6 @@ void	get_args(t_token *tkn, t_command *cmd)
 				cmd->args[i] = ft_strdup(tkn->value);
 				if (!cmd->args[i])
 					return (ft_freematrix(&cmd->args), ft_error("strdup"));
-				ft_printlines(cmd->args[i]);
 				i++;
 				tkn = tkn->next;
 			}
