@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/26 17:16:35 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/27 19:17:46 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ void	update_shell(t_shell **mshell)
 	ft_free_mshell(mshell);
 }
 
-int		main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*mshell;
 	char	*input;
+	int		pid;
+	int		status;
 
 	(void)argc;
 	(void)argv;
@@ -70,22 +72,34 @@ int		main(int argc, char **argv, char **envp)
 		return (ft_error("init minishell"), 0);
 	while (mshell->running)
 	{
-		mshell->user_input = input;
-		input = promp_input(mshell); //Ctrl + D signal se maneja con readline EOF
+		input = promp_input(mshell);
 		if (!input)
 			ft_exit(&mshell);
-		if (input[0] != '\0') // Si no es ENTER
+		if (input[0] != '\0')
+			add_history(input);
+		if (input[0] == '\0' || ft_isspace(input[0]))
 		{
-			parse_input(&mshell, ft_strdup(input));
-			redirection_behavior(mshell->commands);
+			free(input);
+			continue ;   
 		}
-		//ft_printf("main input -> %s\n", input);
-		input = ft_free_str(&input);
-		//ft_printenv(mshell->lstenv);
-		//ft_printtkn(mshell->tkn);
+		mshell->user_input = input;
+		parse_input(&mshell, ft_strdup(input));
 		ft_printcmd(mshell->commands);
-		//ft_printf("process input -> %s\n", mshell->p_input);
-		update_shell(&mshell); // la funcionalidad pensada de updatear shell/env seria fuera del bucle
+		if (mshell->commands)
+		{
+			if (execute_parent_builtin(mshell->commands->args, mshell))
+			{
+				update_shell(&mshell);
+				free(input);
+				continue ;
+			}
+			pid = fork();
+			if (pid == 0)
+				execute(mshell, mshell->commands->args, mshell->env);
+			waitpid(pid, &status, 0);
+		}
+		update_shell(&mshell);
+		free(input);
 	}
 	return (0);
 }
