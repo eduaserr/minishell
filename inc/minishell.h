@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/26 16:14:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:54:15 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,6 +285,9 @@ void	ft_free_mshell(t_shell **mshell);
 //////////////////////
 //	utils_node		//
 //////////////////////
+t_env	*ft_getlstenv(t_env *env, char *var);
+
+void	sync_env_array(t_shell *shell);
 /**
  * @brief You must indicate the key and it returns the corresponding value.
  * 
@@ -331,7 +334,6 @@ int		builtin_exit(char **args);
 int		builtin_unset(t_shell *shell, char **cmd);
 int		builtin_export(t_shell *shell, char **cmd);
 void	execute_child_builtins(char **cmd_args, t_shell *shell);
-bool	execute_parent_builtin(char **cmd_args, t_shell *shell);
 
 /* **************************************** */
 /*					EXECUTE					*/

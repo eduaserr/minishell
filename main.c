@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/27 19:17:46 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:00:44 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,33 +72,29 @@ int	main(int argc, char **argv, char **envp)
 		return (ft_error("init minishell"), 0);
 	while (mshell->running)
 	{
+		mshell->user_input = input;
 		input = promp_input(mshell);
 		if (!input)
 			ft_exit(&mshell);
 		if (input[0] != '\0')
-			add_history(input);
-		if (input[0] == '\0' || ft_isspace(input[0]))
 		{
-			free(input);
-			continue ;   
-		}
-		mshell->user_input = input;
-		parse_input(&mshell, ft_strdup(input));
-		ft_printcmd(mshell->commands);
-		if (mshell->commands)
-		{
-			if (execute_parent_builtin(mshell->commands->args, mshell))
+			parse_input(&mshell, ft_strdup(input));
+			ft_printcmd(mshell->commands);
+			if (mshell->commands)
 			{
-				update_shell(&mshell);
-				free(input);
-				continue ;
+				if (execute_parent_builtin(mshell->commands->args, mshell))
+				{
+					update_shell(&mshell);
+					free(input);
+					continue ;
+				}
+				pid = fork();
+				if (pid == 0)
+					execute(mshell, mshell->commands->args, mshell->env);
+				waitpid(pid, &status, 0);
 			}
-			pid = fork();
-			if (pid == 0)
-				execute(mshell, mshell->commands->args, mshell->env);
-			waitpid(pid, &status, 0);
+			update_shell(&mshell);
 		}
-		update_shell(&mshell);
 		free(input);
 	}
 	return (0);
