@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/27 20:54:15 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:09:54 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,6 +263,8 @@ t_token	*tokenizer(t_token *token_list, char *input);
 void	ft_exit(t_shell **mshell);
 
 void	ft_error(char *str);
+
+void	ft_perror(char *str, char *var);
 
 void	ft_error_exit(t_shell **mshell, char *message, int code);
 

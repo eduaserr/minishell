@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:04:44 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/26 16:16:55 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:19:37 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ void	execute_heredoc(char *delimiter, int heredoc_fd[2])
 static void	handle_file_input(t_shell *shell, char *file)
 {
 	int	fd_in;
+	(void)shell;
 
 	fd_in = open(file, O_RDONLY);
 	if (fd_in == -1)
-		ft_error_exit(&shell, "infile open", EXIT_FAILURE);
+		return (ft_error("infile open"));
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
 }
@@ -46,8 +47,9 @@ static void	handle_heredoc_input(t_shell *shell, char *delimiter)
 {
 	int	heredoc_fd[2];
 
+	(void)shell;
 	if (pipe(heredoc_fd) < 0)
-		ft_error_exit(&shell, "pipe", EXIT_FAILURE);
+		return (ft_error("heredoc input"));
 	execute_heredoc(delimiter, heredoc_fd);
 	dup2(heredoc_fd[0], STDIN_FILENO);
 	close(heredoc_fd[0]);
@@ -90,7 +92,7 @@ void	setup_redirection(t_shell *shell, bool handle_heredoc)
 			else
 				fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 			if (fd_out == -1)
-				ft_error_exit(&shell, "outfile open", EXIT_FAILURE);
+				return (ft_error("outfile open"));
 			dup2(fd_out, STDOUT_FILENO);
 			close(fd_out);
 			return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 12:15:57 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/23 15:56:45 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:40:43 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	builtin_export(t_shell *shell, char **cmd)
 void	builtin_env(t_shell *shell, char **envp)
 {
 	int	i;
+	(void)shell;
 
 	i = 0;
 	while (envp[i])
@@ -76,5 +77,5 @@ void	builtin_env(t_shell *shell, char **envp)
 		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
-	ft_error_exit(&shell, NULL, EXIT_SUCCESS);
+	//ft_error_exit(&shell, NULL, EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:04:50 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/27 21:16:15 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/30 15:40:19 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 bool	execute_parent_builtin(char **cmd_args, t_shell *shell)
 {
+	(void)shell;
 	if (ft_strcmp(cmd_args[0], "cd") == 0)
 	{
 		shell->last_exit_status = builtin_cd(shell, cmd_args);

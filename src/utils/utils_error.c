@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 23:03:28 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:05:15 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_exit(t_shell **mshell)
 
 static void	ft_exit2(t_shell **mshell)
 {
-	if ((*mshell)->exit_status == 1)
+	if ((*mshell)->exit_status != 0)
 		(*mshell)->running = 0;
 	ft_free_mshell(mshell);
 }
@@ -55,6 +55,11 @@ static void	ft_exit2(t_shell **mshell)
 void	ft_error(char *str)
 {
 	ft_printf("\x1b[31m%s\x1B[37m%s\n", "Error : ", str);
+}
+
+void	ft_perror(char *str, char *var)
+{
+	ft_printf("%s: %s\n", var, str);
 }
 
 void	ft_error_exit(t_shell **mshell, char *message, int code)

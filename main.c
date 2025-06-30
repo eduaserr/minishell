@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/27 20:00:44 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:02:17 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	redirection_behavior(t_command *cmd)
 void	update_shell(t_shell **mshell)
 {
 	// update struct() ?
-	if ((*mshell)->exit_status == 1)
+	if ((*mshell)->exit_status != 0)
 		(*mshell)->running = 0;
 	ft_free_mshell(mshell);
 }

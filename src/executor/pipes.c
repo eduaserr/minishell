@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:56:53 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/23 14:35:42 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:18:11 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	child_process(t_shell *shell, int fd[2], int in_fd, char **env)
 	if (heredoc_redir)
 	{
 		if (pipe(heredoc_fd) < 0)
-			ft_error_exit(&shell, "pipe", EXIT_FAILURE);
+			return (ft_error("child proccess"));
 		execute_heredoc(heredoc_redir->file, heredoc_fd);
 	}
 	else if (in_fd != STDIN_FILENO)
@@ -83,7 +83,7 @@ void	handle_pipes(t_shell *shell, char **env)
 	while (shell->commands)
 	{
 		if (shell->commands->next && pipe(fd) < 0)
-			ft_error_exit(&shell, "pipe", EXIT_FAILURE);
+			return (ft_error("handle pipe"));
 		pid = fork();
 		if (pid == 0)
 			child_process(shell, fd, in_fd, env);
@@ -94,5 +94,5 @@ void	handle_pipes(t_shell *shell, char **env)
 	if (in_fd != STDIN_FILENO)
 		close(in_fd);
 	shell->commands = first;
-	ft_error_exit(&shell, NULL, EXIT_SUCCESS);
+	return (ft_error("NULL"));
 }
