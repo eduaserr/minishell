@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/24 22:57:02 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:14:19 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 variables que tambien se deben añadir por default, en otro momento
 		OLDPWD	(anterior ruta)
 		_		(se crea manejando el ultimo comando usado)
-*/	
+*/
 static char	**new_env(int i)
 {
 	char	**env;
@@ -65,6 +65,101 @@ static t_env	*init_env(t_env *lstenv, char **env)
 	return (lstenv);
 }
 
+static t_env	*find_env_node(t_env *lstenv, char *key)
+{
+	t_env	*current;
+
+	current = lstenv;
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
+
+static void	add_to_env_array(t_shell *mshell, char *env_var)
+{
+	char	**new_env;
+	int		count;
+	int		i;
+
+	if (!mshell || !env_var)
+		return ;
+	count = 0;
+	while (mshell->env && mshell->env[count])
+		count++;
+	new_env = malloc(sizeof(char *) * (count + 2));
+	if (!new_env)
+		return ;
+	i = 0;
+	while (i < count)
+	{
+		new_env[i] = ft_strdup(mshell->env[i]);
+		if (!new_env[i])
+		{
+			while (--i >= 0)
+				free(new_env[i]);
+			free(new_env);
+			return ;
+		}
+		i++;
+	}
+	new_env[count] = ft_strdup(env_var);
+	if (!new_env[count])
+	{
+		while (--i >= 0)
+			free(new_env[i]);
+		free(new_env);
+		return ;
+	}
+	new_env[count + 1] = NULL;
+	ft_freematrix(&mshell->env);
+	mshell->env = new_env;
+}
+
+static void	update_SHLVL(t_shell *mshell)
+{
+	t_env	*shlvl_node;
+	char	*current_shlvl;
+	int		shlvl_value;
+	char	*new_shlvl;
+	int		i;
+	t_env	*new_node;
+
+	shlvl_node = find_env_node(mshell->lstenv, "SHLVL");
+	if (shlvl_node)
+	{
+		current_shlvl = shlvl_node->value;
+		shlvl_value = ft_atoi(current_shlvl);
+		shlvl_value++;
+		new_shlvl = ft_itoa(shlvl_value);
+		if (!new_shlvl)
+			return ;
+		free(shlvl_node->value);
+		shlvl_node->value = new_shlvl;
+		i = 0;
+		while (mshell->env && mshell->env[i])
+		{
+			if (ft_strncmp(mshell->env[i], "SHLVL=", 6) == 0)
+			{
+				free(mshell->env[i]);
+				mshell->env[i] = ft_strjoin("SHLVL=", new_shlvl);
+				break ;
+			}
+			i++;
+		}
+	}
+	else
+	{
+		new_node = create_env("SHLVL=1");
+		if (new_node)
+			addlast_node(&mshell->lstenv, new_node);
+		add_to_env_array(mshell, "SHLVL=1");
+	}
+}
+
 t_shell	*init_mshell(t_shell *mshell, char **envp)
 {
 	mshell = (t_shell *)malloc(sizeof(t_shell));
@@ -87,7 +182,6 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 	mshell->lstenv = init_env(mshell->lstenv, mshell->env);
 	if (!mshell->lstenv)
 		return (ft_free_mshell(&mshell), NULL);
-	//update_shell();
-	//update_SHLVL();
+	update_SHLVL(mshell);
 	return (mshell);
 }
