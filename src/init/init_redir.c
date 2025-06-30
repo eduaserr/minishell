@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 01:27:48 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/26 12:29:03 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/30 22:22:08 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ t_redir	*redir_node(t_shell *mshell, t_token *tkn, t_redir *lstrd, int cmd_index
 {
 	char	*tmp;
 	t_redir	*new;
-	int		i;
 
-	i = 0;
 	tmp = NULL;
 	set_tknhead(&tkn, cmd_index);
 	while (tkn && tkn->type != PIPE)

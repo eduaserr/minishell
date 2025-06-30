@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 09:09:36 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/30 20:57:12 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/30 22:41:50 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+//ACTUALIZAR ANTES DE EXECVE EL DOBLE ARRAY CON LA LISTA
 void	exec_cmd(t_shell *shell, char **cmd_args, char **env)
 {
 	char	*path;
