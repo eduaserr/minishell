@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promp.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:30:35 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/12 21:31:24 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:18:09 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,21 @@ char	*promp_input(t_shell *mshell)
 	char	*promp;
 	char	*input;
 	char	*pwd;
+	char	cwd[4096];
 
 	pwd = NULL;
 	input = NULL;
 	promp = NULL;
-/* 	if (g_signal_received == SIGINT)
-		mshell->last_exit_status = EXIT_SIGINT; */
-	pwd = ft_getenv(mshell->lstenv, "PWD");		// /home/eduaserr/cursus/minishell
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		pwd = ft_strdup(cwd);
+	else
+		pwd = ft_strdup("?");
 	pwd = parse_pwd(mshell, pwd);
-	promp = ft_getenv(mshell->lstenv, "USER");	//eduaserr
-	promp = ft_strjoin_gnl(promp, "@mshell");	//eduaserr@mshell
-	promp = ft_strjoin_gnl(promp, pwd);			//eduaserr@mshell/home/eduaserr/cursus/minishell
+	promp = ft_getenv(mshell->lstenv, "USER");
+	promp = ft_strjoin_gnl(promp, "@mshell");
+	promp = ft_strjoin_gnl(promp, pwd);
 	pwd = ft_free_str(&pwd);
-	promp = ft_strjoin_gnl(promp, "$ ");		//eduaserr@mshell/home/eduaserr/cursus/minishell$ 
+	promp = ft_strjoin_gnl(promp, "$ ");
 	input = readline(promp);
 	promp = ft_free_str(&promp);
 	if (!input)

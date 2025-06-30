@@ -6,7 +6,7 @@
 /*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/26 20:35:16 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/27 20:12:26 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ int	main(int argc, char **argv, char **envp)
 		if (input[0] == '\0' || ft_isspace(input[0]))
 		{
 			free(input);
-			continue ;   
+			continue ;
 		}
 		mshell->user_input = input;
 		parse_input(&mshell, ft_strdup(input));
-		ft_printcmd(mshell->commands);
 		if (mshell->commands)
 		{
 			if (execute_parent_builtin(mshell->commands->args, mshell))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 23:03:28 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/27 19:07:59 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	ft_error(char *str)
 
 void	ft_error_exit(t_shell **mshell, char *message, int code)
 {
-	ft_error(message);
+	if (!(message == NULL && code == EXIT_SUCCESS))
+		ft_error(message);
 	(*mshell)->exit_status = code;
 	ft_exit2(mshell);
 }
