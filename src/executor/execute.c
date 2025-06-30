@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 09:09:36 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/30 16:52:27 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:19:51 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exec_cmd(t_shell *shell, char **cmd_args, char **env)
 		|| !ft_strcmp(cmd_args[0], "env"))
 	{
 		execute_child_builtins(cmd_args, shell);
-		return ;
+		ft_exit_child(&shell);
 	}
 	if (ft_strchr(cmd_args[0], '/'))
 		path = cmd_args[0];
@@ -30,7 +30,7 @@ void	exec_cmd(t_shell *shell, char **cmd_args, char **env)
 	{
 		path = get_cmd_paths(cmd_args[0], env);
 		if (path == NULL)
-			return (ft_perror("command not found", cmd_args[0]));
+			return (ft_perror("command not found", cmd_args[0]), ft_exit_child(&shell));
 		path_allocated = true;
 	}
 	if (execve(path, cmd_args, env) == -1)
