@@ -3,20 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/30 20:14:19 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:59:25 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-variables que tambien se deben añadir por default, en otro momento
-		OLDPWD	(anterior ruta)
-		_		(se crea manejando el ultimo comando usado)
-*/
+void	update_shlvl(t_env *lstenv)
+{
+	int		shlvl;
+	char	*new_shlvl_str;
+
+	lstenv = ft_getlstenv(lstenv, "SHLVL");
+	if (!lstenv)
+		return (ft_error("update shlvl"));
+	shlvl = ft_atoi(lstenv->value);
+	shlvl++;
+	new_shlvl_str = ft_itoa(shlvl);
+	if (new_shlvl_str)
+	{
+		free(lstenv->value);
+		lstenv->value = new_shlvl_str;
+	}
+}
+
 static char	**new_env(int i)
 {
 	char	**env;
@@ -37,10 +50,10 @@ static char	**new_env(int i)
 	if (!pwd)
 		return (ft_freematrix(&env), NULL);
 	env[2] = ft_strjoin("PWD=", pwd);
-	pwd = ft_free_str(&pwd);
+	ft_free_str(&pwd);
 	if (!env[2])
 		return (ft_freematrix(&env), NULL);
-	env[3] = ft_strdup("SHLVL=1");
+	env[3] = ft_strdup("SHLVL=0");
 	if (!env[3])
 		return (ft_freematrix(&env), NULL);
 	return (env);
@@ -65,7 +78,7 @@ static t_env	*init_env(t_env *lstenv, char **env)
 	return (lstenv);
 }
 
-static t_env	*find_env_node(t_env *lstenv, char *key)
+/* static t_env	*find_env_node(t_env *lstenv, char *key)
 {
 	t_env	*current;
 
@@ -77,9 +90,9 @@ static t_env	*find_env_node(t_env *lstenv, char *key)
 		current = current->next;
 	}
 	return (NULL);
-}
+} */
 
-static void	add_to_env_array(t_shell *mshell, char *env_var)
+/* static void	add_to_env_array(t_shell *mshell, char *env_var)
 {
 	char	**new_env;
 	int		count;
@@ -117,9 +130,9 @@ static void	add_to_env_array(t_shell *mshell, char *env_var)
 	new_env[count + 1] = NULL;
 	ft_freematrix(&mshell->env);
 	mshell->env = new_env;
-}
+} */
 
-static void	update_SHLVL(t_shell *mshell)
+/* static void	update_SHLVL(t_shell *mshell)
 {
 	t_env	*shlvl_node;
 	char	*current_shlvl;
@@ -158,7 +171,7 @@ static void	update_SHLVL(t_shell *mshell)
 			addlast_node(&mshell->lstenv, new_node);
 		add_to_env_array(mshell, "SHLVL=1");
 	}
-}
+} */
 
 t_shell	*init_mshell(t_shell *mshell, char **envp)
 {
@@ -182,6 +195,6 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 	mshell->lstenv = init_env(mshell->lstenv, mshell->env);
 	if (!mshell->lstenv)
 		return (ft_free_mshell(&mshell), NULL);
-	update_SHLVL(mshell);
+	update_shlvl(mshell->lstenv);
 	return (mshell);
 }

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/30 17:24:07 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/30 21:01:55 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ void	ft_error(char *str)
 
 void	ft_perror(char *str, char *var)
 {
-	ft_printf("%s: %s\n", var, str);
+	if (var[0] == '/')
+		ft_printf("mshell: %s: %s\n", var, "No such file or directory");
+	else
+		ft_printf("%s: %s\n", var, str);
 }
 
 void	ft_error_exit(t_shell **mshell, char *message, int code)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/30 20:04:52 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:53:03 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minishell.h"
 
-void	redirection_behavior(t_command *cmd)
+/* void	redirection_behavior(t_command *cmd)
 {
 	t_redir	*rd;
 	int		flags;
@@ -46,7 +46,7 @@ void	redirection_behavior(t_command *cmd)
 		}
 		cmd = cmd->next;
 	}
-}
+} */
 
 void	update_shell(t_shell **mshell)
 {

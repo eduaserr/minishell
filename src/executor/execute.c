@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 09:09:36 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/30 18:19:51 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:57:12 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	exec_cmd(t_shell *shell, char **cmd_args, char **env)
 	{
 		if (path_allocated)
 			free(path);
-		return (ft_error("exec cmd"));
+		return (ft_perror("command not found", cmd_args[0]), ft_exit_child(&shell));
 	}
 }
 
