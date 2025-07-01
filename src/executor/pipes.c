@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:56:53 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/01 20:29:53 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/02 00:39:00 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	handle_pipes(t_shell *shell, char **env)
 	int			fd[2];
 	int			in_fd;
 	int			child_count;
+	int			status;
 
 	child_count = 0;
 	first = shell->commands;
@@ -111,5 +112,6 @@ void	handle_pipes(t_shell *shell, char **env)
 		close(in_fd);
 	shell->commands = first;
 	while (child_count-- > 0)
-		wait(NULL);
+		wait(&status);
+	ft_exit_child(&shell, WEXITSTATUS(status));
 }
