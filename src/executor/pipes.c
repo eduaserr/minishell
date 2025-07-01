@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:56:53 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/30 16:18:11 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:32:13 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	parent_process(t_shell *shell, int *in_fd, int fd[2])
 {
-	wait(NULL);
 	if (shell->commands->next)
 	{
 		close(fd[1]);
@@ -94,5 +93,4 @@ void	handle_pipes(t_shell *shell, char **env)
 	if (in_fd != STDIN_FILENO)
 		close(in_fd);
 	shell->commands = first;
-	return (ft_error("NULL"));
 }

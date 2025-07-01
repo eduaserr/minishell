@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/30 21:01:55 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:47:25 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ void	ft_exit(t_shell **mshell)
 	exit(EXIT_SUCCESS);
 }
 
-void	ft_exit_child(t_shell **mshell)
+void	ft_exit_child(t_shell **mshell, int code)
 {
 	(*mshell)->running = 0;
 	(*mshell)->exit_status = 1;
 	ft_free_mshell(mshell);
 	ft_clean_rl(); // buena práctica
-	exit(EXIT_SUCCESS);
+	exit(code);
 }
 
 static void	ft_exit2(t_shell **mshell)
@@ -70,6 +70,8 @@ void	ft_perror(char *str, char *var)
 {
 	if (var[0] == '/')
 		ft_printf("mshell: %s: %s\n", var, "No such file or directory");
+	else if (ft_strcmp(str, "cnf") == 0)
+		ft_printf("%s: %s\n", var, "command not found");
 	else
 		ft_printf("%s: %s\n", var, str);
 }

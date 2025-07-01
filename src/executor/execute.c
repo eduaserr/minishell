@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 09:09:36 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/30 22:41:50 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:44:27 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//ACTUALIZAR ANTES DE EXECVE EL DOBLE ARRAY CON LA LISTA
 void	exec_cmd(t_shell *shell, char **cmd_args, char **env)
 {
 	char	*path;
@@ -23,7 +22,7 @@ void	exec_cmd(t_shell *shell, char **cmd_args, char **env)
 		|| !ft_strcmp(cmd_args[0], "env"))
 	{
 		execute_child_builtins(cmd_args, shell);
-		ft_exit_child(&shell);
+		ft_exit_child(&shell, 0);
 	}
 	if (ft_strchr(cmd_args[0], '/'))
 		path = cmd_args[0];
@@ -31,14 +30,14 @@ void	exec_cmd(t_shell *shell, char **cmd_args, char **env)
 	{
 		path = get_cmd_paths(cmd_args[0], env);
 		if (path == NULL)
-			return (ft_perror("command not found", cmd_args[0]), ft_exit_child(&shell));
+			return (ft_perror("cnf", cmd_args[0]), ft_exit_child(&shell, 0));
 		path_allocated = true;
 	}
 	if (execve(path, cmd_args, env) == -1)
 	{
 		if (path_allocated)
 			free(path);
-		return (ft_perror("command not found", cmd_args[0]), ft_exit_child(&shell));
+		return (ft_perror("cnf", cmd_args[0]), ft_exit_child(&shell, 0));
 	}
 }
 

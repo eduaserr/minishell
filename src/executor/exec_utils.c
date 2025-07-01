@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 17:09:25 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/26 16:16:25 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:36:23 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_cmd_paths(char *cmd, char **env)
 	int		i;
 
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 			break ;

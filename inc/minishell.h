@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/30 17:25:09 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:40:41 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ t_command	*create_cmd(t_command *new);
 
 void	addlastcmd_node(t_command **lstcmd, t_command *node);
 
+void	sync_arr_env(t_shell *shell);
 //////////////////////
 //	init_env		//
 //////////////////////
@@ -262,7 +263,7 @@ t_token	*tokenizer(t_token *token_list, char *input);
 //////////////////////
 void	ft_exit(t_shell **mshell);
 
-void	ft_exit_child(t_shell **mshell);
+void	ft_exit_child(t_shell **mshell, int code);
 
 void	ft_error(char *str);
 
@@ -280,6 +281,8 @@ int		dollar_expand(char **str, t_env *env, int i);
 //////////////////////
 //	utils_free		//
 //////////////////////
+void	ft_free_env(t_env **lstenv);
+
 void	ft_free_tkn(t_token **tkn);
 
 void	ft_free_cmd(t_command **cmd);
@@ -337,7 +340,6 @@ int		builtin_cd(t_shell *shell, char **cmd);
 int		builtin_exit(char **args);
 int		builtin_unset(t_shell *shell, char **cmd);
 int		builtin_export(t_shell *shell, char **cmd);
-void	execute_child_builtins(char **cmd_args, t_shell *shell);
 
 /* **************************************** */
 /*					EXECUTE					*/

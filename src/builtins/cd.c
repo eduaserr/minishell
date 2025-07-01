@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:24:48 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/27 21:21:32 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:21:24 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,33 +103,30 @@ static int	cd_to_oldpwd(t_shell *shell)
 
 static int	cd_to_home(t_shell *shell)
 {
-    char	*path_to_home;
-    char	*oldpwd_val;
+	char	*path_to_home;
+	char	*oldpwd_val;
 
-    oldpwd_val = ft_getenv(shell->lstenv, "PWD");  // ✅ Sintaxis correcta
-    if (!oldpwd_val)
-        return (EXIT_FAILURE);
-    
-    path_to_home = ft_getenv(shell->lstenv, "HOME");  // ✅ Sintaxis correcta
-    if (!path_to_home)
-    {
-        ft_putendl_fd("minishell: cd: HOME not set", 2);
-        free(oldpwd_val);
-        return (EXIT_FAILURE);
-    }
-    
-    if (chdir(path_to_home) == -1)
-    {
-        perror("minishell: cd");
-        free(path_to_home);
-        free(oldpwd_val);
-        return (EXIT_FAILURE);
-    }
-    
-    update_env_pwd(shell, oldpwd_val);
-    free(path_to_home);
-    free(oldpwd_val);
-    return (EXIT_SUCCESS);
+	oldpwd_val = ft_getenv(shell->lstenv, "PWD");
+	if (!oldpwd_val)
+		return (EXIT_FAILURE);
+	path_to_home = ft_getenv(shell->lstenv, "HOME");
+	if (!path_to_home)
+	{
+		ft_putendl_fd("minishell: cd: HOME not set", 2);
+		free(oldpwd_val);
+		return (EXIT_FAILURE);
+	}
+	if (chdir(path_to_home) == -1)
+	{
+		perror("minishell: cd");
+		free(path_to_home);
+		free(oldpwd_val);
+		return (EXIT_FAILURE);
+	}
+	update_env_pwd(shell, oldpwd_val);
+	free(path_to_home);
+	free(oldpwd_val);
+	return (EXIT_SUCCESS);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
@@ -138,9 +135,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 	i = 0;
 	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
-	{
 		i++;
-	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 

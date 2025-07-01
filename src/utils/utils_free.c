@@ -6,13 +6,13 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:28:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 23:08:05 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:33:32 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	ft_free_env(t_env **lstenv)
+void	ft_free_env(t_env **lstenv)
 {
 	t_env	*swp;
 
