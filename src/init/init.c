@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 13:12:54 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/30 20:59:25 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:23:22 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,15 @@ static t_env	*init_env(t_env *lstenv, char **env)
 /* static t_env	*find_env_node(t_env *lstenv, char *key)
 {
 	t_env	*current;
+	char	**new_env;
+	int		count;
+	int		i;
+	t_env	*shlvl_node;
+	char	*current_shlvl;
+	int		shlvl_value;
+	char	*new_shlvl;
+	int		i;
+	t_env	*new_node;
 
 	current = lstenv;
 	while (current)
@@ -91,13 +100,8 @@ static t_env	*init_env(t_env *lstenv, char **env)
 	}
 	return (NULL);
 } */
-
 /* static void	add_to_env_array(t_shell *mshell, char *env_var)
 {
-	char	**new_env;
-	int		count;
-	int		i;
-
 	if (!mshell || !env_var)
 		return ;
 	count = 0;
@@ -131,16 +135,8 @@ static t_env	*init_env(t_env *lstenv, char **env)
 	ft_freematrix(&mshell->env);
 	mshell->env = new_env;
 } */
-
 /* static void	update_SHLVL(t_shell *mshell)
 {
-	t_env	*shlvl_node;
-	char	*current_shlvl;
-	int		shlvl_value;
-	char	*new_shlvl;
-	int		i;
-	t_env	*new_node;
-
 	shlvl_node = find_env_node(mshell->lstenv, "SHLVL");
 	if (shlvl_node)
 	{
@@ -172,7 +168,6 @@ static t_env	*init_env(t_env *lstenv, char **env)
 		add_to_env_array(mshell, "SHLVL=1");
 	}
 } */
-
 t_shell	*init_mshell(t_shell *mshell, char **envp)
 {
 	mshell = (t_shell *)malloc(sizeof(t_shell));
@@ -197,4 +192,31 @@ t_shell	*init_mshell(t_shell *mshell, char **envp)
 		return (ft_free_mshell(&mshell), NULL);
 	update_shlvl(mshell->lstenv);
 	return (mshell);
+}
+
+void	sync_lstenv_from_env(t_shell *shell)
+{
+	int		i;
+	t_env	*new_list;
+	t_env	*new_node;
+	t_env	*tmp;
+
+	new_list = NULL;
+	while (shell->lstenv)
+	{
+		tmp = shell->lstenv->next;
+		free(shell->lstenv->key);
+		free(shell->lstenv->value);
+		free(shell->lstenv);
+		shell->lstenv = tmp;
+	}
+	i = 0;
+	while (shell->env && shell->env[i])
+	{
+		new_node = create_env(shell->env[i]);
+		if (new_node)
+			addlast_node(&new_list, new_node);
+		i++;
+	}
+	shell->lstenv = new_list;
 }
