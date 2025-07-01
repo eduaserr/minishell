@@ -6,19 +6,11 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/01 18:47:25 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 20:27:07 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-//por implementar, pone por default la salida de las señales
-/* void	reset_signal_handlers(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTERM, SIG_DFL);
-} */
 
 void	ft_clean_rl(void)
 {

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/01 18:40:41 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 20:26:59 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,8 @@ void	signal_function(void);
 //	signal2			//
 //////////////////////
 void	setup_heredoc_signals(void);
+
+void	signal_default(void);
 
 /* **************************************** */
 /*					TOKENS					*/
