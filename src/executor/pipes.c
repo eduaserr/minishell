@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:56:53 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/01 18:32:13 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 19:35:19 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ static void	child_process(t_shell *shell, int fd[2], int in_fd, char **env)
 	t_command	*command;
 	t_redir		*heredoc_redir;
 
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	command = shell->commands;
 	heredoc_redir = find_redir_by_type(command, HEREDOC);
 	if (heredoc_redir)
 	{
 		if (pipe(heredoc_fd) < 0)
-			return (ft_error("child proccess"));
+			return (ft_error("child proccess"), ft_exit_child(&shell, 1));
 		execute_heredoc(heredoc_redir->file, heredoc_fd);
 	}
 	else if (in_fd != STDIN_FILENO)
@@ -68,6 +70,8 @@ static void	child_process(t_shell *shell, int fd[2], int in_fd, char **env)
 	}
 	setup_redirection(shell, false);
 	exec_cmd(shell, command->args, env);
+	ft_error("NUNCA DEBERÍA LLEGAR AQUI");
+	ft_exit_child(&shell, EXIT_FAILURE);
 }
 
 void	handle_pipes(t_shell *shell, char **env)

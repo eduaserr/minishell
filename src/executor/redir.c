@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:04:44 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/30 16:19:37 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/01 19:45:19 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,20 @@ void	execute_heredoc(char *delimiter, int heredoc_fd[2])
 {
 	char	*line;
 
-	line = NULL;
+	setup_heredoc_signals();
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || !ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
+		if (!line)
+		{
+			write(STDOUT_FILENO, "\n", 1);
 			break ;
+		}
+		if (ft_strcmp(line, delimiter) == 0)
+		{
+			free(line);
+			break ;
+		}
 		write(heredoc_fd[1], line, ft_strlen(line));
 		write(heredoc_fd[1], "\n", 1);
 		free(line);
@@ -38,7 +46,7 @@ static void	handle_file_input(t_shell *shell, char *file)
 
 	fd_in = open(file, O_RDONLY);
 	if (fd_in == -1)
-		return (ft_error("infile open"));
+		return (ft_perror("infile open", file), ft_exit_child(&shell, 1));
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
 }
@@ -49,13 +57,13 @@ static void	handle_heredoc_input(t_shell *shell, char *delimiter)
 
 	(void)shell;
 	if (pipe(heredoc_fd) < 0)
-		return (ft_error("heredoc input"));
+		return (ft_error("heredoc input"), ft_exit_child(&shell, 1));
 	execute_heredoc(delimiter, heredoc_fd);
-	dup2(heredoc_fd[0], STDIN_FILENO);
-	close(heredoc_fd[0]);
+	//dup2(heredoc_fd[0], STDIN_FILENO);
+	//close(heredoc_fd[0]);
 }
 
-void	redirect_stdin(t_shell *shell, bool handle_heredoc)
+/*void	redirect_stdin(t_shell *shell, bool handle_heredoc)
 {
 	t_command	*command;
 	t_redir		*redir;
@@ -72,6 +80,36 @@ void	redirect_stdin(t_shell *shell, bool handle_heredoc)
 			handle_heredoc_input(shell, redir->file);
 		redir = redir->next;
 	}
+}*/
+
+void	redirect_stdin(t_shell *shell, bool handle_heredoc)
+{
+    t_command	*command;
+    t_redir		*redir;
+    t_redir		*last_stdin_redir;
+
+    command = shell->commands;
+    if (!command || !command->rd)
+        return;
+        
+    // ✅ Encontrar la última redirección de entrada (bash behavior)
+    last_stdin_redir = NULL;
+    redir = command->rd;
+    while (redir)
+    {
+        if (redir->type == REDIR_IN || redir->type == HEREDOC)
+            last_stdin_redir = redir;
+        redir = redir->next;
+    }
+    
+    // ✅ Aplicar solo la última redirección de entrada
+    if (last_stdin_redir)
+    {
+        if (last_stdin_redir->type == REDIR_IN)
+            handle_file_input(shell, last_stdin_redir->file);
+        else if (last_stdin_redir->type == HEREDOC && handle_heredoc)
+            handle_heredoc_input(shell, last_stdin_redir->file);
+    }
 }
 
 void	setup_redirection(t_shell *shell, bool handle_heredoc)
@@ -92,7 +130,7 @@ void	setup_redirection(t_shell *shell, bool handle_heredoc)
 			else
 				fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 			if (fd_out == -1)
-				return (ft_error("outfile open"));
+				return (ft_perror("outfile open", redir->file), ft_exit_child(&shell, 1));
 			dup2(fd_out, STDOUT_FILENO);
 			close(fd_out);
 			return ;
