@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/01 20:26:59 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:31:30 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,6 +307,8 @@ void	sync_env_array(t_shell *shell);
 char	*ft_getenv(t_env *env, char *var);
 
 char	*is_var(char *str, t_env *env);
+
+int		ft_strcmp(const char *s1, const char *s2);
 
 //////////////////////
 //	utils_print		//

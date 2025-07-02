@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 20:27:29 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/02 18:18:15 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:32:54 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_env	*ft_getlstenv(t_env *env, char *var)
 	return (env);
 }
 
-//Creates strdup. You must indicate the key and it returns the corresponding value"
 char	*ft_getenv(t_env *env, char *var)
 {
 	while (env)
@@ -48,7 +47,7 @@ char	*is_var(char *str, t_env *env)
 	value = ft_getenv(env, str);
 	if (!value)
 		return (ft_error("no env key match"), NULL);
-	return (value);// devuelve puntero a estructura. //strdup() ?
+	return (value);
 }
 
 /* void	sync_cpy(t_shell *shell, t_env *current, int i, int count)
@@ -129,4 +128,14 @@ void	sync_env_array(t_shell *shell)
 		i++;
 	}
 	shell->env[i] = NULL;
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
