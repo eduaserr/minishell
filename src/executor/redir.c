@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:04:44 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/02 15:46:38 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:07:33 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	handle_heredoc_input(t_shell *shell, char *delimiter)
 	//close(heredoc_fd[0]);
 }
 
-/*void	redirect_stdin(t_shell *shell, bool handle_heredoc)
+void	redirect_stdin(t_shell *shell, bool handle_heredoc)
 {
 	t_command	*command;
 	t_redir		*redir;
@@ -80,9 +80,9 @@ static void	handle_heredoc_input(t_shell *shell, char *delimiter)
 			handle_heredoc_input(shell, redir->file);
 		redir = redir->next;
 	}
-}*/
+}
 
-void	redirect_stdin(t_shell *shell, bool handle_heredoc)
+/*void	redirect_stdin(t_shell *shell, bool handle_heredoc)
 {
     t_command	*command;
     t_redir		*redir;
@@ -110,9 +110,9 @@ void	redirect_stdin(t_shell *shell, bool handle_heredoc)
         else if (last_stdin_redir->type == HEREDOC && handle_heredoc)
             handle_heredoc_input(shell, last_stdin_redir->file);
     }
-}
+}*/
 
-void	setup_redirection(t_shell *shell, bool handle_heredoc)
+/* void	setup_redirection(t_shell *shell, bool handle_heredoc)
 {
 	int			fd_out;
 	t_redir		*redir;
@@ -136,5 +136,52 @@ void	setup_redirection(t_shell *shell, bool handle_heredoc)
 			return ;
 		}
 		redir = redir->next;
+	}
+} */
+
+void	setup_redirection(t_shell *shell, bool handle_heredoc)
+{
+	int			fd_out;
+	t_redir		*redir;
+	t_redir		*last_output_redir;
+
+	redirect_stdin(shell, handle_heredoc);
+	if (!shell->commands || !shell->commands->rd)
+		return ;
+	redir = shell->commands->rd;
+	while (redir)
+	{
+		if (redir->type == REDIR_OUT || redir->type == APPEND)
+		{
+			if (redir->type == APPEND)
+				fd_out = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			else
+				fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				
+			if (fd_out == -1)
+				return (ft_perror("minishell", redir->file), ft_exit_child(&shell, EXIT_FAILURE));
+			close(fd_out);
+		}
+		redir = redir->next;
+	}
+	last_output_redir = NULL;
+	redir = shell->commands->rd;
+	while (redir)
+	{
+		if (redir->type == REDIR_OUT || redir->type == APPEND)
+			last_output_redir = redir;
+		redir = redir->next;
+	}
+	if (last_output_redir)
+	{
+		if (last_output_redir->type == APPEND)
+			fd_out = open(last_output_redir->file, O_WRONLY | O_APPEND);
+		else
+			fd_out = open(last_output_redir->file, O_WRONLY);
+			
+		if (fd_out == -1)
+			return (ft_perror("minishell", last_output_redir->file), ft_exit_child(&shell, EXIT_FAILURE));
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
 	}
 }
