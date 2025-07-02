@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 20:27:29 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/01 18:18:07 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:18:15 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_getenv(t_env *env, char *var)
 {
 	while (env)
 	{
-		if (ft_strncmp(env->key, var, ft_strlen(var)) == 0)
+		if (ft_strncmp(env->key, var, ft_strlen(env->key)) == 0)
 			break ;
 		env = env->next;
 	}

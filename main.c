@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/02 16:04:26 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:47:05 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	update_shell(t_shell **mshell)
 {
-	// update struct() ?
 	if ((*mshell)->exit_status != 0)
 		(*mshell)->running = 0;
 	ft_free_mshell(mshell);
