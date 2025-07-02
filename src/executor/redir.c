@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:04:44 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/01 19:45:19 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:46:38 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	handle_file_input(t_shell *shell, char *file)
 
 	fd_in = open(file, O_RDONLY);
 	if (fd_in == -1)
-		return (ft_perror("infile open", file), ft_exit_child(&shell, 1));
+		return (ft_perror("No such file or directory", file), ft_exit_child(&shell, 1));
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
 }
