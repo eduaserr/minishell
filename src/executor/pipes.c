@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:56:53 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/02 00:39:00 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/02 02:13:15 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ static void	child_process(t_shell *shell, int fd[2], int in_fd, char **env)
 
 	signal_default();
 	command = shell->commands;
-	if (command && command->args && command->args[0] && !ft_strcmp(command->args[0], "exit"))
-		return (ft_perror("exit: cannot be used in a pipeline\n", 0), ft_exit_child(&shell, 0));
 	heredoc_redir = find_redir_by_type(command, HEREDOC);
 	if (heredoc_redir)
 	{
@@ -108,8 +106,8 @@ void	handle_pipes(t_shell *shell, char **env)
 		}
 		shell->commands = shell->commands->next;
 	}
-	if (in_fd != STDIN_FILENO)
-		close(in_fd);
+	//if (in_fd != STDIN_FILENO)
+	//	close(in_fd);
 	shell->commands = first;
 	while (child_count-- > 0)
 		wait(&status);

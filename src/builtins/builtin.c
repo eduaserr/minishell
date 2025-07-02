@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:04:50 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/01 18:38:49 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/02 02:12:15 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 bool	execute_parent_builtin(char **cmd_args, t_shell *shell)
 {
+	if (!cmd_args[0])
+		return (false);
 	if (ft_strcmp(cmd_args[0], "cd") == 0)
 	{
 		shell->last_exit_status = builtin_cd(shell, cmd_args);
