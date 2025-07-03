@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 09:09:36 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/03 01:33:12 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 21:02:16 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec_cmd(t_shell *shell, char **cmd_args, char **env)
 
 	path_allocated = false;
 	if (!cmd_args || !cmd_args[0])
-        return (ft_exit_child(&shell, EXIT_FAILURE));
+		return (ft_exit_child(&shell, EXIT_FAILURE));
 	if (!ft_strcmp(cmd_args[0], "echo") || !ft_strcmp(cmd_args[0], "pwd")
 		|| !ft_strcmp(cmd_args[0], "env"))
 	{
