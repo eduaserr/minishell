@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 19:47:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/26 11:58:12 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:30:00 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static char	**duparr(t_shell *mshell, char **arr)
 	return (tmp);
 }
 
-void	dup_cmd(t_shell *mshell, t_command *cmd)
+void	dup_cmd(t_shell *mshell, t_cmd *cmd)
 {
 	char	**arr;
 

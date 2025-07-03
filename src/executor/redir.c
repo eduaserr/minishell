@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:09:29 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/03 20:09:55 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:51:44 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_redir	*find_last_input_redir(t_redir *redir_list)
 	return (last_input_redir);
 }
 
-static void	process_heredocs(t_shell *shell, t_command *command,
+static void	process_heredocs(t_shell *shell, t_cmd *command,
 		t_redir *last_input_redir)
 {
 	t_redir	*current_redir;
@@ -73,7 +73,7 @@ static void	apply_file_input(t_shell *shell, char *file)
 
 void	redirect_stdin(t_shell *shell, bool handle_heredoc)
 {
-	t_command	*command;
+	t_cmd		*command;
 	t_redir		*last_input_redir;
 
 	command = shell->commands;

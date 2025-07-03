@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:56:53 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/03 02:01:04 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:41:07 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	parent_process(t_shell *shell, int *in_fd, int fd[2])
 		close(*in_fd);
 }
 
-static t_redir	*find_redir_by_type(t_command *command, int type)
+static t_redir	*find_redir_by_type(t_cmd *command, int type)
 {
 	t_redir	*redir;
 
@@ -44,7 +44,7 @@ static t_redir	*find_redir_by_type(t_command *command, int type)
 static void	child_process(t_shell *shell, int fd[2], int in_fd, char **env)
 {
 	int			heredoc_fd[2];
-	t_command	*command;
+	t_cmd		*command;
 	t_redir		*heredoc_redir;
 
 	signal_function();
@@ -74,7 +74,7 @@ static void	child_process(t_shell *shell, int fd[2], int in_fd, char **env)
 
 void	handle_pipes(t_shell *shell, char **env)
 {
-	t_command	*first;
+	t_cmd		*first;
 	int			pid;
 	int			fd[2];
 	int			in_fd;

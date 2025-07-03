@@ -6,23 +6,11 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/03 19:40:25 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:38:21 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-/*static void	ft_free_node(t_command **new)
-{
-	if (!*new)
-		return ;
-	if ((*new)->redirs)
-		free((*new)->redirs); // añadir función de liberar redirs
-	if ((*new)->cmd)
-		ft_free_str(&(*new)->cmd);
-	free(*new);
-	*new = NULL;
-}*/
 
 static char	*parse_cmd(char *input, int start, int pipe)
 {
@@ -46,11 +34,10 @@ static char	*parse_cmd(char *input, int start, int pipe)
 
 // pasar mshell y coger de ahí el contenido. (ten cuidado con no perder la referencia
 // de las cabezas de las listas, o de modificar el contenido cuando no debes)
-static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int start, int pipe)
+static t_cmd	*ft_nodecmd(t_shell *shell, t_cmd *cmd, char *input, int start, int pipe)
 {
-	t_command	*new;
+	t_cmd	*new;
 
-	(void)mshell;
 	new = NULL;
 	new = create_cmd(new);
 	if (!new)
@@ -58,20 +45,18 @@ static t_command	*ft_nodecmd(t_shell *mshell, t_command *cmd, char *input, int s
 	new->cmd = parse_cmd(input, start, pipe);
 	if (!new->cmd)
 		return (free(new), ft_free_cmd(&cmd), ft_error("trim input"), NULL);
-	new->rd = redir_node(mshell, mshell->tkn, new->rd, mshell->cmd_count);
+	new->rd = redir_node(shell, shell->tkn, new->rd, shell->cmd_count);
 	addlastcmd_node(&cmd, new);
 	return (cmd);
 }
 
-t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
+t_cmd	*get_cmd(t_shell *mshell, t_cmd *cmd, char *input, int is_pipe)
 {
-	int		is_pipe;
 	int		i;
 
-	is_pipe = 0;
-	i = 0;
+	i = -1;
 	mshell->cmd_count = 0;
-	while (input[i])
+	while (input[++i])
 	{
 		if (skip_quoted(input, &i))
 			continue ;
@@ -83,7 +68,6 @@ t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
 			is_pipe = i + 1;
 			mshell->cmd_count++;
 		}
-		i++;
 	}
 	if (input[i] == '\0')
 	{
@@ -92,55 +76,4 @@ t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
 			return (ft_error("Parse last command"), NULL);
 	}
 	return (cmd);
-}
-
-static int	is_file(t_token *tkn)
-{
-	if ((tkn->type == REDIR_IN || tkn->type == REDIR_OUT || tkn->type == HEREDOC
-		|| tkn->type == APPEND) && (tkn->next->type == WORD || tkn->next->type == DOUBLE
-			|| tkn->next->type == SIMPLE))
-		return (1);
-	return (0);
-}
-
-static t_token	*get_pipe_tkn(t_token *tkn)
-{
-	while (tkn && tkn->type != PIPE)
-		tkn = tkn->next;
-	if (tkn && tkn->type == PIPE)
-		tkn = tkn->next;
-	if (!tkn)
-		return (NULL);
-	return (tkn);
-}
-
-void	get_args(t_token *tkn, t_command *cmd)
-{
-	int			i;
-	int			len;
-
-	while (cmd)
-	{
-		i = 0;
-		len = pipelen(tkn);
-		cmd->args = (char **)malloc(sizeof(char *) * (len + 1));
-		if (!cmd->args)
-			return (ft_error("malloc cmd->args"));
-		while (tkn && tkn->type != PIPE && i < len)
-		{
-			if (is_file(tkn))
-				tkn = tkn->next->next;
-			else
-			{
-				cmd->args[i] = ft_strdup(tkn->value);
-				if (!cmd->args[i])
-					return (ft_freematrix(&cmd->args), ft_error("strdup"));
-				i++;
-				tkn = tkn->next;
-			}
-		}
-		cmd->args[i] = NULL;
-		tkn = get_pipe_tkn(tkn);
-		cmd = cmd->next;
-	}
 }

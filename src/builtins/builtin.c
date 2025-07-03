@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:04:50 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/03 19:26:31 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:41:52 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	execute_parent_builtin(char **cmd_args, t_shell *shell)
 
 void	execute_child_builtins(char **cmd_args, t_shell *shell)
 {
-	t_command	temp_cmd;
+	t_cmd	temp_cmd;
 
 	if (!cmd_args || !cmd_args[0])
 		return ;

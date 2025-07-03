@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:28:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/03 18:58:21 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:38:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ static void	ft_free_rd(t_redir **rd)
 	*rd = NULL;
 }
 
-void	ft_free_cmd(t_command **cmd)
+void	ft_free_cmd(t_cmd **cmd)
 {
-	t_command	*swp;
+	t_cmd	*swp;
 
 	swp = NULL;
 	if ((!cmd) || (!*cmd))

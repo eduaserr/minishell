@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/03 19:26:37 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:37:49 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ typedef struct s_redir
 	struct s_redir		*next;
 }						t_redir;
 
-typedef struct s_command
+typedef struct s_cmd
 {
 	char				*cmd;				//comando a procesar
 	char				**args;				//argumentos de un mismo cmd por separado
 	t_redir				*rd;				//redirs en el input
-	struct s_command	*next;
-}						t_command;
+	struct s_cmd		*next;
+}						t_cmd;
 
 typedef struct s_shell
 {
@@ -94,7 +94,7 @@ typedef struct s_shell
 	char				**env;				//doble array de envp del sistema
 	t_env				*lstenv;			//lista de las env
 	t_token				*tkn;				//args separados, y divididos por tokens
-	t_command			*commands;			//lista de comandos y args
+	t_cmd				*commands;			//lista de comandos y args
 	int					cmd_count;
 	int					last_exit_status;	//anterior codigo de error
 	int					exit_status;		//estado de la proxima salida del programa
@@ -123,7 +123,7 @@ int		update_env_pwd(t_shell *shell, char *oldpwd_val);
 //////////////////////
 //	echo.c			//
 //////////////////////
-int		builtin_echo(t_command *cmd);
+int		builtin_echo(t_cmd *cmd);
 
 //////////////////////
 //	env.c			//
@@ -155,15 +155,19 @@ int		builtin_pwd(void);
 //////////////////////
 //	cmd.c			//
 //////////////////////
-t_command	*get_command(t_shell *mshell, t_command *cmd, char *input);
-void		get_args(t_token *tkn, t_command *cmd);
+t_cmd	*get_cmd(t_shell *shell, t_cmd *cmd, char *input, int pipe);
 
 //////////////////////
 //	get_cmd.c		//
 //////////////////////
 int		pipelen(t_token *tkn);
 char	*process_str(t_shell *mshell, char *str);
-void	dup_cmd(t_shell *mshell, t_command *cmd);
+void	dup_cmd(t_shell *mshell, t_cmd *cmd);
+
+//////////////////////
+//	get_args.c		//
+//////////////////////
+void	get_args(t_token *tkn, t_cmd *cmd);
 
 /* **************************************** */
 /*					EXECUTOR				*/
@@ -204,9 +208,9 @@ void	sync_arr_env(t_shell *shell);
 //////////////////////
 //	init_cmd.c		//
 //////////////////////
-int			ft_nodelen(t_token *tkn);
-t_command	*create_cmd(t_command *new);
-void		addlastcmd_node(t_command **lstcmd, t_command *node);
+int		ft_nodelen(t_token *tkn);
+t_cmd	*create_cmd(t_cmd *new);
+void	addlastcmd_node(t_cmd **lstcmd, t_cmd *node);
 
 //////////////////////
 //	init_env.c		//
@@ -219,7 +223,7 @@ void	addlast_node(t_env **lstenv, t_env *node);
 //////////////////////
 t_redir	*create_redir(void);
 void	addlast_redir(t_redir **lstrd, t_redir *node);
-t_redir	*redir_node(t_shell *mshell, t_token *tkn, t_redir *lstrd, int cmd_index);
+t_redir	*redir_node(t_shell *mshell, t_token *tkn, t_redir *lstrd, int cmd_ix);
 
 //////////////////////
 //	init_tkn.c		//
@@ -314,7 +318,7 @@ int		dollar_expand(char **str, t_env *env, int i);
 //////////////////////
 void	ft_free_env(t_env **lstenv);
 void	ft_free_tkn(t_token **tkn);
-void	ft_free_cmd(t_command **cmd);
+void	ft_free_cmd(t_cmd **cmd);
 void	ft_free_mshell(t_shell **mshell);
 
 //////////////////////
@@ -335,7 +339,7 @@ void	ft_perror(char *str, char *var);
 //	utils_print.c	//
 //////////////////////
 void	ft_printtkn(t_token *tkn);
-void	ft_printcmd(t_command *cmd);
+void	ft_printcmd(t_cmd *cmd);
 void	ft_printenv(t_env *lstenv);
 
 #endif

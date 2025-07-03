@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+         #
+#    By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 15:47:17 by eduaserr          #+#    #+#              #
-#    Updated: 2025/07/03 20:11:33 by aamoros-         ###   ########.fr        #
+#    Updated: 2025/07/03 20:49:01 by eduaserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ BINS	= src/builtins
 
 SRC		= main.c
 
-SRCS	= $(CMD)/cmd.c $(CMD)/get_cmd.c\
+SRCS	= $(CMD)/cmd.c $(CMD)/get_cmd.c $(CMD)/get_args.c\
 		$(INIT)/init_cmd.c $(INIT)/init_env.c $(INIT)/init_redir.c $(INIT)/init_tkn.c $(INIT)/init.c\
 		$(PRS)/parser.c $(PRS)/promp.c\
 		$(QUOTES)/quotes_expand.c $(QUOTES)/quotes_check.c $(QUOTES)/quotes_utils.c\
