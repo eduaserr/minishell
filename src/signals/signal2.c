@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 19:19:24 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/02 18:48:38 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 01:17:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,15 @@
 static void	handle_heredoc_sigint(int sig)
 {
 	g_signal_received = sig;
+	rl_done = 1;
 	write(STDOUT_FILENO, "\n", 1);
+	exit(SIGINT);
 }
 
 void	setup_heredoc_signals(void)
 {
 	signal(SIGINT, handle_heredoc_sigint);
 	signal(SIGQUIT, SIG_IGN);
-}
-
-void	signal_default(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTERM, SIG_DFL);
 }
 
 /* exec signals */

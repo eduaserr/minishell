@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:56:53 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/02 02:13:15 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 02:01:04 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	child_process(t_shell *shell, int fd[2], int in_fd, char **env)
 	t_command	*command;
 	t_redir		*heredoc_redir;
 
-	signal_default();
+	signal_function();
 	command = shell->commands;
 	heredoc_redir = find_redir_by_type(command, HEREDOC);
 	if (heredoc_redir)

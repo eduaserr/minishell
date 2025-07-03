@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 22:59:16 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 01:13:14 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*check_quotes(char *input)
 		q_state = quotes_status(input, &i);
 		if (q_state == UNCLOSED)
 		{
-			input = ft_free_str(&input);
+			ft_free_str(&input);
 			return (ft_error("unclosed quotes"), NULL);
 		}
 		if (q_state == EMPTY)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:04:44 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/02 18:07:26 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/03 01:59:33 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	execute_heredoc(char *delimiter, int heredoc_fd[2])
 	char	*line;
 
 	setup_heredoc_signals();
-	while (1)
+	while (g_signal_received != SIGINT)
 	{
 		line = readline("> ");
 		if (!line)
