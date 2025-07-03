@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/26 17:29:02 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:40:25 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static char	*parse_cmd(char *input, int start, int pipe)
 	if (!tmp)
 		return (NULL);
 	if (tmp[0] == '\0')
-		return (ft_error("syntax error near unexpected token `|'"), ft_free_str(&tmp));
+		return (ft_error("syntax error near unexpected token `|'"),
+		ft_free_str(&tmp));
 	return (tmp);
 }
 
@@ -93,6 +94,26 @@ t_command	*get_command(t_shell *mshell, t_command *cmd, char *input)
 	return (cmd);
 }
 
+static int	is_file(t_token *tkn)
+{
+	if ((tkn->type == REDIR_IN || tkn->type == REDIR_OUT || tkn->type == HEREDOC
+		|| tkn->type == APPEND) && (tkn->next->type == WORD || tkn->next->type == DOUBLE
+			|| tkn->next->type == SIMPLE))
+		return (1);
+	return (0);
+}
+
+static t_token	*get_pipe_tkn(t_token *tkn)
+{
+	while (tkn && tkn->type != PIPE)
+		tkn = tkn->next;
+	if (tkn && tkn->type == PIPE)
+		tkn = tkn->next;
+	if (!tkn)
+		return (NULL);
+	return (tkn);
+}
+
 void	get_args(t_token *tkn, t_command *cmd)
 {
 	int			i;
@@ -107,9 +128,7 @@ void	get_args(t_token *tkn, t_command *cmd)
 			return (ft_error("malloc cmd->args"));
 		while (tkn && tkn->type != PIPE && i < len)
 		{
-			if ((tkn->type == REDIR_IN || tkn->type == REDIR_OUT || tkn->type == HEREDOC
-				|| tkn->type == APPEND) && (tkn->next->type == WORD || tkn->next->type == DOUBLE
-					|| tkn->next->type == SIMPLE))
+			if (is_file(tkn))
 				tkn = tkn->next->next;
 			else
 			{
@@ -121,10 +140,7 @@ void	get_args(t_token *tkn, t_command *cmd)
 			}
 		}
 		cmd->args[i] = NULL;
-		while (tkn && tkn->type != PIPE)
-			tkn = tkn->next;
-		if (tkn && tkn->type == PIPE)
-			tkn = tkn->next;
+		tkn = get_pipe_tkn(tkn);
 		cmd = cmd->next;
 	}
 }

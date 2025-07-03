@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:04:50 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/02 02:12:15 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:26:31 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ void	execute_child_builtins(char **cmd_args, t_shell *shell)
 	if (!ft_strncmp(cmd_args[0], "pwd", 4))
 		builtin_pwd();
 	if (!ft_strncmp(cmd_args[0], "env", 4))
-		builtin_env(shell, shell->env);
+		builtin_env(shell->env);
 }

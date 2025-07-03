@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/03 19:20:20 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:26:37 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int		builtin_echo(t_command *cmd);
 //////////////////////
 //	env.c			//
 //////////////////////
-void	builtin_env(t_shell *shell, char **envp);
+void	builtin_env(char **envp);
 int		builtin_export(t_shell *shell, char **cmd);
 int		builtin_unset(t_shell *shell, char **cmd);
 
