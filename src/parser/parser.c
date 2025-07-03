@@ -6,13 +6,13 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/26 12:51:12 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:19:53 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	handle_pipes_err(char *str, int i)
+static int	handle_pipes_err(char *str, int i)
 {
 	while (str[i])
 	{
@@ -27,39 +27,7 @@ int	handle_pipes_err(char *str, int i)
 	return (0);
 }
 
-/* char *get_redir_symbol(t_token_type type)
-{
-	if (type == REDIR_IN)
-		return ("<");
-	if (type == REDIR_OUT)
-		return (">");
-	if (type == APPEND)
-		return (">>");
-	if (type == HEREDOC)
-		return ("<<");
-	return ("token");
-}
-
-int	handle_rd_err(t_token *tkn)
-{
-	t_token *swp;
-
-	swp = tkn;
-	while (swp)
-	{
-		if ((swp->type == REDIR_IN || swp->type == REDIR_OUT
-			|| swp->type == APPEND || swp->type == HEREDOC) && !swp->next)
-			return (1);
-		if ((swp->type == REDIR_IN || swp->type == REDIR_OUT
-			|| swp->type == APPEND) && (swp->next->type == REDIR_IN
-				|| swp->next->type == REDIR_OUT || swp->next->type == APPEND))
-			return (1);
-		swp = swp->next;
-	}
-	return (0);
-} */
-
-int	handle_rd_err(t_token *tkn)
+static int	handle_rd_err(t_token *tkn)
 {
 	while (tkn)
 	{
@@ -104,7 +72,7 @@ static char	*preparate_input(char *input)
 	return (input);
 }
 
-int	validate_redir(t_command *cmd)
+static int	validate_redir(t_command *cmd)
 {
 	t_redir	*rd;
 
@@ -140,15 +108,12 @@ void	parse_input(t_shell **mshell, char *input)
 	(*mshell)->p_input = preparate_input(input);
 	if (!(*mshell)->p_input)
 		return ;
-	//parse_tokens
 	(*mshell)->tkn = tokenizer((*mshell)->tkn, (*mshell)->p_input);
 	if (!(*mshell)->tkn)
 		return (ft_error("token"));
 	if (handle_pipes_err((*mshell)->p_input, 0))
 		return (ft_error("syntax error near unexpected token `|'"));
-	if (handle_rd_err((*mshell)->tkn)) // handle_reddir
+	if (handle_rd_err((*mshell)->tkn))
 		return ;
 	parse_commands(mshell);
-	// parse_redirecciones
-		//^ check_input ^ before split into struct
 }

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:40:57 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/16 19:27:08 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:15:52 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,8 @@ char	*ft_strchr(const char *s, int c);
 	if the character does not appear in the string.
  */
 char	*ft_strrchr(const char *s, int c);
+
+int		ft_strcmp(const char *s1, const char *s2);
 /**
  * @brief Lexicographically compare the null-terminated strings 's1' and 's2'.
 	Not more than 'n' characters. Designed for comparing strings rather than
@@ -574,5 +576,9 @@ char	*ft_substr_gnl(char *str, ssize_t start, ssize_t len);
 char	*ft_strjoin_gnl(char *s1, char *s2);
 
 char	*get_next_line(int fd);
+
+/* MINISHELL FOLDER */
+
+char	*get_in_quotes(char *str, int start, int end);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 20:27:29 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/02 18:32:54 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:54:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*is_var(char *str, t_env *env)
 	return (value);
 }
 
-/* void	sync_cpy(t_shell *shell, t_env *current, int i, int count)
+void	sync_cpy(t_shell *shell, t_env *current, int i, int count)
 {
 	char	*tmp;
 
@@ -62,7 +62,7 @@ char	*is_var(char *str, t_env *env)
 		{
 			shell->env[i] = ft_strjoin(tmp, current->value);
 			if (!shell->env[i])
-				return ();
+				return ;
 			ft_free_str(&tmp);
 		}
 		current = current->next;
@@ -86,56 +86,10 @@ void	sync_env_array(t_shell *shell)
 	}
 	if (shell->env)
 		ft_freematrix(&shell->env);
-	shell->env = malloc(sizeof(char *) * (count + 1));
+	shell->env = (char **)malloc(sizeof(char *) * (count + 1));
 	if (!shell->env)
 		return ;
 	i = 0;
 	current = shell->lstenv;
 	sync_cpy(shell, current, i, count);
-} */
-
-
-void	sync_env_array(t_shell *shell)
-{
-	t_env	*current;
-	char	*env_string;
-	int		count;
-	int		i;
-
-	count = 0;
-	current = shell->lstenv;
-	while (current)
-	{
-		count++;
-		current = current->next;
-	}
-	if (shell->env)
-		ft_freematrix(&shell->env);
-	shell->env = malloc(sizeof(char *) * (count + 1));
-	if (!shell->env)
-		return ;
-	i = 0;
-	current = shell->lstenv;
-	while (current && i < count)
-	{
-		env_string = ft_strjoin(current->key, "=");
-		if (env_string)
-		{
-			shell->env[i] = ft_strjoin(env_string, current->value);
-			free(env_string);
-		}
-		current = current->next;
-		i++;
-	}
-	shell->env[i] = NULL;
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
