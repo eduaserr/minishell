@@ -6,61 +6,11 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:24:48 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/02 18:30:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:15:31 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static int	update_env_pwd(t_shell *shell, char *oldpwd_val)
-{
-	char	cwd[4096];
-	t_env	*pwd_node;
-	t_env	*oldpwd_node;
-
-	if (getcwd(cwd, sizeof(cwd)) == NULL)
-	{
-		perror("minishell: cd: error retrieving current directory");
-		return (EXIT_FAILURE);
-	}
-	if (oldpwd_val)
-	{
-		oldpwd_node = ft_getlstenv(shell->lstenv, "OLDPWD");
-		if (oldpwd_node)
-		{
-			free(oldpwd_node->value);
-			oldpwd_node->value = ft_strdup(oldpwd_val);
-		}
-		else
-		{
-			oldpwd_node = create_env("OLDPWD=");
-			if (oldpwd_node)
-			{
-				free(oldpwd_node->value);
-				oldpwd_node->value = ft_strdup(oldpwd_val);
-				addlast_node(&shell->lstenv, oldpwd_node);
-			}
-		}
-	}
-	pwd_node = ft_getlstenv(shell->lstenv, "PWD");
-	if (pwd_node)
-	{
-		free(pwd_node->value);
-		pwd_node->value = ft_strdup(cwd);
-	}
-	else
-	{
-		pwd_node = create_env("PWD=");
-		if (pwd_node)
-		{
-			free(pwd_node->value);
-			pwd_node->value = ft_strdup(cwd);
-			addlast_node(&shell->lstenv, pwd_node);
-		}
-	}
-	sync_env_array(shell);
-	return (EXIT_SUCCESS);
-}
 
 static int	cd_to_oldpwd(t_shell *shell)
 {

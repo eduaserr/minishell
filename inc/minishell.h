@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/02 18:31:30 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:16:39 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,8 @@ t_token	*tokenizer(t_token *token_list, char *input);
 /* **************************************** */
 /*					UTILS					*/
 /* **************************************** */
+int	update_env_pwd(t_shell *shell, char *oldpwd_val);
+
 //////////////////////
 //	utils_error		//
 //////////////////////
