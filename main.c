@@ -6,7 +6,7 @@
 /*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/03 20:46:27 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:53:37 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	process_command_line(t_shell *shell)
 	}
 	free(input);
 }
+
 static void	run_main_loop(t_shell *shell)
 {
 	while (shell->running)
