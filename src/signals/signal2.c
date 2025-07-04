@@ -16,14 +16,13 @@ static void	handle_heredoc_sigint(int sig)
 {
 	g_signal_received = sig;
 	rl_done = 1;
-	write(STDOUT_FILENO, "\n", 1);
-	exit(SIGINT);
 }
 
 void	setup_heredoc_signals(void)
 {
-	signal(SIGINT, handle_heredoc_sigint);
+	g_signal_received = 0;
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_heredoc_sigint);
 }
 
 /* exec signals */

@@ -16,7 +16,7 @@ volatile sig_atomic_t	g_signal_received;
 
 static void	handle_sigint(int sign)
 {
-	g_signal_received = sign;
+	(void)sign;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -26,6 +26,19 @@ static void	handle_sigint(int sign)
 void	signal_function(void)
 {
 	g_signal_received = 0;
-	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handle_sigint);
+}
+
+static void	handle_sigquit(int sign)
+{
+	(void)sign;
+	ft_putendl_fd("Quit (core dumped)", STDOUT_FILENO);
+}
+
+void	handle_exec_sigquit(void)
+{
+	g_signal_received = 0;
+	signal(SIGQUIT, handle_sigquit);
+	signal(SIGINT, SIG_IGN);
 }

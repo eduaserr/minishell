@@ -12,17 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-static int	handle_heredoc_input(t_shell *shell, char *delimiter)
-{
-	int	heredoc_fd[2];
-
-	(void)shell;
-	if (pipe(heredoc_fd) < 0)
-		return (ft_error("heredoc input"), ft_exit_child(&shell, 1), -1);
-	execute_heredoc(delimiter, heredoc_fd);
-	return (heredoc_fd[0]);
-}
-
 static t_redir	*find_last_input_redir(t_redir *redir_list)
 {
 	t_redir	*last_input_redir;
@@ -37,7 +26,7 @@ static t_redir	*find_last_input_redir(t_redir *redir_list)
 	return (last_input_redir);
 }
 
-static void	process_heredocs(t_shell *shell, t_cmd *command,
+static void	process_heredocs(t_cmd *command,
 		t_redir *last_input_redir)
 {
 	t_redir	*current_redir;
@@ -48,7 +37,7 @@ static void	process_heredocs(t_shell *shell, t_cmd *command,
 	{
 		if (current_redir->type == HEREDOC)
 		{
-			heredoc_fd = handle_heredoc_input(shell, current_redir->file);
+			heredoc_fd = open(current_redir->file, O_RDONLY);
 			if (current_redir == last_input_redir)
 				dup2(heredoc_fd, STDIN_FILENO);
 			close(heredoc_fd);
@@ -83,7 +72,7 @@ void	redirect_stdin(t_shell *shell, bool handle_heredoc)
 	if (!last_input_redir)
 		return ;
 	if (handle_heredoc)
-		process_heredocs(shell, command, last_input_redir);
+		process_heredocs(command, last_input_redir);
 	if (last_input_redir->type == REDIR_IN)
 		apply_file_input(shell, last_input_redir->file);
 }

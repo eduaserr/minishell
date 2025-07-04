@@ -57,9 +57,14 @@ void	execute(t_shell *shell, char **cmd_args, char **env)
 {
 	if (!shell->commands->next)
 	{
+		signal(SIGINT, SIG_DFL);
 		setup_redirection(shell, true);
 		exec_cmd(shell, cmd_args, env);
 	}
 	else
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
 		handle_pipes(shell, env);
+	}
 }

@@ -25,7 +25,7 @@ static void	parent_process(t_shell *shell, int *in_fd, int fd[2])
 		close(*in_fd);
 }
 
-static t_redir	*find_redir_by_type(t_cmd *command, int type)
+/*static t_redir	*find_redir_by_type(t_cmd *command, int type)
 {
 	t_redir	*redir;
 
@@ -39,23 +39,23 @@ static t_redir	*find_redir_by_type(t_cmd *command, int type)
 		redir = redir->next;
 	}
 	return (NULL);
-}
+}*/
 
 static void	child_process(t_shell *shell, int fd[2], int in_fd, char **env)
 {
-	int			heredoc_fd[2];
+	//int			heredoc_fd[2];
 	t_cmd		*command;
-	t_redir		*heredoc_redir;
+	//t_redir		*heredoc_redir;
 
 	signal_function();
 	command = shell->commands;
-	heredoc_redir = find_redir_by_type(command, HEREDOC);
+	/*heredoc_redir = find_redir_by_type(command, HEREDOC);
 	if (heredoc_redir)
 	{
 		if (pipe(heredoc_fd) < 0)
 			return (ft_error("child proccess"), ft_exit_child(&shell, 1));
 		execute_heredoc(heredoc_redir->file, heredoc_fd);
-	}
+	}*/
 	if (in_fd != STDIN_FILENO)
 	{
 		dup2(in_fd, STDIN_FILENO);

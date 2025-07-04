@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-void	execute_heredoc(char *delimiter, int heredoc_fd[2])
+/*void	execute_heredoc(char *delimiter, int heredoc_fd[2])
 {
 	char	*line;
 
@@ -35,7 +35,7 @@ void	execute_heredoc(char *delimiter, int heredoc_fd[2])
 		free(line);
 	}
 	close(heredoc_fd[1]);
-}
+}*/
 
 /* static void	handle_file_input(t_shell *shell, char *file)
 {

@@ -33,7 +33,7 @@ static int	dollar_d(char **str, int i)
 	return (i);
 }
 
-static int	dollar_qu(char **str, int e_status, int i)
+int	dollar_qu(char **str, int e_status, int i)
 {
 	char	*err;
 
