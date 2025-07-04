@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/04 14:40:57 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:18:56 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,81 @@ void	create_heredoc_file(t_shell *shell, t_redir *rd, char *n)
 	close(fd);
 	end_of_heredoc(line, filename, rd);
 }
+
+/* void	create_heredoc_file(t_shell *shell, t_redir *rd, char *n)
+{
+	char	*filename = ft_strjoin("/tmp/heredoc_", n);
+	int		fd;
+	int		status;
+	pid_t	pid;
+
+	free(n);
+	if (!filename)
+	{
+		ft_error("minishell: Memory allocation failed for heredoc filename.");
+		ft_exit(&shell);
+	}
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		free(filename);
+		return;
+	}
+	else if (pid == 0)
+	{
+		// === Child process: heredoc reader ===
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
+
+		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+		if (fd < 0)
+			exit(1);
+
+		char *line = NULL;
+		while (1)
+		{
+			line = readline("> ");
+			if (!line)
+				break;
+			if (!ft_strcmp(line, rd->file))
+			{
+				free(line);
+				break;
+			}
+			if (line[0] == '\0')
+			{
+				free(line);
+				line = ft_strdup("\n");
+			}
+			else
+				expand_heredoc(shell, &line);
+
+			ft_putendl_fd(line, fd);
+			free(line);
+		}
+		close(fd);
+		exit(0); // success
+	}
+	else
+	{
+		// === Parent process: wait and handle cleanup ===
+		waitpid(pid, &status, 0);
+
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		{
+			write(STDOUT_FILENO, "\n", 1); // ensure clean prompt
+			unlink(filename);
+			free(filename);
+			g_signal_received = SIGINT;
+			return;
+		}
+
+		free(rd->file);
+		rd->file = filename;
+	}
+} */
 
 void	create_heredocs(t_shell *shell)
 {

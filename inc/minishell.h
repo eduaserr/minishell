@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/04 14:47:51 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:37:38 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,7 @@ char	*check_quotes(t_shell *shell, char *input);
 //	quotes_expand.c	//
 //////////////////////
 void	dollar_case(t_env *env, int e_status, char **str);
+int	dollar_qu(char **str, int e_status, int i);
 
 //////////////////////
 //	quotes_utils.c	//
@@ -273,6 +274,7 @@ char	*rm_quotes2(char *str);
 //	sig_init.c		//
 //////////////////////
 void	signal_function(void);
+void	handle_exec_sigquit(void);
 
 //////////////////////
 //	signal2.c		//
