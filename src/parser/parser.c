@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/04 14:02:44 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:46:46 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	handle_rd_err(t_shell *shell, t_token *tkn)
 	return (0);
 }
 
-static char	*preparate_input(char *input)
+static char	*preparate_input(t_shell *shell, char *input)
 {
 	char	*tmp;
 
@@ -57,7 +57,7 @@ static char	*preparate_input(char *input)
 		return (NULL);
 	if (tmp[0] == '\0')
 		return (ft_free_str(&tmp));
-	tmp = check_quotes(tmp);
+	tmp = check_quotes(shell, tmp);
 	if (!tmp)
 		return (NULL);
 	if (tmp[0] == '\0')
@@ -112,7 +112,7 @@ void	parse_input(t_shell **mshell, char *input)
 	int	tmp;
 
 	tmp = 0;
-	(*mshell)->p_input = preparate_input(input);
+	(*mshell)->p_input = preparate_input(*mshell, input);
 	if (!(*mshell)->p_input)
 		return ;
 	(*mshell)->tkn = tokenizer((*mshell)->tkn, (*mshell)->p_input);

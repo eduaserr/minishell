@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/03 01:13:14 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:47:11 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	quotes_status(char *input, int *i)
 	return (CLOSED);
 }
 
-char	*check_quotes(char *input)
+char	*check_quotes(t_shell *shell, char *input)
 {
 	int	q_state;
 	int	i;
@@ -46,7 +46,7 @@ char	*check_quotes(char *input)
 		if (q_state == UNCLOSED)
 		{
 			ft_free_str(&input);
-			return (ft_error("unclosed quotes"), NULL);
+			return (ft_perror(shell, "unclosed quotes", 0), NULL);
 		}
 		if (q_state == EMPTY)
 		{

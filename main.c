@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/04 12:36:19 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:40:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,13 @@ static void	execute_command_pipeline(t_shell *shell)
 		execute(shell, shell->commands->args, shell->env);
 	else
 	{
-		// ✅ Proceso padre - capturar exit code correctamente
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-		{
-			// ✅ Proceso terminó normalmente
 			shell->last_exit_status = WEXITSTATUS(status);
-		}
 		else if (WIFSIGNALED(status))
-		{
-			// ✅ Proceso terminado por señal
 			shell->last_exit_status = 128 + WTERMSIG(status);
-		}
 		else
-		{
-			// ✅ Caso por defecto
 			shell->last_exit_status = 0;
-		}
 	}
 }
 

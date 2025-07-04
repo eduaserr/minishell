@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 18:59:26 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/04 14:20:21 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/04 14:47:37 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,8 @@ void	ft_perror(t_shell *shell, char *str, char *var)
 		ft_printf("%s: %s\n", var, "command not found");
 	}
 	else
+	{
+		shell->last_exit_status = 1;
 		ft_printf("%s: %s\n", var, str);
+	}
 }
