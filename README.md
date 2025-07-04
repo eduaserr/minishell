@@ -78,6 +78,19 @@ Esta estructura modular facilita el mantenimiento y desarrollo del proyecto, sep
 <!--
 ---------
 
+Códigos de exit estándar:
+Código	Significado	Ejemplo
+0		Éxito	echo hello
+1		Error general	cd directorio_inexistente
+2		Uso incorrecto de builtin	Error de sintaxis
+126		Comando no ejecutable	Permisos denegados
+127		Comando no encontrado	comando_inexistente
+128+n	Señal fatal	Ctrl+C = 130 (128+2)
+130		Ctrl+C (SIGINT)	Interrumpir comando
+131		Ctrl+\ (SIGQUIT)	Quit signal
+
+
+
 parametros posicionales no aceptados
 
 CHECK ARGUMENTOS Y CHECK ENV

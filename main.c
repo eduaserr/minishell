@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/03 20:53:37 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/04 00:01:03 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,27 @@ static void	execute_command_pipeline(t_shell *shell)
 	}
 	if (pid == 0)
 		execute(shell, shell->commands->args, shell->env);
-	waitpid(pid, &status, 0);
+	else
+    {
+        // ✅ Proceso padre - capturar exit code correctamente
+        waitpid(pid, &status, 0);
+        
+        if (WIFEXITED(status))
+        {
+            // ✅ Proceso terminó normalmente
+            shell->last_exit_status = WEXITSTATUS(status);
+        }
+        else if (WIFSIGNALED(status))
+        {
+            // ✅ Proceso terminado por señal
+            shell->last_exit_status = 128 + WTERMSIG(status);
+        }
+        else
+        {
+            // ✅ Caso por defecto
+            shell->last_exit_status = 1;
+        }
+    }
 }
 
 static void	process_command_line(t_shell *shell)

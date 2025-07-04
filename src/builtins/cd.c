@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 13:24:48 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/03 18:15:31 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/04 02:59:22 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	builtin_cd(t_shell *shell, char **cmd)
 	arg_count = count_args(cmd);
 	if (arg_count > 2)
 	{
-		ft_putendl_fd("minishell: cd: too many arguments", 2);
+		ft_putendl_fd("minishell: cd: too many arguments", 1);
 		return (EXIT_FAILURE);
 	}
 	if (!cmd[1] || ft_strcmp(cmd[1], "~") == 0)
