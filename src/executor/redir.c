@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:09:29 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/03 20:51:44 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/04 13:39:18 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	apply_file_input(t_shell *shell, char *file)
 	fd_in = open(file, O_RDONLY);
 	if (fd_in == -1)
 	{
-		ft_perror("minishell", file);
+		ft_perror(shell, "minishell", file);
 		ft_exit_child(&shell, EXIT_FAILURE);
 	}
 	dup2(fd_in, STDIN_FILENO);

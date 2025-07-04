@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/03 20:37:49 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/04 13:38:25 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ void	addlast_tknnode(t_token **token_list, t_token *node);
 //////////////////////
 //	parser.c		//
 //////////////////////
-void	parse_commands(t_shell **mshell);
+void	parse_commands(t_shell **mshell, int tmp);
 void	parse_input(t_shell **mshell, char *input);
 
 //////////////////////
@@ -333,7 +333,7 @@ void	sync_env_array(t_shell *shell);
 //	utils_perror.c	//
 //////////////////////
 void	ft_error(char *str);
-void	ft_perror(char *str, char *var);
+void	ft_perror(t_shell *shell, char *str, char *var);
 
 //////////////////////
 //	utils_print.c	//

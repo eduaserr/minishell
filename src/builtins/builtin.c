@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:04:50 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/03 20:41:52 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/04 12:44:36 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	execute_parent_builtin(char **cmd_args, t_shell *shell)
 		shell->last_exit_status = builtin_cd(shell, cmd_args);
 		return (true);
 	}
-	if (ft_strcmp(cmd_args[0], "exit") == 0)
+	if (ft_strcmp(cmd_args[0], "exit") == 0 && shell->cmd_count < 1)
 	{
 		builtin_exit(cmd_args);
 		return (true);
@@ -52,9 +52,9 @@ void	execute_child_builtins(char **cmd_args, t_shell *shell)
 	temp_cmd.rd = NULL;
 	temp_cmd.next = NULL;
 	if (!ft_strncmp(cmd_args[0], "echo", 5))
-		builtin_echo(&temp_cmd);
+		shell->last_exit_status = builtin_echo(&temp_cmd);
 	if (!ft_strncmp(cmd_args[0], "pwd", 4))
-		builtin_pwd();
+		shell->last_exit_status = builtin_pwd();
 	if (!ft_strncmp(cmd_args[0], "env", 4))
 		builtin_env(shell->env);
 }

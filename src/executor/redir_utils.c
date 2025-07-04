@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:01:08 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/03 20:02:16 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/04 13:39:30 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	prepare_output_files(t_shell *shell)
 				fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (fd_out == -1)
 			{
-				ft_perror("minishell", redir->file);
+				ft_perror(shell, "minishell", redir->file);
 				return (-1);
 			}
 			close(fd_out);
@@ -64,7 +64,7 @@ static void	apply_output_redirection(t_redir *redir, t_shell *shell)
 		fd_out = open(redir->file, O_WRONLY);
 	if (fd_out == -1)
 	{
-		ft_perror("minishell", redir->file);
+		ft_perror(shell, "minishell", redir->file);
 		ft_exit_child(&shell, EXIT_FAILURE);
 	}
 	dup2(fd_out, STDOUT_FILENO);
