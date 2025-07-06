@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/04 20:18:56 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/06 03:31:36 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,141 @@ void	create_heredoc_file(t_shell *shell, t_redir *rd, char *n)
 		rd->file = filename;
 	}
 } */
+
+//DEVEDU UPDATES ABAJO
+
+/*void	validate_sigint(t_shell *mshell)
+{
+	if (g_signal_received == SIGINT)
+    {
+        g_signal_received = 0;
+        mshell->last_exit_status = 130;    
+    }
+	return ;
+}
+
+void	create_heredoc_file(t_shell *shell, t_redir *rd, char *n)
+{
+	char	*filename = ft_strjoin("/tmp/heredoc_", n);
+	int		fd;
+	int		status;
+	pid_t	pid;
+
+	free(n);
+	if (!filename)
+	{
+		ft_error("minishell: Memory allocation failed for heredoc filename.");
+		ft_exit(&shell);
+	}
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork");
+		free(filename);
+		return;
+	}
+	else if (pid == 0)
+	{
+		// === Child process: heredoc reader ===
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
+
+		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+		if (fd < 0)
+			exit(1);
+
+		char *line = NULL;
+		line = readline("> ");
+		while (line && ft_strcmp(line, rd->file) && g_signal_received != SIGINT)
+		{
+			if (line[0] == '\0')
+			{
+				free(line);
+				line = ft_strdup("\n");
+			}
+			expand_heredoc(shell, &line);
+			ft_putendl_fd(line, fd);
+			free(line);
+			line = readline("> ");
+		}
+		close(fd);
+		end_of_heredoc(line, filename, rd);
+		exit(0); // success
+	}
+	else
+	{
+		// === Parent process: wait and handle cleanup ===
+		waitpid(pid, &status, 0);
+
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		{
+			write(STDOUT_FILENO, "\n", 1); // ensure clean prompt
+			unlink(filename);
+			free(filename);
+			g_signal_received = SIGINT;
+			return;
+		}
+
+		free(rd->file);
+		rd->file = filename;
+	}
+}
+
+static void cleanup_interrupted_heredocs(t_shell *shell)
+{
+    t_cmd *cmd;
+    t_redir *rd;
+
+    cmd = shell->commands;
+    while (cmd)
+    {
+        rd = cmd->rd;
+        while (rd)
+        {
+            if (rd->type == HEREDOC && rd->file)
+            {
+                // Solo eliminar archivos temporales creados
+                if (ft_strncmp(rd->file, "/tmp/heredoc_", 13) == 0)
+                {
+                    unlink(rd->file);
+                    free(rd->file);
+                    rd->file = NULL;  // Marcar como no procesado
+                }
+            }
+            rd = rd->next;
+        }
+        cmd = cmd->next;
+    }
+}
+
+void	create_heredocs(t_shell *shell)
+{
+	t_cmd	*cmd;
+	t_redir	*rd;
+	int		n;
+
+	
+	setup_heredoc_signals();
+	cmd = shell->commands;
+	while (cmd && g_signal_received != SIGINT)
+	{
+		n = 0;
+		rd = cmd->rd;
+		while (rd && g_signal_received != SIGINT)
+		{
+			if (rd->type == HEREDOC)
+			{
+				create_heredoc_file(shell, rd, ft_itoa(n++));
+			}
+			rd = rd->next;
+		}
+		cmd = cmd->next;
+	}
+	if (g_signal_received == SIGINT)
+    	cleanup_interrupted_heredocs(shell);
+}*/
+
 
 void	create_heredocs(t_shell *shell)
 {
