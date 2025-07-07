@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/06 03:31:36 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/07 03:43:04 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,16 @@ void	expand_heredoc(t_shell *shell, char **pline)
 		line = *pline;
 		i++;
 	}
+}
+
+static void	clean_sigint(t_shell *shell, int status)
+{
+	if (WIFEXITED(status))
+		shell->last_exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		shell->last_exit_status = 128 + WTERMSIG(status);
+	else
+		shell->last_exit_status = 0;
 }
 
 void	create_heredoc_file(t_shell *shell, t_redir *rd, char *n)
@@ -237,7 +247,7 @@ void	create_heredoc_file(t_shell *shell, t_redir *rd, char *n)
 	{
 		// === Parent process: wait and handle cleanup ===
 		waitpid(pid, &status, 0);
-
+		clean_sigint(shell, status);
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 		{
 			write(STDOUT_FILENO, "\n", 1); // ensure clean prompt
@@ -246,6 +256,7 @@ void	create_heredoc_file(t_shell *shell, t_redir *rd, char *n)
 			g_signal_received = SIGINT;
 			return;
 		}
+		
 
 		free(rd->file);
 		rd->file = filename;
@@ -353,12 +364,7 @@ static void	execute_command_pipeline(t_shell *shell)
 	else
 	{
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			shell->last_exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			shell->last_exit_status = 128 + WTERMSIG(status);
-		else
-			shell->last_exit_status = 0;
+		clean_sigint(shell, status);
 	}
 }
 
