@@ -214,4 +214,12 @@ char **str;
 
 str[0][0] = "cd"
 str[0][1] = "dir"
+
+/*
+	>>src/bonjour <prout >> src/hello
+	wc << o ls | wc << e
+	wc << e | ls
+	<< e
+*/
 -->
+

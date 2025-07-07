@@ -6,7 +6,7 @@
 /*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/07 19:01:46 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:41:37 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	update_shell(t_shell **mshell)
 		(*mshell)->running = 0;
 	ft_free_mshell(mshell);
 }
-
-// DEVEDU UPDATES ABAJO
 
 static void	remove_heredocs(t_shell *shell)
 {
@@ -64,6 +62,8 @@ static void	execute_command_pipeline(t_shell *shell)
 	{
 		waitpid(pid, &status, 0);
 		clean_sigint(shell, status);
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			write(STDOUT_FILENO, "\n", 1);
 	}
 }
 
@@ -115,10 +115,3 @@ int	main(int argc, char **argv, char **envp)
 	exit_code = mshell->exit_status;
 	return (exit_code);
 }
-
-/*
-	>>src/bonjour <prout >> src/hello
-	wc << o ls | wc << e
-	wc << e | ls
-	<< e
-*/
