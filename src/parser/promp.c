@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promp.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:30:35 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/03 01:44:54 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:00:54 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ static char	*parse_pwd(t_shell *mshell, char *pwd)
 	return (pwd);
 }
 
+static void	validate_sigint(t_shell *mshell)
+{
+	if (g_signal_received == SIGINT)
+	{
+		g_signal_received = 0;
+		mshell->last_exit_status = 130;
+	}
+}
+
 char	*promp_input(t_shell *mshell)
 {
 	char	*promp;
@@ -42,19 +51,18 @@ char	*promp_input(t_shell *mshell)
 	pwd = NULL;
 	input = NULL;
 	promp = NULL;
-/* 	if (g_signal_received == SIGINT)
-		mshell->last_exit_status = EXIT_SIGINT; */
-	pwd = ft_getenv(mshell->lstenv, "PWD");		// /home/eduaserr/cursus/minishell
+	pwd = ft_getenv(mshell->lstenv, "PWD");
 	if (!pwd)
 		pwd = ft_strdup("");
 	pwd = parse_pwd(mshell, pwd);
-	promp = ft_getenv(mshell->lstenv, "USER");	//eduaserr
-	promp = ft_strjoin_gnl(promp, "@mshell");	//eduaserr@mshell
-	promp = ft_strjoin_gnl(promp, pwd);			//eduaserr@mshell/home/eduaserr/cursus/minishell
+	promp = ft_getenv(mshell->lstenv, "USER");
+	promp = ft_strjoin_gnl(promp, "@mshell");
+	promp = ft_strjoin_gnl(promp, pwd);
 	ft_free_str(&pwd);
-	promp = ft_strjoin_gnl(promp, "$ ");		//eduaserr@mshell/home/eduaserr/cursus/minishell$ 
+	promp = ft_strjoin_gnl(promp, "$ ");
 	input = readline(promp);
 	ft_free_str(&promp);
+	validate_sigint(mshell);
 	if (input && input[0] != '\0')
 		add_history(input);
 	return (input);

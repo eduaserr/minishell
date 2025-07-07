@@ -6,7 +6,7 @@
 /*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/04 19:37:38 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:44:37 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ typedef enum e_quote_status
 	UNCLOSED	= -1,
 	EMPTY		= -2,
 }	t_quote_status;
+
+typedef struct s_pipe_ctx
+{
+	int		fd[2];
+	int		in_fd;
+	int		*child_count;
+}			t_pipe_ctx;
 
 typedef struct s_env
 {
@@ -187,6 +194,7 @@ void	execute(t_shell *shell, char **cmd_args, char **env);
 //	pipes.c			//
 //////////////////////
 void	handle_pipes(t_shell *shell, char **env);
+int	setup_pipe_if_needed(t_shell *shell, int fd[2]);
 
 //////////////////////
 //	redir.c			//
@@ -194,6 +202,15 @@ void	handle_pipes(t_shell *shell, char **env);
 void	execute_heredoc(char *delimiter, int heredoc_fd[2]);
 void	redirect_stdin(t_shell *shell, bool handle_heredoc);
 void	setup_redirection(t_shell *shell, bool handle_heredoc);
+
+//////////////////////
+//	heredoc.c		//
+//////////////////////
+void	read_heredoc_lines(t_shell *shell, t_redir *rd, int fd);
+void	cleanup_interrupted_heredocs(t_shell *shell);
+void	clean_sigint(t_shell *shell, int status);
+void	read_heredoc_lines(t_shell *shell, t_redir *rd, int fd);
+void	create_heredocs(t_shell *shell);
 
 /* **************************************** */
 /*					INIT					*/
@@ -239,6 +256,8 @@ void	addlast_tknnode(t_token **token_list, t_token *node);
 //////////////////////
 void	parse_commands(t_shell **mshell, int tmp);
 void	parse_input(t_shell **mshell, char *input);
+int	handle_pipes_err(char *str, int i);
+int	handle_rd_err(t_shell *shell, t_token *tkn);
 
 //////////////////////
 //	promp.c			//

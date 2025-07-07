@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/03 19:10:56 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:38:41 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,3 @@ void	ft_error_exit(t_shell **mshell, char *message, int code)
 	(*mshell)->exit_status = code;
 	ft_exit2(mshell);
 }
-
-/*
-# define EXIT_CMD_NOT_FOUND 		127	-> no salir (nuevo promp)
-command not found
-
-# define EXIT_GENERAL_ERROR 		1	-> salir
-# define EXIT_EXEC_FAILURE 			126	-> salir ?
-$ chmod -x script.sh
-$ ./script.sh
-bash: ./script.sh: Permission denied
-$ echo $?
-126
-
-# define EXIT_BUILTIN_MISUSE 		2	-> salir ?
-
-# define SYNTAX_ERROR_STATUS 		2	-> salir ?
-syntax error unexpected token ''
-
-# define EXIT_SIGINT 				130	-> salir por señal C
-# define EXIT_SIGQUIT 				131	-> no salir (se ignora)
-
-# define EXIT_REQUEST_SIG_OFFSET 	128 + signo;	-> reflejar que el proceso
-fue terminado por una señal externa.
- si un proceso muere por SIGKILL (9)
-$ kill -9 PID
-$ echo $?
-137
-
-# define EXIT_UQUOTE 				259	-> no salir (nuevo promp)  (exit code inventado)
-*/

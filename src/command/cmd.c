@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/03 20:38:21 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:30:22 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ static char	*parse_cmd(char *input, int start, int pipe)
 		return (NULL);
 	if (tmp[0] == '\0')
 		return (ft_error("syntax error near unexpected token `|'"),
-		ft_free_str(&tmp));
+			ft_free_str(&tmp));
 	return (tmp);
 }
 
-// pasar mshell y coger de ahí el contenido. (ten cuidado con no perder la referencia
-// de las cabezas de las listas, o de modificar el contenido cuando no debes)
-static t_cmd	*ft_nodecmd(t_shell *shell, t_cmd *cmd, char *input, int start, int pipe)
+static t_cmd	*ft_nodecmd(t_shell *shell, t_cmd *cmd, char *input, int start,
+		int pipe)
 {
 	t_cmd	*new;
 
@@ -52,7 +51,7 @@ static t_cmd	*ft_nodecmd(t_shell *shell, t_cmd *cmd, char *input, int start, int
 
 t_cmd	*get_cmd(t_shell *mshell, t_cmd *cmd, char *input, int is_pipe)
 {
-	int		i;
+	int	i;
 
 	i = -1;
 	mshell->cmd_count = 0;

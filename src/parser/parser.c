@@ -3,49 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:25:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/04 14:46:46 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:40:10 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static int	handle_pipes_err(char *str, int i)
-{
-	while (str[i])
-	{
-		if (str[i] == '|' && i == 0)
-			return (SYNTAX_ERROR_STATUS);
-		if (str[i] == '|' && str[i + 1] == '|')
-			return (SYNTAX_ERROR_STATUS);
-		i++;
-	}
-	if (i > 0 && str[i - 1] == '|')
-		return (SYNTAX_ERROR_STATUS);
-	return (0);
-}
-
-static int	handle_rd_err(t_shell *shell, t_token *tkn)
-{
-	while (tkn)
-	{
-		if (tkn->type == REDIR_IN || tkn->type == REDIR_OUT
-			|| tkn->type == APPEND || tkn->type == HEREDOC)
-		{
-			if (!tkn->next)
-				return (ft_perror(shell, "senut", "newline"), 2);
-			else if (tkn->next->type == PIPE)
-				return (ft_perror(shell, "senut", "|"), 2);
-			else if (tkn->next->type == REDIR_IN || tkn->next->type == REDIR_OUT
-				|| tkn->next->type == APPEND || tkn->next->type == HEREDOC)
-				return (ft_perror(shell, "senut", tkn->next->value), 2);
-		}
-		tkn = tkn->next;
-	}
-	return (0);
-}
 
 static char	*preparate_input(t_shell *shell, char *input)
 {
@@ -91,8 +56,8 @@ static int	validate_redir(t_cmd *cmd)
 
 void	parse_commands(t_shell **mshell, int tmp)
 {
-	(*mshell)->commands = get_cmd(*mshell,
-		(*mshell)->commands, (*mshell)->p_input, 0);
+	(*mshell)->commands = get_cmd(*mshell, (*mshell)->commands,
+			(*mshell)->p_input, 0);
 	if (!(*mshell)->commands)
 		return (ft_error("get cmd"));
 	tmp = validate_redir((*mshell)->commands);
