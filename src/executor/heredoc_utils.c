@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 17:49:22 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/07 21:37:30 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/08 00:39:40 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,6 @@ void	cleanup_interrupted_heredocs(t_shell *shell)
 		}
 		cmd = cmd->next;
 	}
-}
-
-void	validate_sigint(t_shell *mshell)
-{
-	if (g_signal_received == SIGINT)
-	{
-		g_signal_received = 0;
-		mshell->last_exit_status = 130;
-	}
-	return ;
 }
 
 static void	end_of_heredoc(char *line, char *filename, t_redir *rd)

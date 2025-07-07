@@ -6,7 +6,7 @@
 /*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/08 00:37:16 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/08 00:41:10 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	find_next_pipe(char *input, int start)
 	return (i);
 }
 
-static t_cmd	*process_pipe_segment(t_shell *mshell, t_cmd *cmd, 
+static t_cmd	*process_pipe_segment(t_shell *mshell, t_cmd *cmd,
 		char *input, int *ix)
 {
 	cmd = ft_nodecmd(mshell, cmd, input, ix);

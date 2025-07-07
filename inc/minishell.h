@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/07 21:28:22 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/08 00:48:25 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,16 +169,16 @@ t_cmd							*get_cmd(t_shell *shell, t_cmd *cmd,
 									char *input, int pipe);
 
 //////////////////////
+//	get_args.c		//
+//////////////////////
+void							get_args(t_token *tkn, t_cmd *cmd);
+
+//////////////////////
 //	get_cmd.c		//
 //////////////////////
 int								pipelen(t_token *tkn);
 char							*process_str(t_shell *mshell, char *str);
 void							dup_cmd(t_shell *mshell, t_cmd *cmd);
-
-//////////////////////
-//	get_args.c		//
-//////////////////////
-void							get_args(t_token *tkn, t_cmd *cmd);
 
 /* **************************************** */
 /*					EXECUTOR				*/
@@ -197,6 +197,14 @@ void							execute(t_shell *shell, char **cmd_args,
 									char **env);
 
 //////////////////////
+//	heredoc.c		//
+//////////////////////
+void							cleanup_interrupted_heredocs(t_shell *shell);
+void							read_heredoc_lines(t_shell *shell, t_redir *rd,
+									int fd, char *file);
+void							create_heredocs(t_shell *shell);
+
+//////////////////////
 //	pipes.c			//
 //////////////////////
 void							handle_pipes(t_shell *shell, char **env);
@@ -211,15 +219,6 @@ void							redirect_stdin(t_shell *shell,
 									bool handle_heredoc);
 void							setup_redirection(t_shell *shell,
 									bool handle_heredoc);
-
-//////////////////////
-//	heredoc.c		//
-//////////////////////
-void							cleanup_interrupted_heredocs(t_shell *shell);
-void							clean_sigint(t_shell *shell, int status);
-void							read_heredoc_lines(t_shell *shell, t_redir *rd,
-									int fd, char *file);
-void							create_heredocs(t_shell *shell);
 
 /* **************************************** */
 /*					INIT					*/
@@ -268,6 +267,10 @@ void							addlast_tknnode(t_token **token_list,
 //////////////////////
 void							parse_commands(t_shell **mshell, int tmp);
 void							parse_input(t_shell **mshell, char *input);
+
+//////////////////////
+//	parse_utils.c	//
+//////////////////////
 int								handle_pipes_err(char *str, int i);
 int								handle_rd_err(t_shell *shell, t_token *tkn);
 
