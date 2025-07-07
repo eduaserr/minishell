@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/07 19:03:47 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/07 21:28:22 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,12 +215,10 @@ void							setup_redirection(t_shell *shell,
 //////////////////////
 //	heredoc.c		//
 //////////////////////
-void							read_heredoc_lines(t_shell *shell, t_redir *rd,
-									int fd);
 void							cleanup_interrupted_heredocs(t_shell *shell);
 void							clean_sigint(t_shell *shell, int status);
 void							read_heredoc_lines(t_shell *shell, t_redir *rd,
-									int fd);
+									int fd, char *file);
 void							create_heredocs(t_shell *shell);
 
 /* **************************************** */

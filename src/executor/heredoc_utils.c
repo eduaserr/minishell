@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 17:49:22 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/07 19:00:11 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/07 21:37:30 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static void	expand_heredoc(t_shell *shell, char **pline)
 	}
 }
 
-void	read_heredoc_lines(t_shell *shell, t_redir *rd, int fd)
+void	read_heredoc_lines(t_shell *shell, t_redir *rd, int fd, char *file)
 {
 	char	*line;
 
@@ -103,11 +103,10 @@ void	read_heredoc_lines(t_shell *shell, t_redir *rd, int fd)
 		expand_heredoc(shell, &line);
 		ft_putendl_fd(line, fd);
 		free(line);
-		close(fd);
 		line = readline("> ");
 	}
 	close(fd);
-	end_of_heredoc(line, NULL, rd);
+	end_of_heredoc(line, file, rd);
 	exit(0);
 }
 
