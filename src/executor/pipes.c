@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:56:53 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/07 21:48:13 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/08 01:54:38 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	handle_pipes(t_shell *shell, char **env)
     pid = fork();
     if (pid == 0)  // Proceso hijo
     {
+		signal_function();
         // Configurar entrada (heredoc o pipe anterior)
         if (*in_fd != STDIN_FILENO)
         {
@@ -121,12 +122,13 @@ void	handle_pipes(t_shell *shell, char **env)
         // Configurar salida (pipe siguiente o STDOUT)
         if (shell->commands->next)
         {
-            dup2(fd[1], STDOUT_FILENO);
-            close(fd[1]);
+            close(fd[0]);
+			dup2(fd[1], STDOUT_FILENO);
+			close(fd[1]);
         }
-        close(fd[0]);
         
         // Ejecutar comando
+
         execute_child_builtins(shell->commands->args, shell);
         exec_cmd(shell, shell->commands->args, env);
     }
