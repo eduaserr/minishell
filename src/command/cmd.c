@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:16:14 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/08 00:41:10 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:43:53 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ static int	find_next_pipe(char *input, int start)
 	return (i);
 }
 
-static t_cmd	*process_pipe_segment(t_shell *mshell, t_cmd *cmd,
-		char *input, int *ix)
+static t_cmd	*process_pipe(t_shell *mshell, t_cmd *cmd, char *input, int *ix)
 {
 	cmd = ft_nodecmd(mshell, cmd, input, ix);
 	if (!cmd)
@@ -84,7 +83,7 @@ t_cmd	*get_cmd(t_shell *mshell, t_cmd *cmd, char *input, int is_pipe)
 		pos[1] = find_next_pipe(input, pos[0]);
 		if (input[pos[1]] == '|')
 		{
-			cmd = process_pipe_segment(mshell, cmd, input, pos);
+			cmd = process_pipe(mshell, cmd, input, pos);
 			if (!cmd)
 				return (ft_error("Parse command"), NULL);
 			pos[0] = pos[1] + 1;

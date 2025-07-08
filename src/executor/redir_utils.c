@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:01:08 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/07 18:42:31 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:35:37 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,4 @@ void	setup_redirection(t_shell *shell, bool handle_heredoc)
 		ft_exit_child(&shell, EXIT_FAILURE);
 	last_output_redir = find_last_output_redir(shell->commands->rd);
 	apply_output_redirection(last_output_redir, shell);
-}
-
-int	setup_pipe_if_needed(t_shell *shell, int fd[2])
-{
-	if (shell->commands->next && pipe(fd) < 0)
-	{
-		ft_error("handle pipe");
-		return (-1);
-	}
-	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/07 19:41:37 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:41:43 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	update_shell(t_shell **mshell)
 {
+	(*mshell)->cmd_count = 0;
 	if ((*mshell)->exit_status != 0)
 		(*mshell)->running = 0;
 	ft_free_mshell(mshell);
@@ -52,10 +53,8 @@ static void	execute_command_pipeline(t_shell *shell)
 		return ;
 	pid = fork();
 	if (pid == -1)
-	{
-		ft_error("minishell: fork");
-		return ;
-	}
+
+		return (ft_error("minishell: fork"));
 	if (pid == 0)
 		execute(shell, shell->commands->args, shell->env);
 	else

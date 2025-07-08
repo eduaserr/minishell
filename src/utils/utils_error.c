@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 15:22:00 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/07 18:38:41 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:23:05 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,4 @@ void	ft_exit_child(t_shell **mshell, int code)
 	ft_free_mshell(mshell);
 	ft_clean_rl();
 	exit(code);
-}
-
-static void	ft_exit2(t_shell **mshell)
-{
-	if ((*mshell)->exit_status != 0)
-		(*mshell)->running = 0;
-	ft_free_mshell(mshell);
-}
-
-void	ft_error_exit(t_shell **mshell, char *message, int code)
-{
-	ft_error(message);
-	(*mshell)->exit_status = code;
-	ft_exit2(mshell);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:09:29 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/07 19:51:32 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:33:25 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ static t_redir	*find_last_input_redir(t_redir *redir_list)
 	return (last_input_redir);
 }
 
-static void	process_heredocs(t_cmd *command,
-		t_redir *last_input_redir)
+static void	process_heredocs(t_cmd *command, t_redir *last_input_redir)
 {
 	t_redir	*current_redir;
 	int		heredoc_fd;
@@ -53,7 +52,7 @@ static void	apply_file_input(t_shell *shell, char *file)
 	fd_in = open(file, O_RDONLY);
 	if (fd_in == -1)
 	{
-		ft_perror(shell, "nsfod", shell->commands->rd->file);
+		ft_perror(shell, "nsfod", file);
 		ft_exit_child(&shell, EXIT_FAILURE);
 	}
 	dup2(fd_in, STDIN_FILENO);

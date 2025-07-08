@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:56:53 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/08 01:54:38 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:20:01 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,48 +25,6 @@ static void	parent_process(t_shell *shell, int *in_fd, int fd[2])
 		close(*in_fd);
 }
 
-static void	child_process(t_shell *shell, int fd[2], int in_fd, char **env)
-{
-	t_cmd	*command;
-
-	signal_function();
-	command = shell->commands;
-	if (in_fd != STDIN_FILENO)
-	{
-		dup2(in_fd, STDIN_FILENO);
-		close(in_fd);
-	}
-	if (command->next)
-	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-	}
-	setup_redirection(shell, false);
-	exec_cmd(shell, command->args, env);
-	ft_exit_child(&shell, EXIT_FAILURE);
-}
-
-int	spawn_child(t_shell *shell, t_pipe_ctx *ctx, char **env)
-{
-	int	pid;
-
-	pid = fork();
-	if (pid < 0)
-	{
-		ft_error("fork error");
-		return (-1);
-	}
-	if (pid == 0)
-		child_process(shell, ctx->fd, ctx->in_fd, env);
-	else
-	{
-		(*ctx->child_count)++;
-		parent_process(shell, &ctx->in_fd, ctx->fd);
-	}
-	return (0);
-}
-
 void	wait_for_children(int count, t_shell *shell)
 {
 	int	status;
@@ -76,89 +34,50 @@ void	wait_for_children(int count, t_shell *shell)
 	ft_exit_child(&shell, WEXITSTATUS(status));
 }
 
-void	handle_pipes(t_shell *shell, char **env)
+static void	exec_pipe_cmd(t_shell *shell, char **env, int *in_fd, int fd[2])
 {
-	t_cmd		*first;
-	t_pipe_ctx	ctx;
-	int			child_count;
+	pid_t	pid;
 
-	first = shell->commands;
-	ctx.in_fd = STDIN_FILENO;
-	child_count = 0;
-	ctx.child_count = &child_count;
-	while (shell->commands)
+	pid = fork();
+	if (pid == 0)
 	{
-		if (setup_pipe_if_needed(shell, ctx.fd) < 0)
-			break ;
-		if (spawn_child(shell, &ctx, env) < 0)
-			break ;
-		shell->commands = shell->commands->next;
-	}
-	shell->commands = first;
-	wait_for_children(child_count, shell);
-}
-
-
-/*static void	execute_pipe_command(t_shell *shell, char **env, int *in_fd, int fd[2])
-{
-    pid_t	pid;
-
-    pid = fork();
-    if (pid == 0)  // Proceso hijo
-    {
 		signal_function();
-        // Configurar entrada (heredoc o pipe anterior)
-        if (*in_fd != STDIN_FILENO)
-        {
-            dup2(*in_fd, STDIN_FILENO);
-            close(*in_fd);
-        }
-        else
-        {
-            // Si es el primer comando, configurar redirecciones (incluyendo heredoc)
-            setup_redirection(shell, true);
-        }
-        
-        // Configurar salida (pipe siguiente o STDOUT)
-        if (shell->commands->next)
-        {
-            close(fd[0]);
+		if (*in_fd != STDIN_FILENO)
+		{
+			dup2(*in_fd, STDIN_FILENO);
+			close(*in_fd);
+		}
+		else
+			setup_redirection(shell, true);
+		if (shell->commands->next)
+		{
+			close(fd[0]);
 			dup2(fd[1], STDOUT_FILENO);
 			close(fd[1]);
-        }
-        
-        // Ejecutar comando
-
-        execute_child_builtins(shell->commands->args, shell);
-        exec_cmd(shell, shell->commands->args, env);
-    }
-    else  // Proceso padre
-    {
-        parent_process(shell, in_fd, fd);
-    }
+		}
+		execute_child_builtins(shell->commands->args, shell);
+		exec_cmd(shell, shell->commands->args, env);
+		ft_exit_child(&shell, EXIT_FAILURE);
+	}
+	else
+		parent_process(shell, in_fd, fd);
 }
 
 void	handle_pipes(t_shell *shell, char **env)
 {
-    int		in_fd = STDIN_FILENO;
-    int		fd[2];
-    t_cmd	*current_cmd;
-    
-    current_cmd = shell->commands;
-    while (current_cmd)
-    {
-        shell->commands = current_cmd;  // Actualizar comando actual
-        
-        if (current_cmd->next && pipe(fd) == -1)
-        {
-            ft_error("pipe failed");
-            return;
-        }
-        
-        execute_pipe_command(shell, env, &in_fd, fd);
-        current_cmd = current_cmd->next;
-    }
-    // Esperar a todos los procesos hijos
-    wait_for_children(shell->cmd_count, shell);
+	int		in_fd;
+	int		fd[2];
+	t_cmd	*current_cmd;
+
+	in_fd = STDIN_FILENO;
+	current_cmd = shell->commands;
+	while (current_cmd)
+	{
+		shell->commands = current_cmd;
+		if (current_cmd->next && pipe(fd) == -1)
+			return (ft_error("pipe failed"));
+		exec_pipe_cmd(shell, env, &in_fd, fd);
+		current_cmd = current_cmd->next;
+	}
+	wait_for_children(shell->cmd_count, shell);
 }
-*/
