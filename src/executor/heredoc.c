@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 20:04:44 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/07 21:47:12 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:17:51 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ static void	handle_heredoc_child(t_shell *shell, t_redir *rd, char *filename)
 {
 	int	fd;
 
-	signal(SIGINT, SIG_DFL);
+	g_signal_received = -1;
+	signal(SIGINT, sigint_heredoc_handler);
 	signal(SIGQUIT, SIG_IGN);
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (fd < 0)
 		exit(1);
+	g_signal_received = fd;
 	read_heredoc_lines(shell, rd, fd, filename);
 }
 

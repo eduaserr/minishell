@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/08 00:51:16 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:18:40 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,11 +195,11 @@ void							exec_cmd(t_shell *shell, char **cmd_args,
 									char **env);
 void							execute(t_shell *shell, char **cmd_args,
 									char **env);
-									
+
 //////////////////////
 //	heredoc_utils.c	//
 //////////////////////
-void	clean_sigint(t_shell *shell, int status);
+void							clean_sigint(t_shell *shell, int status);
 
 //////////////////////
 //	heredoc.c		//
@@ -315,6 +315,7 @@ char							*rm_quotes2(char *str);
 //////////////////////
 void							signal_function(void);
 void							handle_exec_sigquit(void);
+void							sigint_heredoc_handler(int sig);
 
 //////////////////////
 //	signal2.c		//

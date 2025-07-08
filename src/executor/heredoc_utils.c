@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eduaserr <eduaserr@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 17:49:22 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/08 00:39:40 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:10:03 by aamoros-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
