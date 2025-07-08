@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/08 21:41:43 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/08 21:55:39 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	signal_function();
 	process_command_line(mshell);
-	exit_code = mshell->exit_status;
+	exit_code = mshell->last_exit_status;
 	return (exit_code);
 }
