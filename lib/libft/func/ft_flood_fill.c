@@ -6,12 +6,13 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 22:17:10 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/03/19 22:40:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:24:50 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
+/*	COMENTADA PORQUE TIENE 5 ARGUMENTOS (NORMINETTE)
 int	ft_flood_fill(t_data *data, char **map, int y, int x, char search)
 {
 	if (!map ||  y < 0 || y >= data->length
@@ -28,3 +29,4 @@ int	ft_flood_fill(t_data *data, char **map, int y, int x, char search)
 		return (1);
 	return (0);
 }
+ */
