@@ -65,40 +65,40 @@ minishell/
 
 ### Organización por módulos:
 📁 **Archivos principales**
-- main.c - Función principal y bucle del shell
-- minishell.h - Header con todas las definiciones.
+- [main.c](https://github.com/eduaserr/minishell/blob/main/main.c) - Función principal y bucle del shell
+- [minishell.h](https://github.com/eduaserr/minishell/blob/main/inc/minishell.h) - Header con todas las definiciones.
 
-📁 **src/builtins/**
+📁 **[src/builtins/](https://github.com/eduaserr/minishell/blob/main/src/builtins)**
 - Implementación de comandos internos (cd, echo, env, exit, pwd, export, unset).
 
-📁 **src/command/**
+📁 **[src/command/](https://github.com/eduaserr/minishell/blob/main/src/command)**
 - Gestión y parseo de comandos.
 
-📁 **src/executor/**
+📁 **[src/executor/](https://github.com/eduaserr/minishell/blob/main/src/executor)**
 - Ejecución de comandos, manejo de pipes, redirecciones y heredocs.
 
-📁 **src/init/**
+📁 **[src/init/](https://github.com/eduaserr/minishell/blob/main/src/init)**
 - Inicialización de estructuras (shell, env, tokens, comandos, redirecciones).
 
-📁 **src/parser/**
+📁 **[src/parser/](https://github.com/eduaserr/minishell/blob/main/src/parser)**
 - Parseo del input del usuario y generación del prompt.
 
-📁 **src/quotes/**
+📁 **[src/quotes/](https://github.com/eduaserr/minishell/blob/main/src/quotes)**
 - Manejo de comillas (validación, expansión, utilidades).
 
-📁 **src/redirs/**
+📁 **[src/redirs/](https://github.com/eduaserr/minishell/blob/main/src/redirs)**
 - Gestión de redirecciones de entrada y salida.
 
-📁 **src/signals/**
+📁 **[src/signals/](https://github.com/eduaserr/minishell/blob/main/src/signals)**
 - Gestión de señales (SIGINT, SIGQUIT, etc.).
 
-📁 **src/tokens/**
+📁 **[src/tokens/](https://github.com/eduaserr/minishell/blob/main/src/tokens)**
 - Tokenización del input.
 
-📁 **src/utils/**
+📁 **[src/utils/](https://github.com/eduaserr/minishell/blob/main/src/utils)**
 - Funciones auxiliares (errores, liberación de memoria, impresión, split).
 
-📁 **lib/libft/**
+📁 **[lib/libft/](https://github.com/eduaserr/minishell/blob/main/lib/libft)**
 - Biblioteca de funciones personalizadas con ft_printf y get_next_line.
 
 Esta estructura modular facilita el mantenimiento y desarrollo del proyecto, separando claramente las responsabilidades de cada componente.
