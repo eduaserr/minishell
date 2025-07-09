@@ -6,16 +6,18 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 04:24:56 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/05/22 17:35:29 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:22:15 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-static int	ft_strlendb(char *str, int space, int i)
+static int	ft_strlendb(char *str, int i)
 {
 	int	len;
+	int	space;
 
+	space = 1;
 	len = 0;
 	while (str[i])
 	{
@@ -39,10 +41,12 @@ static int	ft_strlendb(char *str, int space, int i)
 	return (len);
 }
 
-static char	*ft_strcpydb(char *str, char *tmp, int space, int i, int len)
+static char	*ft_strcpydb(char *str, char *tmp, int i, int len)
 {
 	int	j;
+	int	space;
 
+	space = 1;
 	j = 0;
 	while (str[i] && j < len)
 	{
@@ -77,11 +81,11 @@ char	*ft_rm_db_spaces(char **str)
 	i = 0;
 	len = 0;
 	space = 1;
-	len = ft_strlendb(*str, space, i);
+	len = ft_strlendb(*str, i);
 	tmp = (char *)malloc(sizeof(char) * (len + 1));
 	if (!tmp)
 		return (NULL);
-	tmp = ft_strcpydb(*str, tmp, space, i, len);
+	tmp = ft_strcpydb(*str, tmp, i, len);
 	ft_free_str(str);
 	return (tmp);
 }

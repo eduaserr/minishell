@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 01:27:48 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/26 12:29:03 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 21:00:38 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,13 @@ static void	set_tknhead(t_token **tkn, int cmd_index)
 	}
 }
 
-t_redir	*redir_node(t_shell *mshell, t_token *tkn, t_redir *lstrd, int cmd_index)
+t_redir	*redir_node(t_shell *mshell, t_token *tkn, t_redir *lstrd, int cmd_ix)
 {
 	char	*tmp;
 	t_redir	*new;
-	int		i;
 
-	i = 0;
 	tmp = NULL;
-	set_tknhead(&tkn, cmd_index);
+	set_tknhead(&tkn, cmd_ix);
 	while (tkn && tkn->type != PIPE)
 	{
 		if (tkn->type == REDIR_IN || tkn->type == REDIR_OUT

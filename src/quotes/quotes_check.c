@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 18:04:01 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 22:59:16 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/04 19:07:32 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	quotes_status(char *input, int *i)
 	return (CLOSED);
 }
 
-char	*check_quotes(char *input)
+char	*check_quotes(t_shell *shell, char *input)
 {
 	int	q_state;
 	int	i;
@@ -45,8 +45,8 @@ char	*check_quotes(char *input)
 		q_state = quotes_status(input, &i);
 		if (q_state == UNCLOSED)
 		{
-			input = ft_free_str(&input);
-			return (ft_error("unclosed quotes"), NULL);
+			ft_free_str(&input);
+			return (ft_perror(shell, "unclosed quotes", "mshell"), NULL);
 		}
 		if (q_state == EMPTY)
 		{

@@ -1,15 +1,66 @@
+# READLINE
+
 {
-   <ignore_readline>
+   <ignore_readline_leaks>
    Memcheck:Leak
    ...
    fun:readline
-   ...
 }
 
 {
-   <ignore_add_history>
+   <ignore_add_history_leaks>
    Memcheck:Leak
    ...
    fun:add_history
+}
+
+{
+   <ignore_rl_initialize>
+   Memcheck:Leak
    ...
+   fun:rl_initialize
+}
+
+# COMANDOS
+
+{
+   <ignore_external_binaries>
+   Memcheck:Leak
+   ...
+   obj:/usr/bin/*
+}
+
+{
+   <ignore_system_binaries>
+   Memcheck:Leak
+   ...
+   obj:/bin/*
+}
+
+{
+   <ignore_sbin_binaries>
+   Memcheck:Leak
+   ...
+   obj:/usr/sbin/*
+}
+
+{
+   <ignore_libc_start_main>
+   Memcheck:Leak
+   ...
+   fun:(below main)
+}
+
+{
+   <ignore_libc_start_call_main>
+   Memcheck:Leak
+   ...
+   fun:libc_start_call_main
+}
+
+{
+   <ignore_dynamic_loader>
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so*
 }

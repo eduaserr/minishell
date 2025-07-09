@@ -6,13 +6,13 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 17:28:38 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 23:08:05 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:38:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	ft_free_env(t_env **lstenv)
+void	ft_free_env(t_env **lstenv)
 {
 	t_env	*swp;
 
@@ -68,9 +68,9 @@ static void	ft_free_rd(t_redir **rd)
 	*rd = NULL;
 }
 
-void	ft_free_cmd(t_command **cmd)
+void	ft_free_cmd(t_cmd **cmd)
 {
-	t_command	*swp;
+	t_cmd	*swp;
 
 	swp = NULL;
 	if ((!cmd) || (!*cmd))
@@ -90,7 +90,7 @@ void	ft_free_cmd(t_command **cmd)
 	*cmd = NULL;
 }
 
-void	ft_free_mshell(t_shell **mshell) // free_all
+void	ft_free_mshell(t_shell **mshell)
 {
 	if (!mshell || !*mshell)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 06:21:13 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 23:02:25 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:01:26 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,6 @@ int	get_quote(char *str)
 		i++;
 	}
 	return (0);
-}
-
-//no se usa
-char	*get_in_quotes(char *str, int start, int end)
-{
-	char	*tmp;
-	int		i;
-	int		len;
-
-	i = 0;
-	len = end - start - 1;
-	if (start < 0)
-		return (NULL);
-	tmp = (char *)malloc(sizeof(char) * (len + 1));
-	if (!tmp)
-		return (NULL);
-	while (str[++start] && (--len) >= 0)
-	{
-		tmp[i] = str[start];
-		i++;
-	}
-	tmp[i] = '\0';
-	return (tmp);
 }
 
 char	*rm_empty_quotes(char *str, int start, int end)

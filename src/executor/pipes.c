@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:56:53 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/01 19:56:47 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:46:44 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,99 +25,58 @@ static void	parent_process(t_shell *shell, int *in_fd, int fd[2])
 		close(*in_fd);
 }
 
-static t_redir	*find_redir_by_type(t_command *command, int type)
+void	wait_for_children(int count, t_shell *shell)
 {
-	t_redir	*redir;
+	int	status;
 
-	if (!command)
-		return (NULL);
-	redir = command->rd;
-	while (redir)
-	{
-		if (redir->type == type)
-			return (redir);
-		redir = redir->next;
-	}
-	return (NULL);
+	while (count-- > 0)
+		wait(&status);
+	ft_exit_child(&shell, WEXITSTATUS(status));
 }
 
-static void	child_process(t_shell *shell, int fd[2], int in_fd, char **env)
+static void	exec_pipe_cmd(t_shell *shell, char **env, int *in_fd, int fd[2])
 {
-	int			heredoc_fd[2];
-	t_command	*command;
-	t_redir	*heredoc_redir;
+	pid_t	pid;
 
-	command = shell->commands;
-	// If command is exit, do nothing in child (ignore exit in pipeline)
-	if (command && command->args && command->args[0] && !ft_strcmp(command->args[0], "exit"))
+	pid = fork();
+	if (pid == 0)
 	{
-		ft_printf("exit: cannot be used in a pipeline\n");
-		exit(0);
-	}
-	heredoc_redir = find_redir_by_type(command, HEREDOC);
-	if (heredoc_redir)
-	{
-		if (pipe(heredoc_fd) < 0)
+		signal_function();
+		if (*in_fd != STDIN_FILENO)
 		{
-			ft_error("child proccess");
-			exit(EXIT_FAILURE);
+			dup2(*in_fd, STDIN_FILENO);
+			close(*in_fd);
 		}
-		execute_heredoc(heredoc_redir->file, heredoc_fd);
+		else
+			setup_redirection(shell, true);
+		if (shell->commands->next)
+		{
+			close(fd[0]);
+			dup2(fd[1], STDOUT_FILENO);
+			close(fd[1]);
+		}
+		if (execute_child_builtins(shell->commands->args, shell) == 0)
+			exec_cmd(shell, shell->commands->args, env);
+		ft_exit_child(&shell, EXIT_FAILURE);
 	}
-	if (in_fd != STDIN_FILENO)
-	{
-		dup2(in_fd, STDIN_FILENO);
-		close(in_fd);
-	}
-	if (command->next)
-	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-	}
-	setup_redirection(shell, false);
-	exec_cmd(shell, command->args, env);
-	exit(EXIT_FAILURE);
+	else
+		parent_process(shell, in_fd, fd);
 }
 void	handle_pipes(t_shell *shell, char **env)
 {
-	t_command	*first;
-	int			pid;
-	int			fd[2];
-	int			in_fd;
-	int			child_count;
+	int		in_fd;
+	int		fd[2];
+	t_cmd	*current_cmd;
 
-	child_count = 0;
-	first = shell->commands;
 	in_fd = STDIN_FILENO;
-	while (shell->commands)
+	current_cmd = shell->commands;
+	while (current_cmd)
 	{
-		if (shell->commands->next && pipe(fd) < 0)
-		{
-			ft_error("handle pipe");
-			break ;
-		}
-		pid = fork();
-		if (pid < 0)
-		{
-			ft_error("fork error");
-			break ;
-		}
-		if (pid == 0)
-		{
-			child_process(shell, fd, in_fd, env);
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-			child_count++;
-			parent_process(shell, &in_fd, fd);
-		}
-		shell->commands = shell->commands->next;
+		shell->commands = current_cmd;
+		if (current_cmd->next && pipe(fd) == -1)
+			return (ft_error("pipe failed"));
+		exec_pipe_cmd(shell, env, &in_fd, fd);
+		current_cmd = current_cmd->next;
 	}
-	if (in_fd != STDIN_FILENO)
-		close(in_fd);
-	shell->commands = first;
-	while (child_count-- > 0)
-		wait(NULL);
+	wait_for_children(shell->cmd_count, shell);
 }

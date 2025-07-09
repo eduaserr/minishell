@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrdup.c                                        :+:      :+:    :+:   */
+/*   ft_get_in_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 19:56:20 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/09 15:19:25 by eduaserr         ###   ########.fr       */
+/*   Created: 2025/07/03 19:02:23 by eduaserr          #+#    #+#             */
+/*   Updated: 2025/07/09 15:21:39 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-char	**ft_arrdup(char **arr)
+char	*get_in_quotes(char *str, int start, int end)
 {
-	char	**dup;
+	char	*tmp;
 	int		i;
+	int		len;
 
 	i = 0;
-	while (arr[i])
-		i++;
-	dup = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!dup)
+	len = end - start - 1;
+	if (start < 0)
 		return (NULL);
-	i = 0;
-	while (arr[i])
+	tmp = (char *)malloc(sizeof(char) * (len + 1));
+	if (!tmp)
+		return (NULL);
+	while (str[++start] && (--len) >= 0)
 	{
-		dup[i] = ft_strdup(arr[i]);
-		if (!dup[i])
-		{
-			ft_freematrix(&dup);
-			return (NULL);
-		}
+		tmp[i] = str[start];
 		i++;
 	}
-	dup[i] = NULL;
-	return (dup);
+	tmp[i] = '\0';
+	return (tmp);
 }

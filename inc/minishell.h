@@ -6,7 +6,7 @@
 /*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/27 20:59:05 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:46:51 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,112 +79,190 @@ typedef struct s_redir
 	struct s_redir		*next;
 }						t_redir;
 
-typedef struct s_command
+typedef struct s_cmd
 {
-	char				*cmd;				//comando a procesar
-	char				**args;				//argumentos de un mismo cmd por separado
-	t_redir				*rd;				//redirs en el input
-	struct s_command	*next;
-}						t_command;
+	char				*cmd;
+	char				**args;
+	t_redir				*rd;
+	struct s_cmd		*next;
+}						t_cmd;
 
 typedef struct s_shell
 {
-	char				*p_input;			//processed input
-	char				*user_input;		//input orriginal del usuario
-	char				**env;				//doble array de envp del sistema
-	t_env				*lstenv;			//lista de las env
-	t_token				*tkn;				//args separados, y divididos por tokens
-	t_command			*commands;			//lista de comandos y args
+	char				*p_input;
+	char				*user_input;
+	char				**env;
+	t_env				*lstenv;
+	t_token				*tkn;
+	t_cmd				*commands;
 	int					cmd_count;
-	int					last_exit_status;	//anterior codigo de error
-	int					exit_status;		//estado de la proxima salida del programa
-	int					running;			//estado actual del programa
+	int					last_exit_status;
+	int					exit_status;
+	int					running;
 }						t_shell;
 
 /* **************************************** */
 /*					BUILTINS				*/
 /* **************************************** */
-bool	execute_parent_builtin(char **cmd_wargs, t_shell *shell);
+//////////////////////
+//	builtin.c		//
+//////////////////////
+bool	execute_parent_builtin(char **cmd_args, t_shell *shell);
+int		execute_child_builtins(char **cmd_args, t_shell *shell);
 
-void	execute_child_builtins(char **cmd_wargs, t_shell *shell);
+//////////////////////
+//	cd.c			//
+//////////////////////
+int		builtin_cd(t_shell *shell, char **cmd);
 
-int		builtin_echo(t_command *cmd);
+//////////////////////
+//	cd_utils.c		//
+//////////////////////
+int		update_env_pwd(t_shell *shell, char *oldpwd_val);
 
-int		builtin_pwd(void);
+//////////////////////
+//	echo.c			//
+//////////////////////
+int		builtin_echo(t_cmd *cmd);
 
-void	builtin_env(t_shell *shell, char **envp);
-
+//////////////////////
+//	env.c			//
+//////////////////////
+void	builtin_env(char **envp);
 int		builtin_export(t_shell *shell, char **cmd);
-
 int		builtin_unset(t_shell *shell, char **cmd);
+
+//////////////////////
+//	env_utils.c		//
+//////////////////////
+char	*get_env(char *env, char **envp);
+int		unset_env(char *env, char **envp);
+int		set_env(char *env, char ***envp);
+
+//////////////////////
+//	exit.c			//
+//////////////////////
+int		builtin_exit(char **args);
+
+//////////////////////
+//	pwd.c			//
+//////////////////////
+int		builtin_pwd(void);
 
 /* **************************************** */
 /*					COMMAND					*/
 /* **************************************** */
 //////////////////////
-//	cmd				//
+//	cmd.c			//
 //////////////////////
-t_command	*get_command(t_shell *mshell, t_command *cmd, char *input);
+t_cmd	*get_cmd(t_shell *shell, t_cmd *cmd, char *input, int pipe);
 
 //////////////////////
-//	get_cmd			//
+//	get_cmd.c		//
 //////////////////////
 int		pipelen(t_token *tkn);
-
 char	*process_str(t_shell *mshell, char *str);
+void	dup_cmd(t_shell *mshell, t_cmd *cmd);
 
-void	get_args(t_token *tkn, t_command *cmd);
+//////////////////////
+//	get_args.c		//
+//////////////////////
+void	get_args(t_token *tkn, t_cmd *cmd);
 
-void	dup_cmd(t_shell *mshell, t_command *cmd);
+/* **************************************** */
+/*					EXECUTOR				*/
+/* **************************************** */
+//////////////////////
+//	exec_utils.c	//
+//////////////////////
+char	*get_cmd_paths(char *cmd, char **env);
+
+//////////////////////
+//	execute.c		//
+//////////////////////
+void	exec_cmd(t_shell *shell, char **cmd_args, char **env);
+void	execute(t_shell *shell, char **cmd_args, char **env);
+
+//////////////////////
+//	heredoc.c		//
+//////////////////////
+void	create_heredocs(t_shell *shell);
+
+//////////////////////
+//	heredoc_utils.c	//
+//////////////////////
+void	cleanup_interrupted_heredocs(t_shell *shell);
+void	read_heredoc_lines(t_shell *shell, t_redir *rd, int fd, char *file);
+void	clean_sigint(t_shell *shell, int status);
+
+//////////////////////
+//	pipes.c			//
+//////////////////////
+void	handle_pipes(t_shell *shell, char **env);
+
+//////////////////////
+//	redir_utils.c	//
+//////////////////////
+void	setup_redirection(t_shell *shell, bool handle_heredoc);
+
+//////////////////////
+//	redir.c			//
+//////////////////////
+void	redirect_stdin(t_shell *shell, bool handle_heredoc);
 
 /* **************************************** */
 /*					INIT					*/
 /* **************************************** */
 //////////////////////
-//	init_cmd		//
+//	init.c			//
 //////////////////////
-t_command	*create_cmd(t_command *new);
+void	update_shlvl(t_env *lstenv);
+t_shell	*init_mshell(t_shell *mshell, char **envp);
+void	sync_arr_env(t_shell *shell);
 
-void	addlastcmd_node(t_command **lstcmd, t_command *node);
+//////////////////////
+//	init_cmd.c		//
+//////////////////////
+int		ft_nodelen(t_token *tkn);
+t_cmd	*create_cmd(t_cmd *new);
+void	addlastcmd_node(t_cmd **lstcmd, t_cmd *node);
 
 //////////////////////
-//	init_env		//
+//	init_env.c		//
 //////////////////////
-/**
- * @brief creates env variables struct. Asing the correspondign key and value.
- * If there is no value, ft_strdup("");
- * @return (t_env) returns new node.
- */
 t_env	*create_env(char *env);
-
 void	addlast_node(t_env **lstenv, t_env *node);
 
 //////////////////////
-//	init_tkn		//
+//	init_redir.c	//
+//////////////////////
+t_redir	*create_redir(void);
+void	addlast_redir(t_redir **lstrd, t_redir *node);
+t_redir	*redir_node(t_shell *mshell, t_token *tkn, t_redir *lstrd, int cmd_ix);
+
+//////////////////////
+//	init_tkn.c		//
 //////////////////////
 t_token	*get_token(t_token *new, t_token_type tkn, char *value, int *i);
-
 void	addlast_tknnode(t_token **token_list, t_token *node);
-
-void	parse_redirs(t_command **cmd, t_token *tkn);
-
-t_redir	*redir_node(t_shell *mshell, t_token *tkn, t_redir *lstrd, int cmd_index);
-
-//////////////////////
-//	init			//
-//////////////////////
-t_shell	*init_mshell(t_shell *mshell, char **envp);
 
 /* **************************************** */
 /*					PARSER					*/
 /* **************************************** */
 //////////////////////
-//	parser			//
+//	parser.c		//
 //////////////////////
+int		handle_pipes_err(char *str, int i);
+int		handle_rd_err(t_shell *shell, t_token *tkn);
+
+//////////////////////
+//	parser.c		//
+//////////////////////
+void	parse_commands(t_shell **mshell, int tmp);
 void	parse_input(t_shell **mshell, char *input);
 
 //////////////////////
-//	promp			//
+//	promp.c			//
 //////////////////////
 char	*promp_input(t_shell *mshell);
 
@@ -192,65 +270,45 @@ char	*promp_input(t_shell *mshell);
 /*					QUOTES					*/
 /* **************************************** */
 //////////////////////
-//	quotes_check	//
+//	quotes_check.c	//
 //////////////////////
-char	*check_quotes(char *input);
+char	*check_quotes(t_shell *shell, char *input);
 
-char 	*rm_quotes2(char *str);
-
-/**
- * @brief This function processes the input string, and copy all character except both chars indicated
- * by index in the parameter from the function.
- * @param input Pointer to the string to process.
- * @param i Index of the first quote in the string.
- * @param j Index of the first quote in the string.
- * @return (char *) A new string without pair quotes. The caller is responsible for freeing it.
- */
-char	*rm_quotes(char *input, int i, int j);
 //////////////////////
-//	quotes_expand	//
+//	quotes_expand.c	//
 //////////////////////
 void	dollar_case(t_env *env, int e_status, char **str);
-
-void	swp_value(char **input, char *value, int i, int end);
-
+int		dollar_qu(char **str, int e_status, int i);
 
 //////////////////////
-//	quotes_utils	//
+//	quotes_utils.c	//
 //////////////////////
 int		get_quote(char *str);
-
-char	*get_in_quotes(char *str, int start, int end);
-
-/**
- * @brief This function processes the input string, removes the empty quotes (single or double),
- * and returns a newly allocated string without them.
- * 
- * @param input Pointer to the string to process. The string is freed inside the function.
- * @param start The index of the first quote.
- * @param end The index of the final quote.
- * @return (char *) A new string without quotes. The caller is responsible for freeing it.
- */
 char	*rm_empty_quotes(char *str, int start, int end);
+char	*rm_quotes(char *input, int i, int end);
+char	*rm_quotes2(char *str);
 
 /* **************************************** */
 /*					SIGNALS					*/
 /* **************************************** */
 //////////////////////
-//	sig_init		//
+//	sig_init.c		//
 //////////////////////
 void	signal_function(void);
+void	handle_exec_sigquit(void);
 
 //////////////////////
-//	signal2			//
+//	signal2.c		//
 //////////////////////
 void	setup_heredoc_signals(void);
+void	init_signal_handler_exec(void);
+void	sigint_heredoc_handler(int sig);
 
 /* **************************************** */
 /*					TOKENS					*/
 /* **************************************** */
 //////////////////////
-//	tokens			//
+//	tokens.c		//
 //////////////////////
 t_token	*tokenizer(t_token *token_list, char *input);
 
@@ -258,92 +316,53 @@ t_token	*tokenizer(t_token *token_list, char *input);
 /*					UTILS					*/
 /* **************************************** */
 //////////////////////
-//	utils_error		//
+//	utils.c			//
+//////////////////////
+int		ft_isredir(int a);
+int		skip_quoted(char *str, int *i);
+char	**ft_init_array(char **array);
+char	*get_word_msh(char *str, int i);
+void	ft_free_array(void **array);
+
+//////////////////////
+//	utils_error.c	//
 //////////////////////
 void	ft_exit(t_shell **mshell);
-
-void	ft_error(char *str);
-
-void	ft_error_exit(t_shell **mshell, char *message, int code);
-
-char	*get_word_msh(char *str, int i);
+void	ft_exit_child(t_shell **mshell, int code);
 
 //////////////////////
-//	utils_expand	//
+//	utils_expand.c	//
 //////////////////////
+void	swp_value(char **input, char *value, int i, int end);
 int		dollar_expand(char **str, t_env *env, int i);
 
 //////////////////////
-//	utils_free		//
+//	utils_free.c	//
 //////////////////////
+void	ft_free_env(t_env **lstenv);
 void	ft_free_tkn(t_token **tkn);
-
-void	ft_free_cmd(t_command **cmd);
-
+void	ft_free_cmd(t_cmd **cmd);
 void	ft_free_mshell(t_shell **mshell);
 
 //////////////////////
-//	utils_node		//
+//	utils_node.c	//
 //////////////////////
-/**
- * @brief You must indicate the key and it returns the corresponding value.
- * 
- * @param env content data.
- * @param var variable for being search.
- * @return (char *) A new dup string. The caller is responsible for freeing it.
- */
+t_env	*ft_getlstenv(t_env *env, char *var);
 char	*ft_getenv(t_env *env, char *var);
-
 char	*is_var(char *str, t_env *env);
+void	sync_env_array(t_shell *shell);
 
 //////////////////////
-//	utils_print		//
+//	utils_perror.c	//
 //////////////////////
-void	ft_printenv(t_env *lstenv);
+void	ft_error(char *str);
+void	ft_perror(t_shell *shell, char *str, char *var);
 
+//////////////////////
+//	utils_print.c	//
+//////////////////////
 void	ft_printtkn(t_token *tkn);
-
-void	ft_printcmd(t_command *cmd);
-
-//////////////////////
-//	utils			//
-//////////////////////
-int		ft_isredir(int a);
-
-int		skip_quoted(char *str, int *i);
-
-char	**ft_init_array(char **array);
-
-void	ft_free_array(void **array);
-
-/* **************************************** */
-/*					BUILTINS				*/
-/* **************************************** */
-char	*get_env(char *env, char **envp);
-int		unset_env(char *env, char **envp);
-int		set_env(char *env, char ***envp);
-int		ft_strcmp(const char *s1, const char *s2);
-int		builtin_echo(t_command *cmd);
-int		builtin_pwd(void);
-void	builtin_env(t_shell *shell, char **envp);
-int		builtin_cd(t_shell *shell, char **cmd);
-int		builtin_exit(char **args);
-int		builtin_unset(t_shell *shell, char **cmd);
-int		builtin_export(t_shell *shell, char **cmd);
-void	execute_child_builtins(char **cmd_args, t_shell *shell);
-bool	execute_parent_builtin(char **cmd_args, t_shell *shell);
-
-/* **************************************** */
-/*					EXECUTE					*/
-/* **************************************** */
-char	*get_cmd_paths(char *cmd, char **env);
-void	execute_heredoc(char *delimiter, int heredoc_fd[2]);
-void	redirect_stdin(t_shell *shell, bool handle_heredoc);
-void	setup_redirection(t_shell *shell, bool handle_heredoc);
-void	exec_cmd(t_shell *shell, char **cmd_args, char **env);
-void	execute(t_shell *shell, char **cmd_args, char **env);
-void	handle_pipes(t_shell *shell, char **env);
-
-
+void	ft_printcmd(t_cmd *cmd);
+void	ft_printenv(t_env *lstenv);
 
 #endif

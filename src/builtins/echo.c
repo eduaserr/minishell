@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 11:54:35 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/17 18:02:44 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:41:31 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	parse_echo_flags(char **args, int *suppress_newline)
 	return (i);
 }
 
-int	builtin_echo(t_command *cmd)
+int	builtin_echo(t_cmd *cmd)
 {
 	int		i;
 	int		suppress_newline;

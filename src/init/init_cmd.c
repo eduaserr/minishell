@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:25:52 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/06/25 22:58:10 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:32:12 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	ft_nodelen(t_token *tkn)
 	return (i);
 }
 
-t_command	*create_cmd(t_command *new)
+t_cmd	*create_cmd(t_cmd *new)
 {
-	new = (t_command *)malloc(sizeof(t_command));
+	new = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!new)
 		return (NULL);
 	new->cmd = NULL;
@@ -37,16 +37,16 @@ t_command	*create_cmd(t_command *new)
 	return (new);
 }
 
-static t_command	*get_lastcmd_node(t_command *node)
+static t_cmd	*get_lastcmd_node(t_cmd *node)
 {
 	while (node->next)
 		node = node->next;
 	return (node);
 }
 
-void	addlastcmd_node(t_command **lstcmd, t_command *node)
+void	addlastcmd_node(t_cmd **lstcmd, t_cmd *node)
 {
-	t_command	*last;
+	t_cmd	*last;
 
 	last = NULL;
 	if (!lstcmd || !node)

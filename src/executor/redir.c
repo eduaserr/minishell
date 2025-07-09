@@ -5,96 +5,73 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 20:04:44 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/06/26 16:16:55 by eduaserr         ###   ########.fr       */
+/*   Created: 2025/07/03 20:09:29 by aamoros-          #+#    #+#             */
+/*   Updated: 2025/07/08 21:33:25 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	execute_heredoc(char *delimiter, int heredoc_fd[2])
+static t_redir	*find_last_input_redir(t_redir *redir_list)
 {
-	char	*line;
+	t_redir	*last_input_redir;
 
-	line = NULL;
-	while (1)
+	last_input_redir = NULL;
+	while (redir_list)
 	{
-		line = readline("> ");
-		if (!line || !ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1))
-			break ;
-		write(heredoc_fd[1], line, ft_strlen(line));
-		write(heredoc_fd[1], "\n", 1);
-		free(line);
+		if (redir_list->type == REDIR_IN || redir_list->type == HEREDOC)
+			last_input_redir = redir_list;
+		redir_list = redir_list->next;
 	}
-	close(heredoc_fd[1]);
-	dup2(heredoc_fd[0], STDIN_FILENO);
-	close(heredoc_fd[0]);
+	return (last_input_redir);
 }
 
-static void	handle_file_input(t_shell *shell, char *file)
+static void	process_heredocs(t_cmd *command, t_redir *last_input_redir)
+{
+	t_redir	*current_redir;
+	int		heredoc_fd;
+
+	current_redir = command->rd;
+	while (current_redir)
+	{
+		if (current_redir->type == HEREDOC)
+		{
+			heredoc_fd = open(current_redir->file, O_RDONLY);
+			if (current_redir == last_input_redir)
+				dup2(heredoc_fd, STDIN_FILENO);
+			close(heredoc_fd);
+		}
+		current_redir = current_redir->next;
+	}
+}
+
+static void	apply_file_input(t_shell *shell, char *file)
 {
 	int	fd_in;
 
 	fd_in = open(file, O_RDONLY);
 	if (fd_in == -1)
-		ft_error_exit(&shell, "infile open", EXIT_FAILURE);
+	{
+		ft_perror(shell, "nsfod", file);
+		ft_exit_child(&shell, EXIT_FAILURE);
+	}
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
 }
 
-static void	handle_heredoc_input(t_shell *shell, char *delimiter)
-{
-	int	heredoc_fd[2];
-
-	if (pipe(heredoc_fd) < 0)
-		ft_error_exit(&shell, "pipe", EXIT_FAILURE);
-	execute_heredoc(delimiter, heredoc_fd);
-	dup2(heredoc_fd[0], STDIN_FILENO);
-	close(heredoc_fd[0]);
-}
-
 void	redirect_stdin(t_shell *shell, bool handle_heredoc)
 {
-	t_command	*command;
-	t_redir		*redir;
+	t_cmd		*command;
+	t_redir		*last_input_redir;
 
 	command = shell->commands;
 	if (!command || !command->rd)
 		return ;
-	redir = command->rd;
-	while (redir)
-	{
-		if (redir->type == REDIR_IN)
-			handle_file_input(shell, redir->file);
-		else if (redir->type == HEREDOC && handle_heredoc)
-			handle_heredoc_input(shell, redir->file);
-		redir = redir->next;
-	}
-}
-
-void	setup_redirection(t_shell *shell, bool handle_heredoc)
-{
-	int			fd_out;
-	t_redir		*redir;
-
-	redirect_stdin(shell, handle_heredoc);
-	if (!shell->commands || !shell->commands->rd)
+	last_input_redir = find_last_input_redir(command->rd);
+	if (!last_input_redir)
 		return ;
-	redir = shell->commands->rd;
-	while (redir)
-	{
-		if (redir->type == REDIR_OUT || redir->type == APPEND)
-		{
-			if (redir->type == APPEND)
-				fd_out = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0666);
-			else
-				fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-			if (fd_out == -1)
-				ft_error_exit(&shell, "outfile open", EXIT_FAILURE);
-			dup2(fd_out, STDOUT_FILENO);
-			close(fd_out);
-			return ;
-		}
-		redir = redir->next;
-	}
+	if (handle_heredoc)
+		process_heredocs(command, last_input_redir);
+	if (last_input_redir->type == REDIR_IN)
+		apply_file_input(shell, last_input_redir->file);
 }

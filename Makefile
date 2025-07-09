@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+         #
+#    By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/13 15:47:17 by eduaserr          #+#    #+#              #
-#    Updated: 2025/06/26 12:59:46 by eduaserr         ###   ########.fr        #
+#    Updated: 2025/07/07 18:46:00 by aamoros-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ CMD		= src/command
 INIT	= src/init
 PRS		= src/parser
 QUOTES	= src/quotes
-RDIR	= src/redirs
 SIG		= src/signals
 TKN		= src/tokens
 UTLS	= src/utils
@@ -34,17 +33,17 @@ BINS	= src/builtins
 
 SRC		= main.c
 
-SRCS	= $(CMD)/cmd.c $(CMD)/get_cmd.c\
+SRCS	= $(CMD)/cmd.c $(CMD)/get_cmd.c $(CMD)/get_args.c\
 		$(INIT)/init_cmd.c $(INIT)/init_env.c $(INIT)/init_redir.c $(INIT)/init_tkn.c $(INIT)/init.c\
-		$(PRS)/parser.c $(PRS)/promp.c\
+		$(PRS)/parser.c $(PRS)/promp.c $(PRS)/parse_utils.c\
 		$(QUOTES)/quotes_expand.c $(QUOTES)/quotes_check.c $(QUOTES)/quotes_utils.c\
-		$(RDIR)/redirs.c\
 		$(SIG)/sig_init.c $(SIG)/signal2.c\
 		$(TKN)/tokens.c\
-		$(UTLS)/utils_error.c $(UTLS)/utils_expand.c $(UTLS)/utils_free.c $(UTLS)/utils_node.c\
+		$(UTLS)/utils_error.c $(UTLS)/utils_expand.c $(UTLS)/utils_free.c $(UTLS)/utils_node.c $(UTLS)/utils_perror.c\
 		$(UTLS)/utils_print.c $(UTLS)/utils.c\
-		$(EXEC)/execute.c $(EXEC)/exec_utils.c $(EXEC)/redir.c $(EXEC)/pipes.c\
-		$(BINS)/cd.c $(BINS)/echo.c $(BINS)/env.c $(BINS)/env_utils.c $(BINS)/exit.c\
+		$(EXEC)/execute.c $(EXEC)/exec_utils.c $(EXEC)/redir.c $(EXEC)/pipes.c $(EXEC)/redir_utils.c $(EXEC)/heredoc.c\
+		$(EXEC)/heredoc_utils.c\
+		$(BINS)/cd.c $(BINS)/cd_utils.c $(BINS)/echo.c $(BINS)/env.c $(BINS)/env_utils.c $(BINS)/exit.c\
 		$(BINS)/pwd.c $(BINS)/builtin.c
 		
 ### OBJS ###
