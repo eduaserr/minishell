@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:44:47 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/08 21:47:10 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:46:51 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ typedef struct s_shell
 //	builtin.c		//
 //////////////////////
 bool	execute_parent_builtin(char **cmd_args, t_shell *shell);
-void	execute_child_builtins(char **cmd_args, t_shell *shell);
+int		execute_child_builtins(char **cmd_args, t_shell *shell);
 
 //////////////////////
 //	cd.c			//

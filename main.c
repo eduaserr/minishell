@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:24:27 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/08 21:55:39 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:10:57 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void	execute_command_pipeline(t_shell *shell)
 		return ;
 	pid = fork();
 	if (pid == -1)
-
 		return (ft_error("minishell: fork"));
 	if (pid == 0)
 		execute(shell, shell->commands->args, shell->env);

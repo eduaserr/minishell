@@ -6,7 +6,7 @@
 /*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 11:56:53 by aamoros-          #+#    #+#             */
-/*   Updated: 2025/07/08 21:20:01 by eduaserr         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:46:44 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static void	exec_pipe_cmd(t_shell *shell, char **env, int *in_fd, int fd[2])
 			dup2(fd[1], STDOUT_FILENO);
 			close(fd[1]);
 		}
-		execute_child_builtins(shell->commands->args, shell);
-		exec_cmd(shell, shell->commands->args, env);
+		if (execute_child_builtins(shell->commands->args, shell) == 0)
+			exec_cmd(shell, shell->commands->args, env);
 		ft_exit_child(&shell, EXIT_FAILURE);
 	}
 	else
