@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promp.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aamoros- <aamoros-@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: eduaserr < eduaserr@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:30:35 by eduaserr          #+#    #+#             */
-/*   Updated: 2025/07/07 19:00:54 by aamoros-         ###   ########.fr       */
+/*   Updated: 2025/08/26 19:57:41 by eduaserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ char	*promp_input(t_shell *mshell)
 	char	*promp;
 	char	*input;
 	char	*pwd;
-	char	cwd[4096];
 
 	pwd = NULL;
 	input = NULL;
